@@ -5,18 +5,26 @@ import java.io.PrintWriter;
 
 public class MysqlUtilException extends RuntimeException {
 	private Exception originException;
+	private SecSql sql;
 
-	public MysqlUtilException(Exception e) {
+	public MysqlUtilException(Exception e, SecSql sql) {
 		this.originException = e;
+		this.sql = sql;
 	}
 
 	@Override
 	public String getMessage() {
+		if (sql != null) {
+			return originException.getMessage() + ", SQL : " + sql.getRawSql();
+		}
 		return originException.getMessage();
 	}
 
 	@Override
 	public String getLocalizedMessage() {
+		if (sql != null) {
+			return originException.getLocalizedMessage() + ", SQL : " + sql.getRawSql();
+		}
 		return originException.getLocalizedMessage();
 	}
 
@@ -49,4 +57,4 @@ public class MysqlUtilException extends RuntimeException {
 	public void printStackTrace(PrintWriter s) {
 		originException.printStackTrace(s);
 	}
-} 
+}
