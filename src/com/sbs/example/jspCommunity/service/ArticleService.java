@@ -13,8 +13,16 @@ public class ArticleService {
 		articleDao = Container.articleDao;
 	}
 
-	public List<Article> getForPrintfArticlesByBoardId(int boardId) {
+	public List<Article> getForPrintArticlesByBoardId(int boardId) {
 		return articleDao.getForPrintArticlesByBoardId(boardId);
+	}
+
+	public String getBoardNameByBoardId(int boardId) {
+		return articleDao.getBoardNameByBoardId(boardId);
+	}
+
+	public Article getForPrintArticleById(int id) {
+		return articleDao.getForPrintArticleById(id);
 	}
 
 }

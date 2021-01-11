@@ -33,9 +33,9 @@ public class DispatcherServlet extends HttpServlet {
 
 		String controllerName = requestUriBits[3];
 		String actionMethodName = requestUriBits[4];
-		
+
 		MysqlUtil.setDBInfo("127.0.0.1", "sbsst", "sbs123414", "jspCommunity");
-		
+
 		String jspPath = null;
 
 		if (controllerName.equals("member")) {
@@ -45,16 +45,18 @@ public class DispatcherServlet extends HttpServlet {
 				jspPath = memberController.showList(req, resp);
 			}
 		}
-		if (controllerName.equals("article")) {
+		else if (controllerName.equals("article")) {
 			ArticleController articleController = Container.articleController;
 
 			if (actionMethodName.equals("list")) {
 				jspPath = articleController.showList(req, resp);
+			} else if (actionMethodName.equals("detail")) {
+				jspPath = articleController.showDetail(req, resp);
 			}
 		}
 		MysqlUtil.closeConnection();
 
-		req.getRequestDispatcher("/jsp/"+jspPath+".jsp").forward(req, resp);
+		req.getRequestDispatcher("/jsp/" + jspPath + ".jsp").forward(req, resp);
 
 	}
 }
