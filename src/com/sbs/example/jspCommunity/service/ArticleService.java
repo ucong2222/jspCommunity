@@ -39,4 +39,8 @@ public class ArticleService {
 		return articleDao.modify(args);
 	}
 
+	public int delete(int id) {
+		return articleDao.delete(id);
+	}
+
 }

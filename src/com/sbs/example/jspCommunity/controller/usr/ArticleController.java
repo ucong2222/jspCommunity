@@ -104,5 +104,15 @@ public class ArticleController {
 		
 	}
 
+	public String doDelete(HttpServletRequest req, HttpServletResponse resp) {
+		int id = Integer.parseInt(req.getParameter("id"));
+		Article article = articleService.getArticleByid(id);
+		articleService.delete(id);
+		
+		req.setAttribute("alertMsg", id + "번 게시물이 삭제되었습니다.");
+		req.setAttribute("replaceUrl", String.format("list?boardId=%d", article.boardId));
+		return "common/redirect";
+	}
+
 
 }

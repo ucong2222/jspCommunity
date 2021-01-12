@@ -113,4 +113,12 @@ public class ArticleDao {
 
 		return MysqlUtil.update(sql);
 	}
+
+	public int delete(int id) {
+		SecSql sql = new SecSql();
+		sql.append("DELETE FROM article");
+		sql.append("WHERE id = ?", id);
+
+		return MysqlUtil.delete(sql);
+	}
 }
