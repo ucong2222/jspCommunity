@@ -11,7 +11,7 @@ if(historyBack){
 	history.back();
 }
 
-var replaceUrl = '<%=request.getAttribute("replaceUrl")%>.trim()';
+var replaceUrl = '<%=request.getAttribute("replaceUrl")%>'.trim();
 if(replaceUrl){
 	location.replace(replaceUrl);
 }
