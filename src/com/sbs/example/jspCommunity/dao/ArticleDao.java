@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.sbs.example.jspCommunity.dto.Article;
+import com.sbs.example.jspCommunity.dto.Board;
 import com.sbs.example.mysqlutil.MysqlUtil;
 import com.sbs.example.mysqlutil.SecSql;
 
@@ -36,16 +37,6 @@ public class ArticleDao {
 		return articles;
 	}
 
-	public String getBoardNameByBoardId(int boardId) {
-		SecSql sql = new SecSql();
-		sql.append("SELECT name");
-		sql.append("FROM board");
-		sql.append("WHERE id = ? ", boardId);
-
-		return MysqlUtil.selectRowStringValue(sql);
-
-	}
-
 	public Article getForPrintArticleById(int id) {
 		SecSql sql = new SecSql();
 		sql.append("SELECT A.*");
@@ -66,5 +57,20 @@ public class ArticleDao {
 		}
 
 		return new Article(articleMap);
+	}
+
+	public Board getBoardById(int id) {
+		SecSql sql = new SecSql();
+		sql.append("SELECT B.*");
+		sql.append("FROM board AS B");
+		sql.append("WHERE B.id = ?", id);
+
+		Map<String, Object> map = MysqlUtil.selectRow(sql);
+
+		if ( map.isEmpty() ) {
+			return null;
+		}
+
+		return new Board(map);
 	}
 }
