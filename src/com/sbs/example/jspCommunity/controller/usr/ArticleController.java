@@ -46,5 +46,10 @@ public class ArticleController {
 		return "usr/article/detail";
 	}
 
+	public String showWrite(HttpServletRequest req, HttpServletResponse resp) {
+		
+		return "usr/article/write";
+	}
+
 
 }

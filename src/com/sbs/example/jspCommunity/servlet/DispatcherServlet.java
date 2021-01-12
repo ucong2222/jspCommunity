@@ -44,14 +44,15 @@ public class DispatcherServlet extends HttpServlet {
 			if (actionMethodName.equals("list")) {
 				jspPath = memberController.showList(req, resp);
 			}
-		}
-		else if (controllerName.equals("article")) {
+		} else if (controllerName.equals("article")) {
 			ArticleController articleController = Container.articleController;
 
 			if (actionMethodName.equals("list")) {
 				jspPath = articleController.showList(req, resp);
 			} else if (actionMethodName.equals("detail")) {
 				jspPath = articleController.showDetail(req, resp);
+			} else if (actionMethodName.equals("write")) {
+				jspPath = articleController.showWrite(req, resp);
 			}
 		}
 		MysqlUtil.closeConnection();
