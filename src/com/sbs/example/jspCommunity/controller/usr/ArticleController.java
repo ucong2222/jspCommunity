@@ -20,10 +20,9 @@ public class ArticleController {
 	public String showList(HttpServletRequest req, HttpServletResponse resp) {
 		int boardId = Integer.parseInt(req.getParameter("boardId"));
 
-		
 		Board board = articleService.getBoardById(boardId);
 		req.setAttribute("board", board);
-					
+
 		List<Article> articles = articleService.getForPrintArticlesByBoardId(boardId);
 		req.setAttribute("articles", articles);
 
@@ -32,24 +31,27 @@ public class ArticleController {
 
 	public String showDetail(HttpServletRequest req, HttpServletResponse resp) {
 		int id = Integer.parseInt(req.getParameter("id"));
-		
+
 		Article article = articleService.getForPrintArticleById(id);
-		
-		if ( article == null ) {
-			req.setAttribute("alertMsg", id + "번 게시물은 존재하지 않습니다." );
-			req.setAttribute("historyBack", true );
+
+		if (article == null) {
+			req.setAttribute("alertMsg", id + "번 게시물은 존재하지 않습니다.");
+			req.setAttribute("historyBack", true);
 			return "common/redirect";
 		}
-		
+
 		req.setAttribute("article", article);
 
 		return "usr/article/detail";
 	}
 
 	public String showWrite(HttpServletRequest req, HttpServletResponse resp) {
+		int boardId = Integer.parseInt(req.getParameter("boardId"));
+
+		Board board = articleService.getBoardById(boardId);
+		req.setAttribute("board", board);
 		
 		return "usr/article/write";
 	}
-
 
 }
