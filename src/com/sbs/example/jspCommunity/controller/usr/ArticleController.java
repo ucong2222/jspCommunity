@@ -75,4 +75,34 @@ public class ArticleController {
 		return "common/redirect";
 	}
 
+	public String modify(HttpServletRequest req, HttpServletResponse resp) {
+		int id = Integer.parseInt(req.getParameter("id"));
+
+		Article article = articleService.getArticleByid(id);
+		req.setAttribute("article", article);
+		
+		return "usr/article/modify";
+	}
+
+	public String doModify(HttpServletRequest req, HttpServletResponse resp) {
+		int memberId = Integer.parseInt(req.getParameter("memberId"));
+		int id = Integer.parseInt(req.getParameter("id"));
+		String title = req.getParameter("title");
+		String body = req.getParameter("body");
+		
+		Map<String, Object> modifyArgs = new HashMap<>();
+		modifyArgs.put("memberId", memberId);
+		modifyArgs.put("id", id);
+		modifyArgs.put("title", title);
+		modifyArgs.put("body", body);
+		
+		articleService.modify(modifyArgs);
+		
+		req.setAttribute("alertMsg", id + "번 게시물이 수정되었습니다.");
+		req.setAttribute("replaceUrl", String.format("detail?id=%d", id));
+		return "common/redirect";
+		
+	}
+
+
 }
