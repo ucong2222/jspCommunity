@@ -4,19 +4,14 @@
 <%@ page import="java.util.List"%>
 <%@ page import="com.sbs.example.jspCommunity.dto.Article"%>
 <%@ page import="com.sbs.example.jspCommunity.dto.Board"%>
-
 <%
 Article article = (Article) request.getAttribute("article");
 Board board = (Board) request.getAttribute("board");
+String pageTitle = "게시물 상세페이지";
 %>
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-<meta charset="UTF-8">
-<title>게시물 상세페이지</title>
-</head>
-<body>
-	<h1>게시물 상세페이지</h1>
+<%@ include file="../../part/head.jspf" %>
+
+	<h1><%=pageTitle%></h1>
 	<div>
 		번호 : 
 		<%=article.id %>
@@ -44,6 +39,4 @@ Board board = (Board) request.getAttribute("board");
 		<a href="modify?id=<%=article.id %>">수정</a>
 		<a onclick="if (confirm('정말 삭제 하시겠습니까?') == false){ return false;}" href="doDelete?id=<%=article.id %>">삭제</a>
 	</div>
-
-</body> 
-</html>
+<%@ include file="../../part/foot.jspf" %>
