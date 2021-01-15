@@ -78,7 +78,7 @@ public class ArticleController {
 	public String modify(HttpServletRequest req, HttpServletResponse resp) {
 		int id = Integer.parseInt(req.getParameter("id"));
 
-		Article article = articleService.getArticleByid(id);
+		Article article = articleService.getForPrintArticleById(id);
 		req.setAttribute("article", article);
 		
 		return "usr/article/modify";
@@ -106,11 +106,20 @@ public class ArticleController {
 
 	public String doDelete(HttpServletRequest req, HttpServletResponse resp) {
 		int id = Integer.parseInt(req.getParameter("id"));
-		Article article = articleService.getArticleByid(id);
+		Article article = articleService.getForPrintArticleById(id);
+		
+		if (article == null) {
+			req.setAttribute("alertMsg", id + "번 게시물은 존재하지 않습니다..");
+			req.setAttribute("historyBack", true);
+			return "common/redirect";
+		}
+		
 		articleService.delete(id);
 		
+		int boardId = article.boardId;
+		
 		req.setAttribute("alertMsg", id + "번 게시물이 삭제되었습니다.");
-		req.setAttribute("replaceUrl", String.format("list?boardId=%d", article.boardId));
+		req.setAttribute("replaceUrl", String.format("list?boardId=%d", boardId));
 		return "common/redirect";
 	}
 

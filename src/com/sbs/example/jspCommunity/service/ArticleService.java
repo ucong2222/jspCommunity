@@ -31,10 +31,6 @@ public class ArticleService {
 		return articleDao.write(args);
 	}
 
-	public Article getArticleByid(int id) {
-		return articleDao.getArticleByid(id);
-	}
-
 	public int modify(Map<String, Object> args) {
 		return articleDao.modify(args);
 	}

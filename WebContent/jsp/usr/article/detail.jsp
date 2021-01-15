@@ -39,12 +39,9 @@ Article article = (Article) request.getAttribute("article");
 	<hr />
 	
 	<div>
-		<a href="modify?id=<%=article.id %>
-		">게시물 수정</a>
-		<a href="doDelete?id=<%=article.id %>
-		">게시물 삭제</a>
-		<a href="list?boardId=<%=article.boardId %>
-		">리스트로 이동</a>
+		<a href="list?boardId=<%=article.boardId %>">리스트로 이동</a>
+		<a href="modify?id=<%=article.id %>">수정</a>
+		<a onclick="if (confirm('정말 삭제 하시겠습니까?') == false){ return false;}" href="doDelete?id=<%=article.id %>">삭제</a>
 	</div>
 
 </body> 
