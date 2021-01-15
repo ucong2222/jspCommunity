@@ -3,10 +3,11 @@
 <%@ page import="java.util.Map"%>
 <%@ page import="java.util.List"%>
 <%@ page import="com.sbs.example.jspCommunity.dto.Article"%>
+<%@ page import="com.sbs.example.jspCommunity.dto.Board"%>
 
 <%
 Article article = (Article) request.getAttribute("article");
-
+Board board = (Board) request.getAttribute("board");
 %>
 <!DOCTYPE html>
 <html lang="ko">

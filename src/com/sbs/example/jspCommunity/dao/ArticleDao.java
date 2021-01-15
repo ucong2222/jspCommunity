@@ -107,8 +107,22 @@ public class ArticleDao {
 		SecSql sql = new SecSql();
 		sql.append("UPDATE article");
 		sql.append("SET updateDate = NOW()");
-		sql.append(",title = ?", args.get("title"));
-		sql.append(",body = ?", args.get("body"));
+		
+		boolean needToUpdate = false;
+		
+		if ( args.get("title") != null ) {
+			needToUpdate = true;
+			sql.append(",title = ?", args.get("title"));			
+		}
+		if ( args.get("body") != null ) {
+			needToUpdate = true;
+			sql.append(",body = ?", args.get("body"));			
+		}
+		
+		if(needToUpdate == false) {
+			return 0;
+		}
+		
 		sql.append("WHERE id = ?", args.get("id"));
 
 		return MysqlUtil.update(sql);
