@@ -13,7 +13,7 @@ String pageTitle = board.getName() + " 게시물 리스트";
 	<h1><%=pageTitle%></h1>
 	
 	<div>
-		<a href="write?boardId=${param.boardId} }">게시물 작성</a>
+		<a href="write?boardId=${param.boardId}">게시물 작성</a>
 	</div>
 	<% 
 	for(Article article : articles){
