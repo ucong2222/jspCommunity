@@ -1,16 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ page import="java.util.Map"%>
-<%@ page import="java.util.List"%>
-<%@ page import="com.sbs.example.jspCommunity.dto.Article"%>
-<%@ page import="com.sbs.example.jspCommunity.dto.Board"%>
-<%
-Board board = (Board) request.getAttribute("board");
-String pageTitle = "게시물 상세페이지";
-%>
-<%@ include file="../../part/head.jspf" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-	<h1><%=pageTitle%></h1>
+<c:set var="pageTitle" value="${board.name} 게시물 상세 페이지"/>
+<%@ include file="../../part/head.jspf" %>
+	<h1>${pageTitle}</h1>
 	<div>
 		번호 : 
 		${article.id}

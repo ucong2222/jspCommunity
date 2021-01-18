@@ -1,7 +1,6 @@
 package com.sbs.example.jspCommunity.servlet;
 
 import java.io.IOException;
-import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,8 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 import com.sbs.example.jspCommunity.container.Container;
 import com.sbs.example.jspCommunity.controller.usr.ArticleController;
 import com.sbs.example.jspCommunity.controller.usr.MemberController;
-import com.sbs.example.jspCommunity.dto.Article;
-import com.sbs.example.jspCommunity.service.ArticleService;
 import com.sbs.example.mysqlutil.MysqlUtil;
 
 @WebServlet("/usr/*")

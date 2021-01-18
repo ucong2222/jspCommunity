@@ -1,13 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ page import="com.sbs.example.jspCommunity.dto.Article"%>
-<%@ page import="com.sbs.example.jspCommunity.dto.Board"%>
-<%
-Board board = (Board) request.getAttribute("board");
-String pageTitle =board.getName() + " 게시물 수정페이지";
-%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
+<c:set var="pageTitle" value="${board.name} 게시물 수정"/>
 <%@ include file="../../part/head.jspf" %>
-	<h1><%=pageTitle%></h1>
+	<h1>${pageTitle}</h1>
 	<div>
 		<form action="doModify" method="POST">
 			<input type="hidden" name="id" value="${article.id}"/>
