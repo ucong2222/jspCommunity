@@ -3,13 +3,13 @@
 <%@ page import="com.sbs.example.jspCommunity.dto.Board"%>
 <%
 Board board = (Board) request.getAttribute("board");
-String pageTitle = board.name +" 게시물 작성페이지";
+String pageTitle = board.getName() +" 게시물 작성페이지";
 %>
 <%@ include file="../../part/head.jspf" %>
 	<h1><%=pageTitle%></h1>
 	<div>
 		<form action="doWrite" method="POST">
-			<input type="hidden" name="boardId" value="<%=board.id%>"/>
+			<input type="hidden" name="boardId" value="${board.id}"/>
 			<input type="hidden" name="memberId" value="1"/>
 			<hr />
 			<div>
