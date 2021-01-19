@@ -92,4 +92,13 @@ public class UsrMemberController {
 		return "common/redirect";
 	}
 
+	public String doLogout(HttpServletRequest req, HttpServletResponse resp) {
+		HttpSession session = req.getSession();
+		session.removeAttribute("loginedMemberId");
+		
+		req.setAttribute("alertMsg", "로그아웃 되었습니다.");
+		req.setAttribute("replaceUrl", "../home/main");
+		return "common/redirect";
+	}
+
 }
