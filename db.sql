@@ -7,11 +7,11 @@ CREATE TABLE `member`(
     id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
     regDate DATETIME NOT NULL,
     updateDate DATETIME NOT NULL,
+    loginId CHAR(50) NOT NULL UNIQUE,
+    loginPw VARCHAR(200) NOT NULL,
     `name` CHAR(50) NOT NULL,
     `nickname` CHAR(50) NOT NULL,
     `email` VARCHAR(100) NOT NULL,
-    loginId CHAR(50) NOT NULL UNIQUE,
-    loginPw VARCHAR(200) NOT NULL,
     cellphoneNo char(20) NOT NULL,
     authLevel TINYINT(1) UNSIGNED NOT NULL DEFAULT 2 COMMENT '0=탈퇴/1=로그인정지/2=일반/3=인증된/4=관리자'
 );
@@ -120,3 +120,7 @@ memberId = 2,
 boardId = 1,
 title = '제목5',
 `body` = '내용5'; 
+
+# 칼럼 순서 재정렬
+ALTER TABLE `member` CHANGE loginId loginId CHAR(50) NOT NULL AFTER updateDate,
+                     CHANGE loginPw loginPw VARCHAR(200) NOT NULL AFTER loginId;
