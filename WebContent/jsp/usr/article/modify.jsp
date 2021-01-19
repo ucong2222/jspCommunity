@@ -8,7 +8,6 @@
 	<div>
 		<form action="doModify" method="POST">
 			<input type="hidden" name="id" value="${article.id}"/>
-			<input type="hidden" name="memberId" value="1"/>
 			<hr />
 			<div>
 				<div>제목</div>
