@@ -12,7 +12,7 @@ CREATE TABLE `member`(
     `name` CHAR(50) NOT NULL,
     `nickname` CHAR(50) NOT NULL,
     `email` VARCHAR(100) NOT NULL,
-    cellphoneNo char(20) NOT NULL,
+    cellphoneNo CHAR(20) NOT NULL,
     authLevel TINYINT(1) UNSIGNED NOT NULL DEFAULT 2 COMMENT '0=탈퇴/1=로그인정지/2=일반/3=인증된/4=관리자'
 );
 
@@ -23,6 +23,7 @@ SET regDate = NOW(),
     `name` = "김민수",
     `nickname` = "강바람",
     `email` = "dnjdn21@naver.com",
+    cellphoneNo=01012341234,
     loginId = "user1",
     loginPw = "user1";
     
@@ -33,6 +34,7 @@ SET regDate = NOW(),
     `name` = "김수연",
     `nickname` = "콧노래",
     `email` = "dnjdn21@naver.com",
+    cellphoneNo=01012341234,
     loginId = "user2",
     loginPw = "user2";
 
