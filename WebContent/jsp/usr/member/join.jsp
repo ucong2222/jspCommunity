@@ -78,7 +78,7 @@
 
 			if (form.cellphoneNo.value.length == 0) {
 				alert('전화번호를 입력해주세요.');
-				form.loginId.focus();
+				form.cellphoneNo.focus();
 
 				return;
 			}
