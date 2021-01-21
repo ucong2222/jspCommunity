@@ -29,7 +29,9 @@
 	
 	<div>
 		<a href="list?boardId=${article.boardId}">리스트로 이동</a>
+		<c:if test="${sessionScope.loginedMemberId eq article.memberId}">
 		<a href="modify?id=${article.id}">수정</a>
 		<a onclick="if (confirm('정말 삭제 하시겠습니까?') == false){ return false;}" href="doDelete?id=${article.id}">삭제</a>
+		</c:if>
 	</div>
 <%@ include file="../../part/foot.jspf" %>

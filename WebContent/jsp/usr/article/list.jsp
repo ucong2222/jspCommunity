@@ -7,7 +7,9 @@
 <h1>${pageTitle}</h1>
 
 <div>
+	<c:if test="${sessionScope.loginedMemberId > 0}">
 	<a href="write?boardId=${param.boardId}">게시물 작성</a>
+	</c:if>
 </div>
 
 <c:forEach var="article" items="${articles}">
