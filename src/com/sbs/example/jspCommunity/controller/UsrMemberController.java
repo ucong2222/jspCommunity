@@ -157,11 +157,14 @@ public class UsrMemberController {
 		if (member != null) {
 			resultCode = "F-1";
 			msg = "이미 사용중인 로그인아이디 입니다.";
+		} else if (loginId.length() == 0) {
+			resultCode = "F-2";
+			msg = "로그인 아이디를 입력해주세요.";
 		} else {
 			resultCode = "S-1";
 			msg = "사용가능한 로그인아이디 입니다.";
 		}
-		
+
 		rs.put("resultCode", resultCode);
 		rs.put("msg", msg);
 		rs.put("loginId", loginId);
