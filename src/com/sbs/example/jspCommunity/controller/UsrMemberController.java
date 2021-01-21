@@ -58,7 +58,8 @@ public class UsrMemberController {
 		String cellphoneNo = req.getParameter("cellphoneNo");
 
 		Member oldMember = memberService.getMemberByLoginId(loginId);
-
+		
+		// 이중체크 : 우회할방법이 많기 때문에
 		if (oldMember != null) {
 			req.setAttribute("alertMsg", "해당 로그인 아이디는 이미 사용중입니다.");
 			req.setAttribute("historyBack", true);
@@ -141,6 +142,23 @@ public class UsrMemberController {
 		req.setAttribute("alertMsg", "로그아웃 되었습니다.");
 		req.setAttribute("replaceUrl", "../home/main");
 		return "common/redirect";
+	}
+
+	public String getLoginIdDup(HttpServletRequest req, HttpServletResponse resp) {
+		String loginId = req.getParameter("loginId");
+
+		Member member = memberService.getMemberByLoginId(loginId);
+
+		String data = "";
+
+		if (member != null) {
+			data = "No";
+		} else {
+			data = "Yes";
+		}
+
+		req.setAttribute("data", data);
+		return "common/pure";
 	}
 
 }
