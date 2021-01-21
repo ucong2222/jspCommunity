@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 import com.sbs.example.jspCommunity.container.Container;
 import com.sbs.example.jspCommunity.dto.Member;
 import com.sbs.example.jspCommunity.service.MemberService;
+import com.sbs.example.util.Util;
 
 public class UsrMemberController {
 	private MemberService memberService;
@@ -58,7 +59,7 @@ public class UsrMemberController {
 		String cellphoneNo = req.getParameter("cellphoneNo");
 
 		Member oldMember = memberService.getMemberByLoginId(loginId);
-		
+
 		// 이중체크 : 우회할방법이 많기 때문에
 		if (oldMember != null) {
 			req.setAttribute("alertMsg", "해당 로그인 아이디는 이미 사용중입니다.");
@@ -149,15 +150,23 @@ public class UsrMemberController {
 
 		Member member = memberService.getMemberByLoginId(loginId);
 
-		String data = "";
+		Map<String, Object> rs = new HashMap<>();
 
+		String resultCode = null;
+		String msg = null;
 		if (member != null) {
-			data = "No";
+			resultCode = "F-1";
+			msg = "이미 사용중인 로그인아이디 입니다.";
 		} else {
-			data = "Yes";
+			resultCode = "S-1";
+			msg = "사용가능한 로그인아이디 입니다.";
 		}
+		
+		rs.put("resultCode", resultCode);
+		rs.put("msg", msg);
+		rs.put("loginId", loginId);
 
-		req.setAttribute("data", data);
+		req.setAttribute("data", Util.getJsonText(rs));
 		return "common/pure";
 	}
 

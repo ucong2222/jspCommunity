@@ -23,15 +23,14 @@
 					loginId
 				},
 				function(data){
-					if ( data == "Yes"){
-						alert('해당 로그인 아이디는 사용가능합니다.');
-						DoJoinForm__checkedLoginId = loginId;
+					if ( data.msg ){
+						alert(data.msg);
 					}
-					else {
-						alert('해당 로그인 아이디는 이미 사용중입니다.');	
+					if ( data.resultCode.substr(0, 2) == "S-"){
+						DoJoinForm__checkedLoginId = data.loginId;
 					}
 				},
-				"html"
+				"json"
 			);
 		}
 
