@@ -1,5 +1,7 @@
 package com.sbs.example.jspCommunity.service;
 
+import com.sbs.example.util.Util;
+
 public class EmailService {
 	private String gmailId;
 	private String gmailPw;
@@ -15,5 +17,9 @@ public class EmailService {
 		System.out.println("실행잘됨");
 		System.out.println(gmailId);
 		System.out.println(gmailPw);
+	}
+
+	public int send(String to, String title, String body) {
+		return Util.send(gmailId, gmailPw, from, fromName, to, title, body);
 	}
 }
