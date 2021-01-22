@@ -29,23 +29,10 @@ public class UsrMemberController {
 	}
 
 	public String showJoin(HttpServletRequest req, HttpServletResponse resp) {
-
-		if ((boolean) req.getAttribute("isLogined")) {
-			req.setAttribute("alertMsg", "로그아웃 후 진행해주세요.");
-			req.setAttribute("historyBack", true);
-			return "common/redirect";
-		}
-
 		return "usr/member/join";
 	}
 
 	public String doJoin(HttpServletRequest req, HttpServletResponse resp) {
-
-		if ((boolean) req.getAttribute("isLogined")) {
-			req.setAttribute("alertMsg", "로그아웃 후 진행해주세요.");
-			req.setAttribute("historyBack", true);
-			return "common/redirect";
-		}
 
 		String loginId = req.getParameter("loginId");
 		String loginPw = req.getParameter("loginPw");
@@ -79,23 +66,11 @@ public class UsrMemberController {
 	}
 
 	public String showLogin(HttpServletRequest req, HttpServletResponse resp) {
-
-		if ((boolean) req.getAttribute("isLogined")) {
-			req.setAttribute("alertMsg", "로그아웃 후 진행해주세요.");
-			req.setAttribute("historyBack", true);
-			return "common/redirect";
-		}
-
 		return "usr/member/login";
 	}
 
 	public String doLogin(HttpServletRequest req, HttpServletResponse resp) {
 
-		if ((boolean) req.getAttribute("isLogined")) {
-			req.setAttribute("alertMsg", "로그아웃 후 진행해주세요.");
-			req.setAttribute("historyBack", true);
-			return "common/redirect";
-		}
 		String loginId = req.getParameter("loginId");
 		String loginPw = req.getParameter("loginPw");
 
@@ -123,12 +98,6 @@ public class UsrMemberController {
 
 	public String doLogout(HttpServletRequest req, HttpServletResponse resp) {
 
-		if ((boolean) req.getAttribute("isLogined") == false) {
-			req.setAttribute("alertMsg", "이미 로그아웃 상태입니다.");
-			req.setAttribute("historyBack", true);
-			return "common/redirect";
-		}
-
 		HttpSession session = req.getSession();
 		session.removeAttribute("loginedMemberId");
 
@@ -138,6 +107,7 @@ public class UsrMemberController {
 	}
 
 	public String getLoginIdDup(HttpServletRequest req, HttpServletResponse resp) {
+
 		String loginId = req.getParameter("loginId");
 
 		Member member = memberService.getMemberByLoginId(loginId);
