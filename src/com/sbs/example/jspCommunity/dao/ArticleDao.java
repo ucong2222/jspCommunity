@@ -31,11 +31,11 @@ public class ArticleDao {
 
 		if (searchKeyword != null) {
 			if (searchKeywordType == null || searchKeywordType.equals("title")) {
-				sql.append("AND A.title LIKE CONCAT('%', ? '%')", searchKeyword);
+				sql.append("AND A.title LIKE CONCAT('%', ? , '%')", searchKeyword);
 			} else if (searchKeywordType.equals("body")) {
-				sql.append("AND A.body LIKE CONCAT('%', ? '%')", searchKeyword);
+				sql.append("AND A.body LIKE CONCAT('%', ? , '%')", searchKeyword);
 			} else if (searchKeywordType.equals("titleAndBody")) {
-				sql.append("AND (A.title LIKE CONCAT('%', ? '%') OR A.body LIKE CONCAT('%', ? '%'))", searchKeyword, searchKeyword);
+				sql.append("AND (A.title LIKE CONCAT('%', ? , '%') OR A.body LIKE CONCAT('%', ? '%'))", searchKeyword, searchKeyword);
 			}
 		}
 
@@ -158,13 +158,14 @@ public class ArticleDao {
 		if (boardId != 0) {
 			sql.append("AND A.boardId=?", boardId);
 		}
+		
 		if (searchKeyword != null) {
 			if (searchKeywordType == null || searchKeywordType.equals("title")) {
-				sql.append("AND A.title LIKE CONCAT('%', ? '%')", searchKeyword);
+				sql.append("AND A.title LIKE CONCAT('%', ? , '%')", searchKeyword);
 			} else if (searchKeywordType.equals("body")) {
-				sql.append("AND A.body LIKE CONCAT('%', ? '%')", searchKeyword);
+				sql.append("AND A.body LIKE CONCAT('%', ? , '%')", searchKeyword);
 			} else if (searchKeywordType.equals("titleAndBody")) {
-				sql.append("AND (A.title LIKE CONCAT('%', ? '%') OR A.body LIKE CONCAT('%', ? '%'))", searchKeyword, searchKeyword);
+				sql.append("AND (A.title LIKE CONCAT('%', ? , '%') OR A.body LIKE CONCAT('%', ? '%'))", searchKeyword, searchKeyword);
 			}
 		}
 
