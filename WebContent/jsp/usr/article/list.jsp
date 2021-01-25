@@ -12,6 +12,10 @@
 	</c:if>
 </div>
 
+<div>
+	총 게시물 수 : ${totalCount}
+</div>
+
 <c:forEach var="article" items="${articles}">
 	<div>
 		번호 :

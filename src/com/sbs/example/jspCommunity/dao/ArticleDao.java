@@ -107,22 +107,22 @@ public class ArticleDao {
 		SecSql sql = new SecSql();
 		sql.append("UPDATE article");
 		sql.append("SET updateDate = NOW()");
-		
+
 		boolean needToUpdate = false;
-		
-		if ( args.get("title") != null ) {
+
+		if (args.get("title") != null) {
 			needToUpdate = true;
-			sql.append(",title = ?", args.get("title"));			
+			sql.append(",title = ?", args.get("title"));
 		}
-		if ( args.get("body") != null ) {
+		if (args.get("body") != null) {
 			needToUpdate = true;
-			sql.append(",body = ?", args.get("body"));			
+			sql.append(",body = ?", args.get("body"));
 		}
-		
-		if(needToUpdate == false) {
+
+		if (needToUpdate == false) {
 			return 0;
 		}
-		
+
 		sql.append("WHERE id = ?", args.get("id"));
 
 		return MysqlUtil.update(sql);
@@ -134,5 +134,17 @@ public class ArticleDao {
 		sql.append("WHERE id = ?", id);
 
 		return MysqlUtil.delete(sql);
+	}
+
+	public int getArticlesCountByBoardId(int boardId) {
+		SecSql sql = new SecSql();
+		sql.append("SELECT COUNT(*) AS cnt");
+		sql.append("FROM article AS A");
+		if (boardId != 0) {
+			sql.append("WHERE A.boardId=?", boardId);
+		}
+
+		return MysqlUtil.selectRowIntValue(sql);
+
 	}
 }
