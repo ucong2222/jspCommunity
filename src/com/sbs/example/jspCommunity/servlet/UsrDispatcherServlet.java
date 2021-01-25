@@ -38,6 +38,10 @@ public class UsrDispatcherServlet extends DispatcherServlet {
 				jspPath = memberController.doLogout(req, resp);
 			} else if (actionMethodName.equals("getLoginIdDup")) {
 				jspPath = memberController.getLoginIdDup(req, resp);
+			} else if (actionMethodName.equals("findLoginId")) {
+				jspPath = memberController.showFindLoginId(req, resp);
+			} else if (actionMethodName.equals("doFindLoginId")) {
+				jspPath = memberController.doFindLoginId(req, resp);
 			}
 		} else if (controllerName.equals("article")) {
 			UsrArticleController articleController = Container.articleController;
