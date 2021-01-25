@@ -144,7 +144,7 @@ public class UsrMemberController {
 		String email = req.getParameter("email");
 
 		Member member = memberService.getMemberByNameAndEmail(name, email);
-		
+
 		if (member == null) {
 			req.setAttribute("alertMsg", "일치하는 회원이 존재하지 않습니다.");
 			req.setAttribute("historyBack", true);
@@ -165,22 +165,31 @@ public class UsrMemberController {
 		String email = req.getParameter("email");
 
 		Member member = memberService.getMemberByLoginId(loginId);
-		
+
 		if (member == null) {
 			req.setAttribute("alertMsg", "일치하는 회원이 존재하지 않습니다.");
 			req.setAttribute("historyBack", true);
 			return "common/redirect";
 		}
-		
-		if (member.getEmail().equals(email)==false) {
+
+		if (member.getEmail().equals(email) == false) {
 			req.setAttribute("alertMsg", "회원의 이메일주소를 정확히 입력해주세요.");
 			req.setAttribute("historyBack", true);
 			return "common/redirect";
 		}
-		
-		memberService.sendTempLoginPwToEmail(member);
-		
-		req.setAttribute("alertMsg", String.format("고객님의 새 임시 패스워드는 %s (으)로 발송되었습니다.", member.getEmail()));
+
+		Map<String, Object> sendTempLoginPwToEmailRs = memberService.sendTempLoginPwToEmail(member);
+
+		String resultCode = (String) sendTempLoginPwToEmailRs.get("resultCode");
+		String resultMsg = (String) sendTempLoginPwToEmailRs.get("msg");
+
+		if (resultCode.startsWith("F-")) {
+			req.setAttribute("alertMsg", resultMsg);
+			req.setAttribute("historyBack", true);
+			return "common/redirect";
+		}
+
+		req.setAttribute("alertMsg", resultMsg);
 		req.setAttribute("replaceUrl", "../member/login");
 		return "common/redirect";
 	}
