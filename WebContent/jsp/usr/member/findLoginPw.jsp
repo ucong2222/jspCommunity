@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
-<c:set var="pageTitle" value="로그인아이디찾기" />
+<c:set var="pageTitle" value="로그인비밀번호찾기" />
 <%@ include file="../../part/head.jspf"%>
 <h1>${pageTitle}</h1>
 
@@ -11,18 +11,18 @@
 
 <div>
 	<script>
-	let DoFindLoginIdForm__submited = false;
-	function DoFindLoginIdForm__submit(form) {
-		if ( DoFindLoginIdForm__submited ) {
+	let DoFindLoginPwForm__submited = false;
+	function DoFindLoginPwForm__submit(form) {
+		if ( DoFindLoginPwForm__submited ) {
 			alert('처리중입니다.');
 			return;
 		}
 	
-		form.name.value = form.name.value.trim();
+		form.loginId.value = form.loginId.value.trim();
 	
-		if ( form.name.value.length == 0 ) {
-			alert('이름을 입력해주세요.');
-			form.name.focus();
+		if ( form.loginId.value.length == 0 ) {
+			alert('로그인아이디를 입력해주세요.');
+			form.loginId.focus();
 			
 			return;
 		}
@@ -37,16 +37,16 @@
 		}
 				
 		form.submit();
-		DoFindLoginIdForm__submited = true;
+		DoFindLoginPwForm__submited = true;
 	}
 	</script>
-	<form action="doFindLoginId" method="POST" onsubmit="DoFindLoginIdForm__submit(this); return false;">
+	<form action="doFindLoginPw" method="POST" onsubmit="DoFindLoginPwForm__submit(this); return false;">
 		<hr />
 		<div>
-			<div>이름</div>
+			<div>로그인아이디</div>
 			<div>
-				<input name="name" type="text" maxlength="50"
-					placeholder="이름을 입력해주세요." />
+				<input name="loginId" type="text" maxlength="50"
+					placeholder="로그인아이디를 입력해주세요." />
 			</div>
 		</div>
 
@@ -63,9 +63,9 @@
 		<hr />
 
 		<div>
-			<div>로그인아이디 찾기</div>
+			<div>로그인비밀번호 찾기</div>
 			<div>
-				<input type="submit" value="로그인아이디 찾기" />
+				<input type="submit" value="로그인비밀번호 찾기" />
 				<button type="button" onclick="history.back();">뒤로가기</button>
 			</div>
 		</div>

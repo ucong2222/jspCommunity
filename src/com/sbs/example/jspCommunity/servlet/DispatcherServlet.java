@@ -117,6 +117,8 @@ public abstract class DispatcherServlet extends HttpServlet {
 		needToLogoutActionUrls.add("/usr/member/doJoin");
 		needToLogoutActionUrls.add("/usr/member/findLoginId");
 		needToLogoutActionUrls.add("/usr/member/doFindLoginId");
+		needToLogoutActionUrls.add("/usr/member/findLoginPw");
+		needToLogoutActionUrls.add("/usr/member/doFindLoginPw");
 
 		if (needToLogoutActionUrls.contains(actionUrl)) {
 			if ((boolean) req.getAttribute("isLogined")) {
