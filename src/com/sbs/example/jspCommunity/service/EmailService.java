@@ -14,9 +14,6 @@ public class EmailService {
 		this.from = from;
 		this.fromName = fromName;
 
-		System.out.println("실행잘됨");
-		System.out.println(gmailId);
-		System.out.println(gmailPw);
 	}
 
 	public int send(String to, String title, String body) {

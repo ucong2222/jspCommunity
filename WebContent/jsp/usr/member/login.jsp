@@ -6,6 +6,9 @@
 <%@ include file="../../part/head.jspf"%>
 <h1>${pageTitle}</h1>
 
+<!-- js-sha256 암호화 라이브러리 -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/js-sha256/0.9.0/sha256.min.js"></script>
+
 <div>
 	<script>
 		let DoLoginForm__submited = false;
@@ -33,11 +36,16 @@
 				return;
 			}
 
+			form.loginPwReal.value= sha256(form.loginPw.value);
+			form.loginPw.value="";
+			form.loginPwConfirm.value="";
+
 			form.submit();
 			DoLoginForm__submited=true;
 		}
 	</script>
 	<form action="doLogin" method="POST" onsubmit="DoLoginForm__submit(this); return false;">
+		<input type="hidden" name="loginPwReal" />
 		<hr />
 		<div>
 			<div>로그인 아이디</div>

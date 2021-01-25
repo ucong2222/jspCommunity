@@ -6,6 +6,9 @@
 <%@ include file="../../part/head.jspf"%>
 <h1>${pageTitle}</h1>
 
+<!-- js-sha256 암호화 라이브러리 -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/js-sha256/0.9.0/sha256.min.js"></script>
+
 <div>
 	<script>
 		let DoJoinForm__submited = false;
@@ -115,11 +118,16 @@
 				return;
 			}
 
+			form.loginPwReal.value= sha256(form.loginPw.value);
+			form.loginPw.value="";
+			form.loginPwConfirm.value="";
+
 			form.submit();
 			DoJoinForm__submited=true;
 		}
 	</script>
 	<form action="doJoin" method="POST" onsubmit="DoJoinForm__submit(this); return false;">
+		<input type="hidden" name="loginPwReal" />
 		<hr />
 		<div>
 			<div>로그인 아이디</div>
@@ -173,7 +181,7 @@
 		<div>
 			<div>전화번호</div>
 			<div>
-				<input name="cellphoneNo" type="number" maxlength="100"
+				<input name="cellphoneNo" type="tel" maxlength="100"
 					placeholder="전화번호를 입력해주세요." />
 			</div>
 		</div>
