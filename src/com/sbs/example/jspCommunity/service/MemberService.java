@@ -8,6 +8,7 @@ import com.sbs.example.jspCommunity.App;
 import com.sbs.example.jspCommunity.container.Container;
 import com.sbs.example.jspCommunity.dao.MemberDao;
 import com.sbs.example.jspCommunity.dto.Member;
+import com.sbs.example.jspCommunity.dto.ResultData;
 import com.sbs.example.util.Util;
 
 public class MemberService {
@@ -39,7 +40,7 @@ public class MemberService {
 		return memberDao.getMemberByNameAndEmail(name, email);
 	}
 
-	public Map<String, Object> sendTempLoginPwToEmail(Member actor) {
+	public ResultData sendTempLoginPwToEmail(Member actor) {
 		// 메일 제목과 내용 만들기
 		String siteName = App.getSite();
 		String siteLoginUrl = App.getLoginUrl();
@@ -48,23 +49,17 @@ public class MemberService {
 		String body = "<h1>임시 패스워드 : " + tempPassword + "</h1>";
 		body += "<a href=\"" + siteLoginUrl + "\" target=\"_blank\">로그인 하러가기</a>";
 
-		Map<String, Object> rs = new HashMap<>();
-
 		// 메일 발송
 		int sendRs = emailService.send(actor.getEmail(), title, body);
 
-		if (sendRs == 1) {
-			rs.put("resultCode", "S-1");
-			rs.put("msg", String.format("고객님의 새 임시 패스워드는 %s (으)로 발송되었습니다.", actor.getEmail()));
-
-			// 고객의 패스워드를 방금 생성한 임시패스워드로 변경
-			setTempPassword(actor, tempPassword);
-		} else {
-			rs.put("resultCode", "F-1");
-			rs.put("msg", "메일발송에 실패하였습니다.");
+		if (sendRs != 1) {
+			return new ResultData("F-1", "메일발송에 실패하였습니다.");
 		}
 
-		return rs;
+		// 고객의 패스워드를 방금 생성한 임시패스워드로 변경
+		setTempPassword(actor, tempPassword);
+
+		return new ResultData("S-1", String.format("고객님의 새 임시 패스워드는 %s (으)로 발송되었습니다.", actor.getEmail()));
 	}
 
 	private void setTempPassword(Member actor, String tempPassword) {
