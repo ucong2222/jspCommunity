@@ -10,7 +10,7 @@ import com.sbs.example.mysqlutil.MysqlUtil;
 import com.sbs.example.mysqlutil.SecSql;
 
 public class ArticleDao {
-	public List<Article> getForPrintArticlesByBoardId(int boardId, String searchKeyword, String searchKeywordType) {
+	public List<Article> getForPrintArticlesByBoardId(int boardId, int limitStart, int limitCount, String searchKeyword, String searchKeywordType) {
 		List<Article> articles = new ArrayList<>();
 
 		SecSql sql = new SecSql();
@@ -40,6 +40,10 @@ public class ArticleDao {
 		}
 
 		sql.append("ORDER BY A.id DESC");
+
+		if (limitCount != -1) {
+			sql.append("LIMIT ?,?", limitStart, limitCount);
+		}
 
 		List<Map<String, Object>> articleMapList = MysqlUtil.selectRows(sql);
 
@@ -158,7 +162,7 @@ public class ArticleDao {
 		if (boardId != 0) {
 			sql.append("AND A.boardId=?", boardId);
 		}
-		
+
 		if (searchKeyword != null) {
 			if (searchKeywordType == null || searchKeywordType.equals("title")) {
 				sql.append("AND A.title LIKE CONCAT('%', ? , '%')", searchKeyword);
