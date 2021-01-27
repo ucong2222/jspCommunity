@@ -126,3 +126,7 @@ title = '제목5',
 # 칼럼 순서 재정렬
 ALTER TABLE `member` CHANGE loginId loginId CHAR(50) NOT NULL AFTER updateDate,
                      CHANGE loginPw loginPw VARCHAR(200) NOT NULL AFTER loginId;
+
+# 기존회원의 비번을 암호화
+UPDATE `member`
+SET loginPw = SHA2(loginPw, 256);
