@@ -33,7 +33,7 @@
 			DoSearchForm__submited = true;
 		}
 	</script>
-	<form action="" onsubmit="DoSearchForm__submit(this); return false;">
+	<form onsubmit="DoSearchForm__submit(this); return false;">
 		<input type="hidden" name="boardId" value="${param.boardId}" />
 		
 		<select name="searchKeywordType">
@@ -75,4 +75,45 @@
 		<hr />
 	</div>
 </c:forEach>
+
+<style>
+	.red {
+		color:red;
+	}
+</style>
+
+<div class="con">
+	<c:if test="${pageBoxStartBeforeBtnNeedToShow}">
+		<c:set var="aUrl" value="?page=1&boardId=${param.boardId}&searchKeywordType=${param.searchKeywordType}&searchKeyword=${param.searchKeyword}" />
+		<a href="${aUrl}">◀◀</a>
+	</c:if>
+	<c:if test="${pageBoxStartBeforeBtnNeedToShow}">
+		<c:set var="aUrl" value="?page=${pageBoxStartBeforePage}&boardId=${param.boardId}&searchKeywordType=${param.searchKeywordType}&searchKeyword=${param.searchKeyword}" />
+		<a href="${aUrl}">◀</a>
+	</c:if>
+	
+	<c:forEach var="i" begin="${pageBoxStartPage}" end="${pageBoxEndPage}" step="1">
+		<c:set var="aClass" value="${page == i ? 'red' : ''}" />
+		<c:set var="aUrl" value="?boardId=${param.boardId}&page=${i}&searchKeywordType=${param.searchKeywordType}&searchKeyword=${param.searchKeyword}" />
+		<a class="${aClass}" href=${aUrl}>${i}</a>
+	</c:forEach>
+	
+	<c:if test="${pageBoxEndAfterBtnNeedToShow}">
+		<c:set var="aUrl" value="?page=${pageBoxEndAfterPage}&boardId=${param.boardId}&searchKeywordType=${param.searchKeywordType}&searchKeyword=${param.searchKeyword}" />
+		<a href="${aUrl}">▶</a>
+	</c:if>
+	<c:if test="${pageBoxEndAfterBtnNeedToShow}">
+		<c:set var="aUrl" value="?page=${totalPage}&boardId=${param.boardId}&searchKeywordType=${param.searchKeywordType}&searchKeyword=${param.searchKeyword}" />
+		<a href="${aUrl}">▶▶</a>
+	</c:if>
+</div>
+
+<hr />
+<hr />
+<hr />
+<hr />
+<hr />
+
+
+
 <%@ include file="../../part/foot.jspf"%>
