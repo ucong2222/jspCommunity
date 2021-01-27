@@ -45,18 +45,20 @@
     <div class="left-content"></div>
     <div class="right-content">
       <div class="login-box">
-        <div class="login-box__login flex flex-ai-c  flex-jc-c">
-          <a href="../member/login">로 그 인</a>
-        </div>
-        <div class="flex flex-jc-sb login-box__option">
-          <div>
-            <a href="../member/findLoginId">아이디찾기</a>
-            <a href="../member/findLoginPw">비밀번호찾기</a>
-          </div>
-          <div>
-            <a href="../member/join">회원가입</a>  
-          </div>
-        </div>
+        <c:if test="${isLogined == false}">
+	        <div class="login-box__login flex flex-ai-c  flex-jc-c">
+	          <a href="../member/login">로 그 인</a>
+	        </div>
+	        <div class="flex flex-jc-sb login-box__option">
+	          <div>
+	            <a href="../member/findLoginId">아이디찾기</a>
+	            <a href="../member/findLoginPw">비밀번호찾기</a>
+	          </div>
+	          <div>
+	            <a href="../member/join">회원가입</a>  
+	          </div>
+	        </div>
+        </c:if>
       </div>
     </div>
   </div>
