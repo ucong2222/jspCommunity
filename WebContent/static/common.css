@@ -165,6 +165,12 @@ a {
   box-sizing: border-box;
 }
 
+.simple-logo > img {
+  height:50px;
+  widht:230px;
+  margin:40px 0;
+  box-sizing: border-box;
+}
 /* 로고 끝 */
 
 /* 탑바 시작*/
@@ -352,4 +358,50 @@ a {
 }
 
 /* 모바일 사이드 바 끝 */
+
+/* 로그인 시작*/
+.login-content input {
+  font-size: 1.1rem;
+  width: 300px;
+  height: 40px;
+  margin-top: 10px;
+}
+
+.login-content__btn-login > input {
+  font-size: 1.5rem;
+  width: 308px;
+  height:55px;
+  background-color: rgba(113, 76, 68);
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+.login-content__check-auto-login {
+  height: 35px;
+  border-bottom: solid #afafaf 1px;
+}
+
+.login-content__check-auto-login > input {
+  width: 16px;
+  height: 16px;
+}
+.login-content__check-auto-login > span {
+  font-size: 17px;
+  color: #afafaf;
+}
+
+.login-content__option {
+  height: 35px;
+}
+.login-content__option > * {
+  color: #afafaf;
+}
+.login-content__option > .txt-bar {
+  margin: 0 10px;
+}
+
+/* 로그인 끝*/
+
 /* 커스텀 끝*/
