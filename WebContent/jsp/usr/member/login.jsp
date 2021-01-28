@@ -56,13 +56,13 @@
 				<div>
 					<div>
 						<input name="loginId" type="text" maxlength="50"
-							placeholder="로그인 아이디를 입력해주세요." />
+							placeholder="아이디 입력" />
 					</div>
 				</div>
 				<div>
 					<div>
 						<input name="loginPw" type="password" maxlength="50"
-							placeholder="로그인 비밀번호를 입력해주세요." />
+							placeholder="비밀번호 입력" />
 					</div>
 				</div>
 				<div>

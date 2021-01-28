@@ -4,7 +4,6 @@
 
 <c:set var="pageTitle" value="회원가입" />
 <%@ include file="../../part/head.jspf"%>
-<h1>${pageTitle}</h1>
 
 <!-- js-sha256 암호화 라이브러리 -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/js-sha256/0.9.0/sha256.min.js"></script>
@@ -126,73 +125,74 @@
 			DoJoinForm__submited=true;
 		}
 	</script>
-	<form action="doJoin" method="POST" onsubmit="DoJoinForm__submit(this); return false;">
-		<input type="hidden" name="loginPwReal" />
-		<hr />
-		<div>
-			<div>로그인 아이디</div>
-			<div>
-				<input name="loginId" type="text" maxlength="50"
-					placeholder="로그인 아이디를 입력해주세요." />
-				<button name="btnLoginIdDupCheck" type="button" onclick="DoJoinForm__checkLoginIdDup(this);">중복체크</button>
-			</div>
+	<header class="con-min-width">
+	  <div class="con flex flex-jc-c">
+	    <div class="simple-logo">
+	      <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbJFCp5%2FbtqUODbWKTd%2F9sKe9tTCE3taxUxWAcbW11%2Fimg.jpg" alt="">
+	    </div>
+	  </div>
+	</header>
+	<div class="con-min-width content">
+  		<div class="con flex flex-jc-c join-content">
+			<form action="doJoin" method="POST" onsubmit="DoJoinForm__submit(this); return false;">
+				<input type="hidden" name="loginPwReal" />
+				<div>
+					<div>로그인 아이디</div>
+					<div class="flex flex-jc-sb flex-ai-c">
+						<input name="loginId" type="text" maxlength="50"
+								placeholder="아이디 입력" />
+						<button name="btnLoginIdDupCheck" type="button" onclick="DoJoinForm__checkLoginIdDup(this);">중복체크</button>						
+					</div>
+				</div>
+				<div>
+					<div>
+						<div>로그인 비밀번호</div>
+						<input name="loginPw" type="password" maxlength="50"
+							placeholder="비밀번호 입력" />
+					</div>
+				</div>
+				<div>
+					<div>
+						<div>로그인 비밀번호 확인</div>
+						<input name="loginPwConfirm" type="password" maxlength="50"
+							placeholder="비밀번호 확인 입력" />
+					</div>
+				</div>
+				<div>
+					<div>
+						<div>이름</div>
+						<input name="name" type="text" maxlength="50"
+							placeholder="이름 입력" />
+					</div>
+				</div>
+				<div>
+					<div>
+						<div>별명</div>
+						<input name="nickname" type="text" maxlength="50"
+							placeholder="별명 입력" />
+					</div>
+				</div>
+				<div>
+					<div>
+						<div>이메일</div>
+						<input name="email" type="email" maxlength="100"
+							placeholder="이메일 입력" />
+					</div>
+				</div>
+				<div>
+					<div>
+						<div>전화번호</div>
+						<input name="cellphoneNo" type="tel" maxlength="100"
+							placeholder="전화번호 입력" />
+					</div>
+				</div>
+				<div>
+					<div class="join-content__btn-join">
+						<input type="submit" value="가입" />
+					</div>
+				</div>
+			</form>
 		</div>
-		<hr />
-		<div>
-			<div>로그인 비밀번호</div>
-			<div>
-				<input name="loginPw" type="password" maxlength="50"
-					placeholder="로그인 비밀번호를 입력해주세요." />
-			</div>
-		</div>
-		<hr />
-		<div>
-			<div>로그인 비밀번호 확인</div>
-			<div>
-				<input name="loginPwConfirm" type="password" maxlength="50"
-					placeholder="로그인 비밀번호 확인을 입력해주세요." />
-			</div>
-		</div>
-		<hr />
-		<div>
-			<div>이름</div>
-			<div>
-				<input name="name" type="text" maxlength="50"
-					placeholder="이름을 입력해주세요." />
-			</div>
-		</div>
-		<hr />
-		<div>
-			<div>별명</div>
-			<div>
-				<input name="nickname" type="text" maxlength="50"
-					placeholder="별명을 입력해주세요." />
-			</div>
-		</div>
-		<hr />
-		<div>
-			<div>이메일</div>
-			<div>
-				<input name="email" type="email" maxlength="100"
-					placeholder="이메일을 입력해주세요." />
-			</div>
-		</div>
-		<hr />
-		<div>
-			<div>전화번호</div>
-			<div>
-				<input name="cellphoneNo" type="tel" maxlength="100"
-					placeholder="전화번호를 입력해주세요." />
-			</div>
-		</div>
-		<hr />
-		<div>
-			<div>가입</div>
-			<div>
-				<input type="submit" value="가입" />
-				<button type="button" onclick="history.back()">뒤로가기</button>
-			</div>
-		</div>
-	</form>
+	</div>
 </div>
 <%@ include file="../../part/foot.jspf"%>

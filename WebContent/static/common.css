@@ -359,6 +359,40 @@ a {
 
 /* 모바일 사이드 바 끝 */
 
+/* 회원가입 시작 */
+.join-content>form>div{
+  margin-top:10px;
+}
+.join-content input {
+  font-size: 1.1rem;
+  width: 300px;
+  height: 40px;
+  margin-top: 10px;
+}
+
+.join-content>form>div:first-of-type > div:last-child>input{
+  width: 230px;
+}
+.join-content>form>div:first-of-type > div:last-child>button{
+  width: 50px;
+  height:45px;
+  margin-top:10px;
+  background-color: rgba(113, 76, 68);
+  color:white;
+  border-radius:3px;
+}
+.join-content__btn-join > input {
+  font-size: 1.5rem;
+  width: 308px;
+  height:55px;
+  background-color: rgba(113, 76, 68);
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 20px;
+}
+/* 회원가입 끝 */
+
 /* 로그인 시작*/
 .login-content input {
   font-size: 1.1rem;
