@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.sbs.example.jspCommunity.container.Container;
+import com.sbs.example.jspCommunity.dto.Article;
+import com.sbs.example.jspCommunity.dto.Board;
 import com.sbs.example.jspCommunity.dto.Member;
 import com.sbs.example.jspCommunity.dto.ResultData;
 import com.sbs.example.jspCommunity.service.MemberService;
@@ -182,6 +184,39 @@ public class UsrMemberController {
 
 		req.setAttribute("alertMsg", sendTempLoginPwToEmailRs.getMsg());
 		req.setAttribute("replaceUrl", "../member/login");
+		return "common/redirect";
+	}
+
+	public String showModify(HttpServletRequest req, HttpServletResponse resp) {
+		return "usr/member/modify";
+	}
+
+	public String doModify(HttpServletRequest req, HttpServletResponse resp) {
+		int loginedMemberId = (int) req.getAttribute("loginedMemberId");
+		
+		String loginPw = req.getParameter("loginPwReal");
+		
+		if (loginPw != null && loginPw.length() == 0) {
+			loginPw = null;
+		}
+		
+		String name = req.getParameter("name");
+		String nickname = req.getParameter("nickname");
+		String email = req.getParameter("email");
+		String cellphoneNo = req.getParameter("cellphoneNo");
+
+		Map<String, Object> modifyParam = new HashMap<>();
+		modifyParam.put("id", loginedMemberId);
+		modifyParam.put("loginPw", loginPw);
+		modifyParam.put("name", name);
+		modifyParam.put("nickname", nickname);
+		modifyParam.put("email", email);
+		modifyParam.put("cellphoneNo", cellphoneNo);
+
+		memberService.modify(modifyParam);
+
+		req.setAttribute("alertMsg", name + "님 회원정보가 수정되었습니다.");
+		req.setAttribute("replaceUrl", "../home/main");
 		return "common/redirect";
 	}
 

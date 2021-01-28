@@ -35,7 +35,8 @@ public abstract class DispatcherServlet extends HttpServlet {
 			return;
 		}
 
-		String jspPath = doAction(req, resp, (String) doBeforeActionRs.get("controllerName"), (String) doBeforeActionRs.get("actionMethodName"));
+		String jspPath = doAction(req, resp, (String) doBeforeActionRs.get("controllerName"),
+				(String) doBeforeActionRs.get("actionMethodName"));
 
 		if (jspPath == null) {
 			resp.getWriter().append("jsp 정보가 없습니다.");
@@ -45,7 +46,8 @@ public abstract class DispatcherServlet extends HttpServlet {
 		doAfterAction(req, resp, jspPath);
 	}
 
-	private Map<String, Object> doBeforeAction(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	private Map<String, Object> doBeforeAction(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
 
 		req.setCharacterEncoding("UTF-8");
 		resp.setContentType("text/html; charset=UTF-8");
@@ -91,6 +93,8 @@ public abstract class DispatcherServlet extends HttpServlet {
 		List<String> needToLoginActionUrls = new ArrayList<>();
 
 		needToLoginActionUrls.add("/usr/member/doLogout");
+		needToLoginActionUrls.add("/usr/member/modify");
+		needToLoginActionUrls.add("/usr/member/doModify");
 		needToLoginActionUrls.add("/usr/article/write");
 		needToLoginActionUrls.add("/usr/article/doWrite");
 		needToLoginActionUrls.add("/usr/article/modify");
@@ -123,7 +127,7 @@ public abstract class DispatcherServlet extends HttpServlet {
 		if (needToLogoutActionUrls.contains(actionUrl)) {
 			if ((boolean) req.getAttribute("isLogined")) {
 				req.setAttribute("alertMsg", "로그아웃 후 진행해주세요.");
-				req.setAttribute("replaceUrl", "../home/main");
+				req.setAttribute("historyBack", true);
 
 				RequestDispatcher rd = req.getRequestDispatcher("/jsp/common/redirect.jsp");
 				rd.forward(req, resp);
@@ -140,9 +144,11 @@ public abstract class DispatcherServlet extends HttpServlet {
 		return rs;
 	}
 
-	protected abstract String doAction(HttpServletRequest req, HttpServletResponse resp, String controllerName, String actionMethodName);
+	protected abstract String doAction(HttpServletRequest req, HttpServletResponse resp, String controllerName,
+			String actionMethodName);
 
-	private void doAfterAction(HttpServletRequest req, HttpServletResponse resp, String jspPath) throws ServletException, IOException {
+	private void doAfterAction(HttpServletRequest req, HttpServletResponse resp, String jspPath)
+			throws ServletException, IOException {
 		MysqlUtil.closeConnection();
 
 		RequestDispatcher rd = req.getRequestDispatcher("/jsp/" + jspPath + ".jsp");
