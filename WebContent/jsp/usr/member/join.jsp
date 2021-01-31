@@ -3,7 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <c:set var="pageTitle" value="회원가입" />
-<%@ include file="../../part/head.jspf"%>
+<%@ include file="../../part/head2.jspf"%>
 
 <!-- js-sha256 암호화 라이브러리 -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/js-sha256/0.9.0/sha256.min.js"></script>
@@ -125,15 +125,7 @@
 			DoJoinForm__submited=true;
 		}
 	</script>
-	<header class="con-min-width">
-	  <div class="con flex flex-jc-c">
-	    <div>
-	      <a href="../home/main" class="simple-logo">
-	        <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbJFCp5%2FbtqUODbWKTd%2F9sKe9tTCE3taxUxWAcbW11%2Fimg.jpg" alt="">
-	      </a>
-	    </div>
-	  </div>
-	</header>
+
 	<div class="con-min-width content">
   		<div class="con flex flex-jc-c join-content">
 			<form action="doJoin" method="POST" onsubmit="DoJoinForm__submit(this); return false;">

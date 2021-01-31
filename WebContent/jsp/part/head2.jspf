@@ -85,31 +85,12 @@
   </nav>
 </aside>
 <!-- 모바일 사이드 바 끝-->
-	<!-- 로고바 시작 -->
-	<div class="logo-bar con-min-width">
-	  <div class="con height-100p flex flex-jc-sb flex-ai-c">
-	    <div class="logo-bar__logo height-100p">
-	      <a href="../home/main" class="logo"><img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FpcVUI%2FbtqUzu8suTk%2F3T7owEJ5tUaHKQTMKzDrtk%2Fimg.jpg" alt=""></a>
-	    </div>
-	    <div class="logo-bar__search-box flex">
-	      <input type="text">
-	      <button type="button"><i class="fas fa-search"></i></button>
-	    </div>
-	  </div>
-	</div>
-	<!-- 로고바 끝 -->
-	
-	<!-- 메뉴바 시작 -->
-	<div class="menu-bar con-min-width">
-	  <div class="con height-100p">
-	    <nav class="menu-bar__menu-box-1 height-100p">
-	      <ul class="flex height-100p">
-	        <li><a href="../home/main" class="flex flex-jc-c flex-ai-c height-100p">HOME</a></li>
-	        <li><a href="../article/list?boardId=1" class="flex flex-jc-c flex-ai-c height-100p">NOTICE</a></li>
-	        <li><a href="../article/list?boardId=3" class="flex flex-jc-c flex-ai-c height-100p">FREE</a></li>
-	        <li><a href="../article/list?boardId=2" class="flex flex-jc-c flex-ai-c height-100p">GUESTBOOK</a></li>
-	      </ul>
-	    </nav>
-	  </div>
-	</div>
-	<!-- 메뉴바 끝 -->
+<header class="con-min-width">
+  <div class="con flex flex-jc-c">
+    <div>
+      <a href="#" class="simple-logo">
+        <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbJFCp5%2FbtqUODbWKTd%2F9sKe9tTCE3taxUxWAcbW11%2Fimg.jpg" alt="">
+      </a>
+    </div>
+  </div>
+</header>

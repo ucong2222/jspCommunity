@@ -4,7 +4,6 @@
 
 <c:set var="pageTitle" value="${board.name} 게시물 수정"/>
 <%@ include file="../../part/head.jspf" %>
-	<h1>${pageTitle}</h1>
 	
 	<div>
 		<script>
@@ -43,29 +42,38 @@
 					DoModifyForm__submited = true;
 				}
 		</script>
-		<form action="doModify" method="POST" onsubmit="DoModifyForm__submit(this); return false;">
+		<!-- 게시물 작성 시작-->
+    <div class="title-bar con-min-width">
+      <h1 class="con">
+        <span><i class="fas fa-edit"></i></span>
+        <span>글수정</span>
+      </h1>
+    </div>
+
+    <div class="con-min-width article-write-box">
+      <div class="con form-box">
+        <form action="doModify" method="POST" onsubmit="DoModifyForm__submit(this); return false;">
 			<input type="hidden" name="id" value="${article.id}"/>
 			<input type="hidden" name="body" />
-			<hr />
-			<div>
-				<div>제목</div>
-				<div><input name="title" type="text" maxlength="50" placeholder="제목을 입력해주세요." value = "${article.title}"/></div>
-			</div>
-				<hr />
-			<div>
-				<div>내용</div>
-				<script type="text/x-template"></script>
- 				<div class="toast-ui-editor">${article.body}</div>
-			</div>
-				<hr />
-			<div>
-				<div>수정</div>
-				<div>
-					<input type="submit" value="수정"/>
-					<button type="button" onclick="history.back()">뒤로가기</button>
-				</div>
-			</div>
-
-		</form>
+          <div class="article-write-box__title flex flex-ai-c">
+            <div>제목</div>
+            <div><input name="title" type="text" maxlength="50" placeholder="제목을 입력해주세요." value="${article.title}" /></div>
+          </div>
+          <div class="article-write-box__body">
+            <div>내용</div>
+            <script type="text/x-template"></script>
+            <div class="toast-ui-editor">${article.body}</div>
+          </div>
+          <div>
+            <div class="article-write-box__bottom flex flex-jc-e">
+              <input type="submit" value="수정" />
+              <button type="button" onclick="history.back()">취소</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <!-- 게시물 작성 끝-->
+		
 	</div>
 <%@ include file="../../part/foot.jspf" %>

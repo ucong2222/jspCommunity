@@ -24,7 +24,7 @@ public class UsrArticleController {
 		String searchKeyword = req.getParameter("searchKeyword");
 		String searchKeywordType = req.getParameter("searchKeywordType");
 
-		int itemsInAPage = 30;
+		int itemsInAPage = 10;
 		int page = Util.getAsInt(req.getParameter("page"), 1);
 		int limitStart = (page - 1) * itemsInAPage;
 

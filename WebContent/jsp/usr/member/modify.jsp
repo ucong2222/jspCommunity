@@ -3,8 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <c:set var="pageTitle" value="회원정보수정" />
-<%@ include file="../../part/head.jspf"%>
-<h1>${pageTitle}</h1>
+<%@ include file="../../part/head2.jspf"%>
 
 <!-- js-sha256 암호화 라이브러리 -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/js-sha256/0.9.0/sha256.min.js"></script>
@@ -84,64 +83,55 @@
 			DoModifyForm__submited=true;
 		}
 	</script>
-	<form action="doModify" method="POST" onsubmit="DoModifyForm__submit(this); return false;">
+
+	<div class="con-min-width content">
+  <div class="con flex flex-jc-c modify-content">
+   <form action="doModify" method="POST" onsubmit="DoModifyForm__submit(this); return false;">
 		<input type="hidden" name="loginPwReal" />
-		<hr />
-		<div>
-			<div>로그인 비밀번호</div>
-			<div>
-				<input name="loginPw" type="password" maxlength="50"
-					placeholder="로그인 비밀번호를 입력해주세요." />
-			</div>
-		</div>
-		<hr />
-		<div>
-			<div>로그인 비밀번호 확인</div>
-			<div>
-				<input name="loginPwConfirm" type="password" maxlength="50"
-					placeholder="로그인 비밀번호 확인을 입력해주세요." />
-			</div>
-		</div>
-		<hr />
-		<div>
-			<div>이름</div>
-			<div>
-				<input name="name" type="text" maxlength="50"
-					placeholder="이름을 입력해주세요." value="${loginedMember.name}" />
-			</div>
-		</div>
-		<hr />
-		<div>
-			<div>별명</div>
-			<div>
-				<input name="nickname" type="text" maxlength="50"
-					placeholder="별명을 입력해주세요." value="${loginedMember.nickname}" />
-			</div>
-		</div>
-		<hr />
-		<div>
-			<div>이메일</div>
-			<div>
-				<input name="email" type="email" maxlength="100"
-					placeholder="이메일을 입력해주세요." value="${loginedMember.email}" />
-			</div>
-		</div>
-		<hr />
-		<div>
-			<div>전화번호</div>
-			<div>
-				<input name="cellphoneNo" type="tel" maxlength="100"
-					placeholder="전화번호를 입력해주세요." value="${loginedMember.cellphoneNo}" />
-			</div>
-		</div>
-		<hr />
-		<div>
-			<div>회원정보수정</div>
-			<div>
-				<input type="submit" value="수정" />
-				<button type="button" onclick="history.back()">뒤로가기</button>
-			</div>
-		</div>
-	</form>
+      <div>
+        <div>로그인 비밀번호</div>
+        <div>
+          <input name="loginPw" type="password" maxlength="50" placeholder="로그인 비밀번호를 입력해주세요." />
+        </div>
+      </div>
+      <div>
+        <div>로그인 비밀번호 확인</div>
+        <div>
+          <input name="loginPwConfirm" type="password" maxlength="50" placeholder="로그인 비밀번호 확인을 입력해주세요." />
+        </div>
+      </div>
+      <div>
+        <div>이름</div>
+        <div>
+          <input name="name" type="text" maxlength="50" placeholder="이름을 입력해주세요." value="${loginedMember.name}" />
+        </div>
+      </div>
+      <div>
+        <div>별명</div>
+        <div>
+          <input name="nickname" type="text" maxlength="50" placeholder="별명을 입력해주세요." value="${loginedMember.nickname}" />
+        </div>
+      </div>
+      <div>
+        <div>이메일</div>
+        <div>
+          <input name="email" type="email" maxlength="100" placeholder="이메일을 입력해주세요." value="${loginedMember.email}" />
+        </div>
+      </div>
+      <div>
+        <div>전화번호</div>
+        <div>
+          <input name="cellphoneNo" type="tel" maxlength="100" placeholder="전화번호를 입력해주세요." value="${loginedMember.cellphoneNo}"/>
+        </div>
+      </div>
+      <div>
+        <div class="modify-content__btn-join">
+          <input type="submit" value="회원정보수정" />
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
 </div>
 <%@ include file="../../part/foot.jspf"%>

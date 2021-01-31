@@ -3,7 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <c:set var="pageTitle" value="로그인" />
-<%@ include file="../../part/head.jspf"%>
+<%@ include file="../../part/head2.jspf"%>
 <!-- js-sha256 암호화 라이브러리 -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/js-sha256/0.9.0/sha256.min.js"></script>
 
@@ -43,14 +43,6 @@
 		}
 	</script>
 	<header class="con-min-width">
-	  <div class="con flex flex-jc-c">
-	    <div>
-	      <a href="../home/main" class="simple-logo">
-	        <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbJFCp5%2FbtqUODbWKTd%2F9sKe9tTCE3taxUxWAcbW11%2Fimg.jpg" alt="">
-	      </a>
-	    </div>
-	  </div>
-	</header>
 	<div class="con-min-width content">
   		<div class="con flex flex-jc-c login-content">
 			<form action="doLogin" method="POST" onsubmit="DoLoginForm__submit(this); return false;">
@@ -80,11 +72,11 @@
 			      </div>
 			      <div>
 			        <div class="login-content__option flex flex-jc-c flex-ai-c">
-			          <a href="#">아이디찾기</a>
+			          <a href="../member/findLoginId">아이디찾기</a>
 			          <span class="txt-bar">|</span>
-			          <a href="#">비밀번호찾기</a>
+			          <a href="../member/findLoginPw">비밀번호찾기</a>
 			          <span class="txt-bar">|</span>
-			          <a href="#">회원가입</a>
+			          <a href="../member/join">회원가입</a>
 			        </div>
 			      </div>
 			</form>
