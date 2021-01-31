@@ -802,9 +802,9 @@ a {
 /* 아이디/비밀번호 찾기 끝 */
 
 /*하단바 시작*/
-.bottom-bar {
-  height: 100px;
-  background-color: black;
+.bottom-bar>div{
+  height: 50px;
+  border-top:solid rgba(113, 76, 68);
 }
 /*하단바 끝*/
 

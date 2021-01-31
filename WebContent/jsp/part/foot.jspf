@@ -3,7 +3,13 @@
 	
 	</main>
   <!-- 하단바 시작 -->
-  <footer class="bottom-bar visible-md-up"></footer>
+  <footer class="bottom-bar con-min-width visible-md-up">
+    <div class="con flex flex-jc-c flex-ai-c">
+      <div class="bottom-bar__site-info">
+        COPYRIGHT Ⓒ 2020. WALWAL. ALL RIGHTS RESERVED
+      </div>
+    </div>
+  </footer>
   <!-- 하단바 끝 -->
 </div>
 </body> 
