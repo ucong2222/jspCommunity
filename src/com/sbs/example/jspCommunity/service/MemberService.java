@@ -64,13 +64,23 @@ public class MemberService {
 		return new ResultData("S-1", String.format("고객님의 새 임시 패스워드는 %s (으)로 발송되었습니다.", actor.getEmail()));
 	}
 
-	private void setTempPassword(Member actor, String tempPassword) {
+	public void setTempPassword(Member actor, String tempPassword) {
 		Map<String, Object> modifyParam = new HashMap<>();
 		modifyParam.put("id", actor.getId());
 		modifyParam.put("loginPw", Util.sha256(tempPassword));
 		modify(modifyParam);
 
-		attrService.setValue("member__" + actor.getId() + "__extra__isUsingTempPassword", "1", null);
+		setIsUsingTempPassword(actor.getId(), true);
+	}
+
+	public void setIsUsingTempPassword(int actorId, boolean use) {
+		attrService.setValue("member__" + actorId + "__extra__isUsingTempPassword", use, null);
+
+	}
+
+	public boolean getIsUsingTempPassword(int actorId) {
+		return attrService.getValueAsBoolean("member__" + actorId + "__extra__isUsingTempPassword");
+
 	}
 
 	public void modify(Map<String, Object> param) {

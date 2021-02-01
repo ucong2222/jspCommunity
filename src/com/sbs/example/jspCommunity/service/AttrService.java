@@ -69,8 +69,7 @@ public class AttrService {
 		return attrDao.remove(relTypeCode, relId, typeCode, type2Code);
 	}
 
-	public int setValue(String relTypeCode, int relId, String typeCode, String type2Code, String value,
-			String expireDate) {
+	public int setValue(String relTypeCode, int relId, String typeCode, String type2Code, String value, String expireDate) {
 		attrDao.setValue(relTypeCode, relId, typeCode, type2Code, value, expireDate);
 		Attr attr = get(relTypeCode, relId, typeCode, type2Code);
 
@@ -79,5 +78,19 @@ public class AttrService {
 		}
 
 		return -1;
+	}
+
+	public void setValue(String name, boolean value, String expireDate) {
+		setValue(name, value ? "1" : "0", expireDate);
+	}
+
+	public boolean getValueAsBoolean(String name) {
+		String value = getValue(name);
+
+		if (value == null || value.equals("1") == false) {
+			return false;
+		}
+
+		return true;
 	}
 }

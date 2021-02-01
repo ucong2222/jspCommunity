@@ -91,8 +91,18 @@ public class UsrMemberController {
 		HttpSession session = req.getSession();
 		session.setAttribute("loginedMemberId", member.getId());
 
-		req.setAttribute("alertMsg", String.format("%s님 환영합니다.", member.getNickname()));
-		req.setAttribute("replaceUrl", "../home/main");
+		boolean isUsingTempPassword = memberService.getIsUsingTempPassword(member.getId());
+
+		String alertMsg = String.format("%s님 환영합니다.", member.getNickname());
+		String replaceUrl = "../home/main";
+
+		if (isUsingTempPassword) {
+			alertMsg = String.format("%s님은 현재 임시 비밀번호를 사용중입니다. 변경 후 이용해주세요.", member.getNickname());
+			replaceUrl = "../member/modify";
+		}
+
+		req.setAttribute("alertMsg", alertMsg);
+		req.setAttribute("replaceUrl", replaceUrl);
 		return "common/redirect";
 	}
 
@@ -214,7 +224,11 @@ public class UsrMemberController {
 		memberService.modify(modifyParam);
 		String value = Container.attrService.getValue("member__" + loginedMemberId + "__extra__isUsingTempPassword");
 
-		if (value.equals("1")) {
+		if (loginPw != null) {
+			memberService.setIsUsingTempPassword(loginedMemberId, false);
+		}
+
+		if (loginPw != null || value.equals("1")) {
 			Container.attrService.remove("member__" + loginedMemberId + "__extra__isUsingTempPassword");
 		}
 
