@@ -215,7 +215,7 @@ public class UsrMemberController {
 		String value = Container.attrService.getValue("member__" + loginedMemberId + "__extra__isUsingTempPassword");
 
 		if (value.equals("1")) {
-			Container.attrService.remove("member__1__extra__isUsingTempPassword");
+			Container.attrService.remove("member__" + loginedMemberId + "__extra__isUsingTempPassword");
 		}
 
 		req.setAttribute("alertMsg", name + "님 회원정보가 수정되었습니다.");
