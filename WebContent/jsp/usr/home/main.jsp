@@ -32,7 +32,7 @@
 	        </c:if>
 	        <c:if test="${isLogined}">
 		        <div class="login-box__info flex flex-jc-sb flex-ai-c">
-		            <div class="login-box__info-nickname"><span>김유경</span>님</div>
+		            <div class="login-box__info-nickname"><span>${loginedMember.name}</span>님</div>
 		            <div class="login-box__info-btn-logout">
 		              <a href="../member/doLogout">로그아웃</a>
 		            </div>
