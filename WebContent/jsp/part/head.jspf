@@ -6,6 +6,13 @@
 <meta charset="UTF-8">
 <title>${pageTitle}</title>
 
+<!-- 반응형 필수
+<meta name="viewport" content="width=device-width,initial-scale=1">
+-->
+
+<!-- 반응형 필수 / 손가락 두번눌렀을때 확대 x -->
+<meta name="viewport" content="width=device-width, user-scalable=no" />
+
 <!-- 제이쿼리 불러오기 -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
