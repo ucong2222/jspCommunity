@@ -47,6 +47,7 @@
   		<div class="con flex flex-jc-c login-content">
 			<form action="doLogin" method="POST" onsubmit="DoLoginForm__submit(this); return false;">
 				<input type="hidden" name="loginPwReal" />
+				<input type="hidden" name="afterLoginUrl" value="${param.afterLoginUrl}" />
 				<div>
 					<div>
 						<input name="loginId" type="text" maxlength="50"
