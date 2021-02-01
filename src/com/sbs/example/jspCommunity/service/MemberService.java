@@ -14,10 +14,12 @@ import com.sbs.example.util.Util;
 public class MemberService {
 	private MemberDao memberDao;
 	private EmailService emailService;
+	private AttrService attrService;
 
 	public MemberService() {
 		memberDao = Container.memberDao;
 		emailService = Container.emailService;
+		attrService = Container.attrService;
 	}
 
 	public List<Member> getForPrintMembers() {
@@ -67,6 +69,8 @@ public class MemberService {
 		modifyParam.put("id", actor.getId());
 		modifyParam.put("loginPw", Util.sha256(tempPassword));
 		modify(modifyParam);
+
+		attrService.setValue("member__" + actor.getId() + "__extra__isUsingTempPassword", "1", null);
 	}
 
 	public void modify(Map<String, Object> param) {
