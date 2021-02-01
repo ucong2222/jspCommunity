@@ -177,6 +177,16 @@ a {
   max-width: var(--site-width);
 }
 
+/* 비밀번호 경고창 시작*/
+.pw-warning {
+  background-color:red;
+  height:50px;
+}
+.pw-warning span{
+  font-size:2rem;
+}
+/* 비밀번호 경고창 끝*/
+
 /* 바디콘텐트 시작 */
 .body{
   min-height:100vh;

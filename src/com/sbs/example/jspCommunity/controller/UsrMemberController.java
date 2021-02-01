@@ -191,13 +191,13 @@ public class UsrMemberController {
 
 	public String doModify(HttpServletRequest req, HttpServletResponse resp) {
 		int loginedMemberId = (int) req.getAttribute("loginedMemberId");
-		
+
 		String loginPw = req.getParameter("loginPwReal");
-		
+
 		if (loginPw != null && loginPw.length() == 0) {
 			loginPw = null;
 		}
-		
+
 		String name = req.getParameter("name");
 		String nickname = req.getParameter("nickname");
 		String email = req.getParameter("email");
@@ -212,6 +212,11 @@ public class UsrMemberController {
 		modifyParam.put("cellphoneNo", cellphoneNo);
 
 		memberService.modify(modifyParam);
+		String value = Container.attrService.getValue("member__" + loginedMemberId + "__extra__isUsingTempPassword");
+
+		if (value.equals("1")) {
+			Container.attrService.remove("member__1__extra__isUsingTempPassword");
+		}
 
 		req.setAttribute("alertMsg", name + "님 회원정보가 수정되었습니다.");
 		req.setAttribute("replaceUrl", "../home/main");

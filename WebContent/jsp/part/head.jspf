@@ -34,7 +34,16 @@
 
 </head>
 <body>
+
+
 <div class="body">
+	<c:if test="${needToChangePw}">
+	  <div class="pw-warning con-min-width">
+	    <div class="con flex flex-jc-c flex-ai-c height-100p">
+	      <span>비밀번호를 변경해주세요.</span>
+	    </div>
+	  </div>
+	</c:if>
 	<header class="top-bar visible-md-up">
 		<div class="con-min-width height-100p">
 			<div class="con height-100p flex flex-ai-c flex-jc-e ">
