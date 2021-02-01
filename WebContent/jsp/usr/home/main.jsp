@@ -11,7 +11,7 @@
  -->
 	
 	<!--content 시작 -->
-	<main class="con-min-width">
+	<main class="con-min-width visible-md-up">
 	  <div class="con main-content flex flex-jc-sb">
 	    <div class="left-content"></div>
 	    <div class="right-content">

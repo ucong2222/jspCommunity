@@ -95,7 +95,7 @@
 </aside>
 <!-- 모바일 사이드 바 끝-->
 	<!-- 로고바 시작 -->
-	<div class="logo-bar con-min-width">
+	<div class="logo-bar con-min-width visible-md-up">
 	  <div class="con height-100p flex flex-jc-sb flex-ai-c">
 	    <div class="logo-bar__logo height-100p">
 	      <a href="../home/main" class="logo"><img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FpcVUI%2FbtqUzu8suTk%2F3T7owEJ5tUaHKQTMKzDrtk%2Fimg.jpg" alt=""></a>
@@ -109,7 +109,7 @@
 	<!-- 로고바 끝 -->
 	
 	<!-- 메뉴바 시작 -->
-	<div class="menu-bar con-min-width">
+	<div class="menu-bar con-min-width visible-md-up">
 	  <div class="con height-100p">
 	    <nav class="menu-bar__menu-box-1 height-100p">
 	      <ul class="flex height-100p">

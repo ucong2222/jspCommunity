@@ -53,7 +53,7 @@
               <td class="visible-md-down">
                 <div class="flex">
                   <span class="article-list-box__id article-list-box__id--mobile">${article.id}</span>
-                  <a href="#" class="article-list-box__title article-list-box__title--mobile flex-grow-1 hover-link">${article.title}</a>
+                  <a href="detail?id=${article.id}" class="article-list-box__title article-list-box__title--mobile flex-grow-1 hover-link">${article.title}</a>
                 </div>
                 <div class="flex">
                   <span class="article-list-box__writer article-list-box__writer--mobile">${article.extra__writer}</span>
