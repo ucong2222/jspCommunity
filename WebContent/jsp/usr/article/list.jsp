@@ -43,17 +43,17 @@
                 <span class="article-list-box__id">${article.id}</span>
               </td>
               <td>
-                <sapn class="article-list-box__reg-date">${article.regDate}</sapn>
+                <span class="article-list-box__reg-date">${article.regDate}</span>
               </td>
               <td>
-                <sapn class="article-list-box__writer">${article.extra__writer}</sapn>
+                <span class="article-list-box__writer">${article.extra__writer}</span>
               </td>
-              <td><a href="detail?id=${article.id}" class="article-list-box__title hover-link article-list-box__title--pc">${article.title}</a>
+              <td><a href="../article/detail?id=${article.id}&listUrl=${encodedCurrentUrl}" class="article-list-box__title hover-link article-list-box__title--pc">${article.title}</a>
               </td>
               <td class="visible-md-down">
                 <div class="flex">
                   <span class="article-list-box__id article-list-box__id--mobile">${article.id}</span>
-                  <a href="detail?id=${article.id}" class="article-list-box__title article-list-box__title--mobile flex-grow-1 hover-link">${article.title}</a>
+                  <a href="../article/detail?id=${article.id}&listUrl=${encodedCurrentUrl}" class="article-list-box__title article-list-box__title--mobile flex-grow-1 hover-link">${article.title}</a>
                 </div>
                 <div class="flex">
                   <span class="article-list-box__writer article-list-box__writer--mobile">${article.extra__writer}</span>
@@ -87,7 +87,7 @@
 			</li>
 			<c:forEach var="i" begin="${pageBoxStartPage}" end="${pageBoxEndPage}" step="1">
 				<c:set var="aClass" value="${page == i ? 'red' : ''}" />
-				<c:set var="aUrl" value="?boardId=${param.boardId}&page=${i}&searchKeywordType=${param.searchKeywordType}&searchKeyword=${param.searchKeyword}" />
+				<c:set var="aUrl" value="?page=${i}&boardId=${param.boardId}&searchKeywordType=${param.searchKeywordType}&searchKeyword=${param.searchKeyword}" />
 				<li>
 					<a class="${aClass} flex flex-ai-c" href=${aUrl}>${i}</a>
 				</li>

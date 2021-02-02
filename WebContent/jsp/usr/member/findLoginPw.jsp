@@ -43,7 +43,6 @@
 	  <div class="con flex flex-jc-c find-content">
 	   <form action="doFindLoginPw" method="POST" onsubmit="DoFindLoginPwForm__submit(this); return false;">
 		<div>
-			<div>로그인아이디</div>
 			<div>
 				<input name="loginId" type="text" maxlength="50"
 					placeholder="로그인아이디를 입력해주세요." />

@@ -38,7 +38,7 @@ public class UsrArticleController extends Controller {
 
 		int totalPage = (int) Math.ceil(totalCount / (double) itemsInAPage);
 
-		int pageBoxSize = 10;
+		int pageBoxSize = 5;
 
 		// 현재 페이지 박스 시작, 끝 계산
 

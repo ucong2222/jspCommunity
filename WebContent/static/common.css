@@ -156,7 +156,7 @@ a {
   --mobile-top-bar__btn-toggle-side-bar__dur: 0.3s;
 }
 
-@media (max-width: 720px) {
+@media (max-width: 701px) {
   .visible-md-up {
     display: none !important;
   }
@@ -170,12 +170,18 @@ a {
 
 .con-min-width {
   min-width: 360px;
-  padding: 0 10px;
 }
 
 .con {
   max-width: var(--site-width);
+  padding: 0 10px;
 }
+
+/* 토스트UI에디터 시작 */
+.tui-editor-contents {
+  font-family: inherit;
+}
+/* 토스트UI에디터 끝 */
 
 /* 비밀번호 경고창 시작*/
 .pw-warning {
@@ -429,6 +435,13 @@ a {
 .mobile-side-bar__menu-box-1>ul>li:hover>a{
   background-color:rgba(126,101,96);
 }
+
+@media ( max-width:700px ) {
+	html.mobile-side-bar-actived,
+	html.mobile-side-bar-actived > body {
+		overflow: hidden;
+	}
+} 
 
 /* 모바일 사이드 바 끝 */
 
@@ -701,7 +714,7 @@ a {
 
 /* 게시물 검색 시작 */
 .article-search-box{
-	margin-bottom:10px;
+	margin-bottom:20px;
 }
 /* 게시물 검색 끝 */
 
