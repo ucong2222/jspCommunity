@@ -59,8 +59,20 @@ public abstract class DispatcherServlet extends HttpServlet {
 			return null;
 		}
 
-		MysqlUtil.setDBInfo("127.0.0.1", "sbsst", "sbs123414", "jspCommunity");
+		String profilesActive = System.getProperty("spring.profiles.active");
 
+		boolean isProductionMode = false;
+
+		MysqlUtil.setDBInfo("127.0.0.1", "sbsst", "sbs123414", "jspCommunity");
+		if (profilesActive != null && profilesActive.equals("production")) {
+			isProductionMode = true;
+		}
+
+		if (isProductionMode) {
+			MysqlUtil.setDBInfo("127.0.0.1", "sbsstLocal", "sbs123414", "jspCommunity");
+		} else {
+			MysqlUtil.setDBInfo("127.0.0.1", "sbsst", "sbs123414", "jspCommunity");
+		}
 		String controllerTypeName = requestUriBits[2];
 		String controllerName = requestUriBits[3];
 		String actionMethodName = requestUriBits[4];

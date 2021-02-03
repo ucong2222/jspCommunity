@@ -745,9 +745,10 @@ a {
 /* 상세페이지 끝 */
 
 /* 글작성 시작 */
-.article-write-box>.con{
-  padding:10px 0;
+.article-write-box>.con>form{
   border-top:3px solid black;
+  padding-top:10px;
+  padding-bottom:10px;
 }
 
 .article-write-box__title>*{

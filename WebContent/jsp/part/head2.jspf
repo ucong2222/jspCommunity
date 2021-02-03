@@ -93,6 +93,16 @@
   <nav class="mobile-side-bar__menu-box-1">
     <ul>
       <li><a href="../home/main" class="block">HOME</a></li>
+      <c:if test="${isLogined}">
+      <li><a href="../member/modify" class="block">회원정보수정</a></li>
+      <li><a href="../member/doLogout" class="block">로그아웃</a></li>
+      </c:if>
+      <c:if test="${isLogined==false}">
+      <li><a href="../member/login" class="block">로그인</a></li>
+      <li><a href="../member/findLoginId" class="block">아이디찾기</a></li>
+      <li><a href="../member/findLoginPw" class="block">비밀번호찾기</a></li>
+      <li><a href="../member/join" class="block">회원가입</a></li>
+      </c:if>
       <li><a href="../article/list?boardId=1" class="block">NOTICE</a></li>
       <li><a href="../article/list?boardId=3" class="block">FREE</a></li>
       <li><a href="../article/list?boardId=2" class="block">GUESTBOOK</a></li>
