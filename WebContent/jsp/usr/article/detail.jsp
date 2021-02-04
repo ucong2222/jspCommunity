@@ -72,8 +72,31 @@
 	        <script type="text/x-template">${article.body}</script>
 	 		<div class="toast-ui-viewer"></div>
         </div>
-        
         <div class="article-detail-box__bottom flex flex-jc-e">
+        <c:if test="${article.extra.actorCanLike}">
+          	<a href="${param.listUrl}">
+				<span><i class="fas fa-thumbs-up"></i></span>
+				<span>좋아요</span>
+			</a>        
+        </c:if>
+		<c:if test="${article.extra.actorCanCancleLike}">
+          	<a href="${param.listUrl}">
+				<span><i class="fas fa-slash"></i></span>
+				<span>좋아요 취소</span>
+			</a>
+        </c:if>
+		<c:if test="${article.extra.actorCanDislike}">
+          	<a href="${param.listUrl}">
+				<span><i class="fas fa-thumbs-down"></i></span>
+				<span>싫어요</span>
+			</a>
+        </c:if>
+		<c:if test="${article.extra.actorCanCancleDislike}">
+          	<a href="${param.listUrl}">
+				<span><i class="fas fa-slash"></i></span>
+				<span>싫어요 취소</span>
+			</a>
+        </c:if>
 			<c:if test="${sessionScope.loginedMemberId eq article.memberId}">
 			<a href="modify?id=${article.id}">수정</a>
 			<a onclick="if (confirm('정말 삭제 하시겠습니까?') == false){ return false;}" href="doDelete?id=${article.id}">삭제</a>
