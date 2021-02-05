@@ -29,9 +29,9 @@ public class Container {
 
 	public static UsrLikeController usrLikeController;
 	public static AdmMemberController admMemberController;
-	public static UsrMemberController memberController;
+	public static UsrMemberController usrMemberController;
 	public static UsrArticleController articleController;
-	public static UsrHomeController homeController;
+	public static UsrHomeController usrHomeController;
 
 	static {
 		attrDao = new AttrDao();
@@ -47,8 +47,8 @@ public class Container {
 
 		usrLikeController = new UsrLikeController();
 		admMemberController = new AdmMemberController();
-		memberController = new UsrMemberController();
+		usrMemberController = new UsrMemberController();
 		articleController = new UsrArticleController();
-		homeController = new UsrHomeController();
+		usrHomeController = new UsrHomeController();
 	}
 }

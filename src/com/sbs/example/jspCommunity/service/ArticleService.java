@@ -38,14 +38,14 @@ public class ArticleService {
 
 	private void updateForInfoPrint(Article article, Member actor) {
 		boolean actorCanLike = likeService.actorCanLike(article, actor);
-		boolean actorCanCancleLike = likeService.actorCanCancleLike(article, actor);
+		boolean actorCanCancelLike = likeService.actorCanCancelLike(article, actor);
 		boolean actorCanDislike = likeService.actorCanDislike(article, actor);
-		boolean actorCanCancleDislike = likeService.actorCanCancleDislike(article, actor);
+		boolean actorCanCancelDislike = likeService.actorCanCancelDislike(article, actor);
 
 		article.getExtra().put("actorCanLike", actorCanLike);
-		article.getExtra().put("actorCanCancleLike", actorCanCancleLike);
+		article.getExtra().put("actorCanCancelLike", actorCanCancelLike);
 		article.getExtra().put("actorCanDislike", actorCanDislike);
-		article.getExtra().put("actorCanCancleDislike", actorCanCancleDislike);
+		article.getExtra().put("actorCanCancelDislike", actorCanCancelDislike);
 	}
 
 	public Board getBoardById(int id) {

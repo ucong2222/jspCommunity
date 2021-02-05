@@ -161,9 +161,9 @@ CREATE TABLE `like` (
     regDate DATETIME NOT NULL,
     updateDate DATETIME NOT NULL,
     relTypeCode CHAR(30) NOT NULL,
-    reId INT(10) UNSIGNED NOT NULL,
+    relId INT(10) UNSIGNED NOT NULL,
     memberId INT(10) UNSIGNED NOT NULL,
-    `point` SMALLINT(1) UNSIGNED NOT NULL
+    `point` SMALLINT(1) NOT NULL
 );
 
 # 좋아요 인덱스
