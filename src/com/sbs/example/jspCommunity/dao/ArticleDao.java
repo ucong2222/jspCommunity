@@ -29,7 +29,9 @@ public class ArticleDao {
 		sql.append("LEFT JOIN `like` AS L");
 		sql.append("ON L.relTypeCode = 'article'");
 		sql.append("AND A.id = L.relId");
+		sql.append("WHERE 1");
 
+		
 		if (boardId != 0) {
 			sql.append("AND A.boardId = ?", boardId);
 		}
