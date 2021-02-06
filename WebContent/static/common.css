@@ -590,7 +590,7 @@ a {
     margin-left:5px;
   }
   
-  .article-list-box>.con>table>tbody>tr>td.visible-md-down>.flex:nth-child(2){
+  .article-list-box>.con>table>tbody>tr>td.visible-md-down>.flex:not(:first-child){
     margin-top:10px;
   }
   .article-list-box>.con>table>tbody>tr>td.visible-md-down>.flex:nth-child(2)>span:nth-child(2){
