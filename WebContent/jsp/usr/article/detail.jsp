@@ -30,8 +30,12 @@
 					<span>3</span>
 				</div>
 				<div class="article-detail-box__recommand">
-					<span>추천</span>
-					<span>5</span>
+					<span>좋아요수</span>
+					<span>${article.extra__likeOnlyPoint}</span>
+				</div>
+				<div class="article-detail-box__recommand">
+					<span>싫어요수</span>
+					<span>${article.extra__dislikeOnlyPoint}</span>
 				</div>
 				<div class="article-detail-box__comment">
 					<span>댓글</span>
@@ -52,8 +56,12 @@
 					<span>3</span>
 				</div>
 				<div class="article-detail-box__recommand">
-					<span>추천</span>
-					<span>5</span>
+					<span>좋아요수</span>
+					<span>${article.extra__likeOnlyPoint}</span>
+				</div>
+				<div class="article-detail-box__recommand">
+					<span>싫어요수</span>
+					<span>${article.extra__dislikeOnlyPoint}</span>
 				</div>
 				<div class="article-detail-box__comment">
 					<span>댓글</span>
