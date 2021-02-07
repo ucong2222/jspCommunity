@@ -127,6 +127,14 @@
 <!-- 게시물 상세페이지 끝-->
 
 <!-- 게시물 댓글 시작-->
+<div class="title-bar con-min-width">
+	<h1 class="con">
+		<span>
+			<i class="fas fa-newspaper"></i>
+		</span>
+		<span>댓글작성</span>
+	</h1>
+</div>
 <c:if test="${isLogined == false}">
 	<div
 		class="article-reply-write-form-box form-box con-min-width">
@@ -173,13 +181,13 @@
 			<input type="hidden" name="relId" value="${article.id}" />
 			<input type="hidden" name="body" />
 			
-          <div class="article-write-box__body">
+          <div class="article-reply-write-box__body">
             <div>내용</div>
             <script type="text/x-template"></script>
             <div class="toast-ui-editor" data-height="200"></div>
           </div>
           <div>
-            <div class="article-write-box__bottom flex flex-jc-e">
+            <div class="article-reply-write-box__bottom flex flex-jc-e">
               <input type="submit" value="작성" />
               <button type="button" onclick="history.back()">취소</button>
             </div>
@@ -189,5 +197,118 @@
 	</div>
 </c:if>
 <!-- 게시물 댓글 끝-->
+
+<!-- 게시물 댓글리스트 시작-->
+<div class="title-bar con-min-width">
+	<h1 class="con">
+		<span>
+			<i class="fas fa-list"></i>
+		</span>
+		<span>댓글 리스트</span>
+	</h1>
+</div>
+
+<div class="reply-list-total-count-box con-min-width">
+	<div class="con">
+		<div>
+			<span>
+				<i class="fas fa-clipboard-list"></i>
+			</span>
+			<span>총 게시물 수 : </span>
+			<span class="color-red"> ${replies.size()} </span>
+		</div>
+	</div>
+</div>
+
+<div class="reply-list-box response-list-box con-min-width">
+	<div class="con">
+		<table>
+			<colgroup>
+				<col width="50">
+				<col width="150">
+				<col width="100">
+				<col width="100">
+			</colgroup>
+			<thead>
+				<tr>
+					<th>번호</th>
+					<th>날짜</th>
+					<th>작성자</th>
+					<th>좋아요</th>
+					<th>내용</th>
+				</tr>
+			</thead>
+			<tbody>
+				<c:forEach items="${replies}" var="reply">
+					<tr>
+						<td>
+							<span class="response-list-box__id">${reply.id}</span>
+						</td>
+						<td>
+							<span class="response-list-box__reg-date">${reply.regDate}</span>
+						</td>
+						<td>
+							<span class="response-list-box__writer">${reply.extra__writer}</span>
+						</td>
+						<td>
+							<span class="response-list-box__likeOnlyPoint">
+								<span>
+									<i class="far fa-thumbs-up"></i>
+								</span>
+								<span> ${reply.extra__likeOnlyPoint} </span>
+							</span>
+							<span class="response-list-box__dislikeOnlyPoint">
+								<span>
+									<i class="far fa-thumbs-down"></i>
+								</span>
+								<span> ${reply.extra__dislikeOnlyPoint} </span>
+							</span>
+						</td>
+						<td>
+							<script type="text/x-template">${reply.body}</script>
+							<div class="toast-ui-viewer"></div>
+						</td>
+						<td class="visible-md-down">
+							<div class="flex">
+								<span class="response-list-box__id response-list-box__id--mobile">${reply.id}</span>
+							</div>
+
+							<div class="flex">
+								<span class="response-list-box__likeOnlyPoint">
+									<span>
+										<i class="far fa-thumbs-up"></i>
+									</span>
+									<span> ${reply.extra__likeOnlyPoint} </span>
+								</span>
+								<span class="response-list-box__dislikeOnlyPoint">
+									<span>
+										<i class="far fa-thumbs-down"></i>
+									</span>
+									<span> ${reply.extra__dislikeOnlyPoint} </span>
+								</span>
+							</div>
+
+							<div class="flex">
+								<span
+									class="response-list-box__writer response-list-box__writer--mobile">${reply.extra__writer}</span>
+								<span>&nbsp;|&nbsp;</span>
+								<span
+									class="response-list-box__reg-date response-list-box__reg-date--mobile">${reply.regDate}</span>
+							</div>
+
+							<div>
+								<script type="text/x-template">${reply.body}</script>
+								<div class="toast-ui-viewer"></div>
+							</div>
+						</td>
+					</tr>
+				</c:forEach>
+			</tbody>
+		</table>
+	</div>
+</div>
+
+
+<!-- 게시물 댓글리스트 끝-->
 
 <%@ include file="../../part/foot.jspf"%>

@@ -20,7 +20,7 @@
       </div>
     </div>
 
-<div class="article-list-box con-min-width">
+<div class="article-list-box response-list-box con-min-width">
       <div class="con">
         <table>
           <colgroup>
@@ -43,45 +43,45 @@
           <c:forEach var="article" items="${articles}">
             <tr>
               <td>
-                <span class="article-list-box__id">${article.id}</span>
+                <span class="response-list-box__id">${article.id}</span>
               </td>
               <td>
-                <span class="article-list-box__reg-date">${article.regDate}</span>
+                <span class="response-list-box__reg-date">${article.regDate}</span>
               </td>
               <td>
-                <span class="article-list-box__writer">${article.extra__writer}</span>
+                <span class="response-list-box__writer">${article.extra__writer}</span>
               </td>
               <td>
-                <span class="article-list-box__likeOnlyPoint">
+                <span class="response-list-box__likeOnlyPoint">
                 	<span><i class="far fa-thumbs-up"></i></span>
                 	<span>${article.extra__likeOnlyPoint}</span>
                 </span>
-                <span class="article-list-box__dislikeOnlyPoint">
+                <span class="response-list-box__dislikeOnlyPoint">
                 	<span><i class="far fa-thumbs-down"></i></span>
                 	<span>${article.extra__dislikeOnlyPoint}</span>
                 </span>
               </td>
-              <td><a href="../article/detail?id=${article.id}&listUrl=${encodedCurrentUrl}" class="article-list-box__title hover-link article-list-box__title--pc">${article.title}</a>
+              <td><a href="../article/detail?id=${article.id}&listUrl=${encodedCurrentUrl}" class="response-list-box__title hover-link response-list-box__title--pc">${article.title}</a>
               </td>
               <td class="visible-md-down">
                 <div class="flex">
-                  <span class="article-list-box__id article-list-box__id--mobile">${article.id}</span>
-                  <a href="../article/detail?id=${article.id}&listUrl=${encodedCurrentUrl}" class="article-list-box__title article-list-box__title--mobile flex-grow-1 hover-link">${article.title}</a>
+                  <span class="response-list-box__id response-list-box__id--mobile">${article.id}</span>
+                  <a href="../article/detail?id=${article.id}&listUrl=${encodedCurrentUrl}" class="response-list-box__title response-list-box__title--mobile flex-grow-1 hover-link">${article.title}</a>
                 </div>
                 <div class="flex flex-ai-c">
-	                <span class="article-list-box__likeOnlyPoint">
+	                <span class="response-list-box__likeOnlyPoint">
 	                	<span><i class="far fa-thumbs-up"></i></span>
 	                	<span>${article.extra__likeOnlyPoint}</span>
 	                </span>
-	                <span class="article-list-box__dislikeOnlyPoint">
+	                <span class="response-list-box__dislikeOnlyPoint">
 	                	<span><i class="far fa-thumbs-down"></i></span>
 	                	<span>${article.extra__dislikeOnlyPoint}</span>
 	                </span>
                 </div>
                 <div class="flex">
-                  <span class="article-list-box__writer article-list-box__writer--mobile">${article.extra__writer}</span>
+                  <span class="response-list-box__writer response-list-box__writer--mobile">${article.extra__writer}</span>
                   <span>|</span>
-                  <span class="article-list-box__reg-data article-list-box__reg-data--mobile">
+                  <span class="response-list-box__reg-data response-list-box__reg-data--mobile">
                     ${article.regDate}
                   </span>
                 </div>

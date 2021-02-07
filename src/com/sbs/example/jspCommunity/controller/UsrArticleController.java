@@ -11,14 +11,18 @@ import com.sbs.example.jspCommunity.container.Container;
 import com.sbs.example.jspCommunity.dto.Article;
 import com.sbs.example.jspCommunity.dto.Board;
 import com.sbs.example.jspCommunity.dto.Member;
+import com.sbs.example.jspCommunity.dto.Reply;
 import com.sbs.example.jspCommunity.service.ArticleService;
+import com.sbs.example.jspCommunity.service.ReplyService;
 import com.sbs.example.util.Util;
 
 public class UsrArticleController extends Controller {
 	private ArticleService articleService;
+	private ReplyService replyService;
 
 	public UsrArticleController() {
 		articleService = Container.articleService;
+		replyService = Container.replyService;
 	}
 
 	public String showList(HttpServletRequest req, HttpServletResponse resp) {
@@ -101,6 +105,10 @@ public class UsrArticleController extends Controller {
 		Board board = articleService.getBoardById(article.getBoardId());
 
 		req.setAttribute("article", article);
+		
+		List<Reply> replies = replyService.getForPrintReplies("article", article.getId());
+		req.setAttribute("replies",replies);
+		
 		req.setAttribute("board", board);
 
 		return "usr/article/detail";
