@@ -124,6 +124,70 @@
 		</div>
 	</div>
 </div>
-<!-- 게시물 리스트 끝-->
+<!-- 게시물 상세페이지 끝-->
+
+<!-- 게시물 댓글 시작-->
+<c:if test="${isLogined == false}">
+	<div
+		class="article-reply-write-form-box form-box con-min-width">
+		<div class="con">
+			<a class="udl hover-link" href="../member/login?afterLoginUrl=${encodedCurrentUrl}">로그인</a> 후 이용해주세요.
+		</div>
+	</div>
+</c:if>
+
+<c:if test="${isLogined}">
+	<div class="article-reply-write-form-box form-box con-min-width">
+		<script>
+	let Reply__DoWriteForm__submited = false;
+	let Reply__DoWriteForm__checkedLoginId = "";
+	
+	// 폼 발송전 체크
+	function Reply__DoWriteForm__submit(form) {
+		if ( Reply__DoWriteForm__submited ) {
+			alert('처리중입니다.');
+			return;
+		}
+			
+		const editor = $(form).find('.toast-ui-editor').data('data-toast-editor');
+		const body = editor.getMarkdown().trim();
+		
+		if ( body.length == 0 ) {
+			alert('내용을 입력해주세요.');
+			editor.focus();
+			
+			return;
+		}
+		
+		form.body.value = body;
+		
+		form.submit();
+		Reply__DoWriteForm__submited = true;
+	}
+	</script>
+
+		<div class="con form-box">
+		<form action="../reply/doWrite" method="POST" onsubmit="Reply__DoWriteForm__submit(this); return false;">
+			<input type="hidden" name="redirectUrl" value="${currentUrl}" />
+			<input type="hidden" name="relTypeCode" value="article" />
+			<input type="hidden" name="relId" value="${article.id}" />
+			<input type="hidden" name="body" />
+			
+          <div class="article-write-box__body">
+            <div>내용</div>
+            <script type="text/x-template"></script>
+            <div class="toast-ui-editor" data-height="200"></div>
+          </div>
+          <div>
+            <div class="article-write-box__bottom flex flex-jc-e">
+              <input type="submit" value="작성" />
+              <button type="button" onclick="history.back()">취소</button>
+            </div>
+          </div>
+        </form>
+      </div>
+	</div>
+</c:if>
+<!-- 게시물 댓글 끝-->
 
 <%@ include file="../../part/foot.jspf"%>

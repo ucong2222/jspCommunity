@@ -356,6 +356,7 @@ a {
 }
 .mobile-top-bar {
   height: var(--mobile-top-bar__height);
+  z-index : 1000;
 }
 
 .mobile-logo > img {
@@ -420,6 +421,7 @@ a {
   display:flex;
   align-items:center;
   padding-bottom:var( --mobile-top-bar__height);
+  z-index : 1000;
 }
 .mobile-side-bar.active{
   left:0;
