@@ -1,9 +1,29 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ page import="com.sbs.example.util.Util"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <c:set var="pageTitle" value="${board.name} 게시물 상세 페이지" />
 <%@ include file="../../part/head.jspf"%>
+
+<script>
+	$(function(){
+		if ( param.focusReplyId ) {
+			const $target = $('.reply-list-box tr[data-id="' + param.focusReplyId + '"]');
+			$target.addClass('focus');
+		
+			setTimeout(function() {
+				const targetOffset = $target.offset();
+				
+				$(window).scrollTop(targetOffset.top - 100);
+				
+				setTimeout(function() {
+					$target.removeClass('focus');
+				}, 1000);
+			}, 1000);
+		}
+	});
+</script>
 
 <!-- 게시물 상세 시작-->
 <div class="title-bar con-min-width">
@@ -176,7 +196,7 @@
 
 		<div class="con form-box">
 		<form action="../reply/doWrite" method="POST" onsubmit="Reply__DoWriteForm__submit(this); return false;">
-			<input type="hidden" name="redirectUrl" value="${currentUrl}" />
+			<input type="hidden" name="redirectUrl" value="${Util.getNewUrl(currentUrl, 'focusReplyId','[NEW_REPLY_ID]')}" />
 			<input type="hidden" name="relTypeCode" value="article" />
 			<input type="hidden" name="relId" value="${article.id}" />
 			<input type="hidden" name="body" />
@@ -240,7 +260,7 @@
 			</thead>
 			<tbody>
 				<c:forEach items="${replies}" var="reply">
-					<tr>
+					<tr data-id="${reply.id}">
 						<td>
 							<span class="response-list-box__id">${reply.id}</span>
 						</td>

@@ -554,6 +554,11 @@ a {
 
 .response-list-box > .con > table tr {
   border-bottom: 1px solid #dfdfdf;
+  transition: background-color 1s;
+}
+.response-list-box > .con > table tr.focus {
+  background-color:#dfdfdf;
+  transition: background-color 0s;
 }
 
 .response-list-box__title {

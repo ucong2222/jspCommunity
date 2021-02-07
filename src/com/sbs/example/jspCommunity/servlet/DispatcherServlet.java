@@ -72,17 +72,17 @@ public abstract class DispatcherServlet extends HttpServlet {
 			MysqlUtil.setDBInfo("127.0.0.1", "sbsst", "sbs123414", "jspCommunity");
 			MysqlUtil.setDevMode(true);
 		}
-		
+
 		int controllerTypeNameIndex = 2;
 		int controllerNameIndex = 3;
 		int actionMethodNameIndex = 4;
-		
+
 		if (App.isProductMode()) {
 			controllerTypeNameIndex = 1;
 			controllerNameIndex = 2;
 			actionMethodNameIndex = 3;
 		}
-		
+
 		String controllerTypeName = requestUriBits[controllerTypeNameIndex];
 		String controllerName = requestUriBits[controllerNameIndex];
 		String actionMethodName = requestUriBits[actionMethodNameIndex];
@@ -123,6 +123,12 @@ public abstract class DispatcherServlet extends HttpServlet {
 		req.setAttribute("currentUrl", currentUrl);
 		req.setAttribute("encodedCurrentUrl", encodedCurrentUrl);
 
+		Map<String,Object> param = Util.getParamMap(req);
+		String paramJson = Util.getJsonText(param);
+		
+		req.setAttribute("paramMap", param);
+		req.setAttribute("paramJson", paramJson);
+
 		// 데이터 추가 인터셉터 끝
 
 		// 필터링 인터셉터 시작
@@ -138,7 +144,7 @@ public abstract class DispatcherServlet extends HttpServlet {
 		needToLoginActionUrls.add("/usr/article/modify");
 		needToLoginActionUrls.add("/usr/article/doModify");
 		needToLoginActionUrls.add("/usr/article/doDelete");
-		
+
 		needToLoginActionUrls.add("/usr/reply/doWrite");
 		needToLoginActionUrls.add("/usr/reply/modify");
 		needToLoginActionUrls.add("/usr/reply/doModify");
