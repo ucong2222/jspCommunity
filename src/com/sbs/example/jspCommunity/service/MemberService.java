@@ -121,4 +121,10 @@ public class MemberService {
 		return false;
 
 	}
+
+	public boolean isAdmin(int actorId) {
+		//return actorId == 1;
+		
+		return false;
+	}
 }

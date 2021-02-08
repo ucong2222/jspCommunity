@@ -53,4 +53,29 @@ public class ReplyDao {
 		return replies;
 	}
 
+	public Reply getReplyById(int id) {
+		SecSql sql = new SecSql();
+		sql.append("SELECT *");
+		sql.append("FROM reply AS R");
+		sql.append("WHERE 1");
+		sql.append("AND R.id = ?", id);
+
+		Map<String, Object> map = MysqlUtil.selectRow(sql);
+
+		if (map.isEmpty()) {
+			return null;
+		}
+
+		return new Reply(map);
+	}
+
+	public int delete(int id) {
+		SecSql sql = new SecSql();
+		sql.append("DELETE FROM reply");
+		sql.append("WHERE 1");
+		sql.append("AND id = ?", id);
+
+		return MysqlUtil.delete(sql);
+	}
+
 }
