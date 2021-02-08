@@ -123,9 +123,9 @@ public abstract class DispatcherServlet extends HttpServlet {
 		req.setAttribute("currentUrl", currentUrl);
 		req.setAttribute("encodedCurrentUrl", encodedCurrentUrl);
 
-		Map<String,Object> param = Util.getParamMap(req);
+		Map<String, Object> param = Util.getParamMap(req);
 		String paramJson = Util.getJsonText(param);
-		
+
 		req.setAttribute("paramMap", param);
 		req.setAttribute("paramJson", paramJson);
 
@@ -155,7 +155,7 @@ public abstract class DispatcherServlet extends HttpServlet {
 				req.setAttribute("alertMsg", "로그인 후 이용해주세요.");
 				req.setAttribute("replaceUrl", "../member/login?afterLoginUrl=" + encodedCurrentUrl);
 
-				RequestDispatcher rd = req.getRequestDispatcher("/jsp/common/redirect.jsp");
+				RequestDispatcher rd = req.getRequestDispatcher(getJspDirPath() + "/common/redirect.jsp");
 				rd.forward(req, resp);
 			}
 		}
@@ -178,7 +178,7 @@ public abstract class DispatcherServlet extends HttpServlet {
 				req.setAttribute("alertMsg", "로그아웃 후 진행해주세요.");
 				req.setAttribute("historyBack", true);
 
-				RequestDispatcher rd = req.getRequestDispatcher("/jsp/common/redirect.jsp");
+				RequestDispatcher rd = req.getRequestDispatcher(getJspDirPath() + "/common/redirect.jsp");
 				rd.forward(req, resp);
 			}
 		}
@@ -198,7 +198,11 @@ public abstract class DispatcherServlet extends HttpServlet {
 	private void doAfterAction(HttpServletRequest req, HttpServletResponse resp, String jspPath) throws ServletException, IOException {
 		MysqlUtil.closeConnection();
 
-		RequestDispatcher rd = req.getRequestDispatcher("/WEB-INF/jsp/" + jspPath + ".jsp");
+		RequestDispatcher rd = req.getRequestDispatcher(getJspDirPath() + "/" + jspPath + ".jsp");
 		rd.forward(req, resp);
+	}
+
+	private String getJspDirPath() {
+		return "/WEB-INF/jsp";
 	}
 }
