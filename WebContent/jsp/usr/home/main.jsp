@@ -9,7 +9,6 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/static/UsrHomeMain.css" />
 <script src="${pageContext.request.contextPath}/static/UsrHomeMain.js" defer></script>
  -->
-	
 	<!--content 시작 -->
 	<main class="con-min-width visible-md-up">
 	  <div class="con main-content flex flex-jc-sb">

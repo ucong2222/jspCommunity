@@ -12,10 +12,12 @@
 - [x] 게시물 검색
 - [x] 게시물 페이징
 - [x] 토스트 에디터 붙이기
+- [X] 좋아요, 싫어요
+- [x] 한방배포
 
 # 당장 할일 리스트
 - [ ] 게시물 블라인드
-- [ ] 좋아요, 싫어요
+
 
 # 추후 할일 리스트
 - [ ] 내 글에 새 댓글 알림
@@ -30,3 +32,17 @@
 - [ ] 관리자페이지
 - [ ] 1:1 쪽지
 - [ ] 신고
+
+# 메이븐 settings.xml 템플릿
+```
+<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 https://maven.apache.org/xsd/settings-1.0.0.xsd">
+    <servers>
+        <server>
+            <id>서버ID</id>
+            <username>톰캣웹관리자계정(배포관리자)의 로그인아이디</username>
+            <password>톰캣웹관리자계정(배포관리자)의 비빌번호</password>
+        </server>
+    </servers>
+</settings>
+```
