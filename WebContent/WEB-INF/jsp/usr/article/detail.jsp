@@ -47,7 +47,7 @@
 			<div class="flex">
 				<div class="article-detail-box__likeCount">
 					<span>조회</span>
-					<span>3</span>
+					<span>${article.hit}</span>
 				</div>
 				<div class="article-detail-box__recommand">
 					<span>좋아요수</span>
@@ -73,7 +73,7 @@
 			<div class="flex">
 				<div class="article-detail-box__likeCount">
 					<span>조회</span>
-					<span>3</span>
+					<span>{article.hit}</span>
 				</div>
 				<div class="article-detail-box__recommand">
 					<span>좋아요수</span>

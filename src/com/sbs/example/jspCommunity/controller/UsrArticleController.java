@@ -91,17 +91,22 @@ public class UsrArticleController extends Controller {
 	public String showDetail(HttpServletRequest req, HttpServletResponse resp) {
 		int id = Util.getAsInt(req.getParameter("id"), 0);
 
+
 		if (id == 0) {
 			return msgAndBack(req, "게시물 번호를 입력해주세요.");
 		}
 
 		Member loginedMember = (Member) req.getAttribute("loginedMember");
 
+		articleService.increaseHit(id);
+
 		Article article = articleService.getForPrintArticleById(id, loginedMember);
 
 		if (article == null) {
 			return msgAndBack(req, id + "번 게시물은 존재하지 않습니다.");
 		}
+		
+		
 		Board board = articleService.getBoardById(article.getBoardId());
 
 		req.setAttribute("article", article);
