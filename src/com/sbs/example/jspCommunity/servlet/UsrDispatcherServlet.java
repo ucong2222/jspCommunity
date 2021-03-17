@@ -14,7 +14,8 @@ import com.sbs.example.jspCommunity.controller.UsrReplyController;
 @WebServlet("/usr/*")
 public class UsrDispatcherServlet extends DispatcherServlet {
 	@Override
-	protected String doAction(HttpServletRequest req, HttpServletResponse resp, String controllerName, String actionMethodName) {
+	protected String doAction(HttpServletRequest req, HttpServletResponse resp, String controllerName,
+			String actionMethodName) {
 
 		String jspPath = null;
 
@@ -74,14 +75,10 @@ public class UsrDispatcherServlet extends DispatcherServlet {
 		} else if (controllerName.equals("like")) {
 			UsrLikeController likeController = Container.usrLikeController;
 
-			if (actionMethodName.equals("doLike")) {
-				jspPath = likeController.doLike(req, resp);
-			} else if (actionMethodName.equals("doCancelLike")) {
-				jspPath = likeController.doCancelLike(req, resp);
-			} else if (actionMethodName.equals("doDislike")) {
-				jspPath = likeController.doDislike(req, resp);
-			} else if (actionMethodName.equals("doCancelDislike")) {
-				jspPath = likeController.doCancelDislike(req, resp);
+			if (actionMethodName.equals("doLikeAjax")) {
+				jspPath = likeController.doLikeAjax(req, resp);
+			} else if (actionMethodName.equals("doDislikeAjax")) {
+				jspPath = likeController.doDislikeAjax(req, resp);
 			}
 		} else if (controllerName.equals("reply")) {
 			UsrReplyController replyController = Container.usrReplyController;

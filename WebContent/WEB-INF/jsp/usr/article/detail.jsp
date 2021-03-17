@@ -23,6 +23,55 @@
 			}, 1000);
 		}
 	});
+	
+	// 좋아요, 싫어요 ajax 구현
+	
+	function doLike(relTypeCode, id){
+		if ( ${loginedMemberId} == 0 ){
+			alert('로그인 후 이용해주세요.');
+			return;
+		}
+		
+		$.get('../like/doLikeAjax',
+				{
+				relTypeCode : relTypeCode,
+				relId : id
+			},
+			function(data){
+				if (data.resultCode == 'F-1'){
+					alert(data.msg);
+				} else{
+				$('.likeOnlyPoint').text(data.body.likeOnlyPoint);
+				}
+			},
+			'json',
+		);
+	}
+	
+	function doDislike(relTypeCode, id){
+		if ( ${loginedMemberId} == 0 ){
+			alert('로그인 후 이용해주세요.');
+			return;
+		}
+		
+		$.get('../like/doDislikeAjax',
+				{
+				relTypeCode : relTypeCode,
+				relId : id
+			},
+			function(data){
+				if (data.resultCode == 'F-1'){
+					alert(data.msg);
+				} else{
+				$('.dislikeOnlyPoint').text(data.body.dislikeOnlyPoint);
+				}
+			},
+			'json',
+		);
+	}
+	
+	
+	
 </script>
 
 <!-- 게시물 상세 시작-->
@@ -51,15 +100,11 @@
 				</div>
 				<div class="article-detail-box__recommand">
 					<span>좋아요수</span>
-					<span>${article.extra__likeOnlyPoint}</span>
+					<span class="likeOnlyPoint">${article.extra__likeOnlyPoint}</span>
 				</div>
 				<div class="article-detail-box__recommand">
 					<span>싫어요수</span>
-					<span>${article.extra__dislikeOnlyPoint}</span>
-				</div>
-				<div class="article-detail-box__comment">
-					<span>댓글</span>
-					<span>4</span>
+					<span class="dislikeOnlyPoint">${article.extra__dislikeOnlyPoint}</span>
 				</div>
 			</div>
 		</div>
@@ -73,19 +118,15 @@
 			<div class="flex">
 				<div class="article-detail-box__likeCount">
 					<span>조회</span>
-					<span>{article.hit}</span>
+					<span>${article.hit}</span>
 				</div>
 				<div class="article-detail-box__recommand">
 					<span>좋아요수</span>
-					<span>${article.extra__likeOnlyPoint}</span>
+					<span class="likeOnlyPoint">${article.extra__likeOnlyPoint}</span>
 				</div>
 				<div class="article-detail-box__recommand">
 					<span>싫어요수</span>
-					<span>${article.extra__dislikeOnlyPoint}</span>
-				</div>
-				<div class="article-detail-box__comment">
-					<span>댓글</span>
-					<span>4</span>
+					<span class="dislikeOnlyPoint">${article.extra__dislikeOnlyPoint}</span>
 				</div>
 			</div>
 		</div>
@@ -95,46 +136,16 @@
 			<div class="toast-ui-viewer"></div>
 		</div>
 		<div class="article-detail-box__bottom flex flex-jc-e">
-			<c:if test="${article.extra.actorCanLike}">
-				<a
-					href="../like/doLike?relTypeCode=article&relId=${article.id}&redirectUrl=${encodedCurrentUrl}"
-					onclick="if (!confirm('`좋아요` 처리 하시겠습니까?')) return false">
-					<span>
-						<i class="fas fa-thumbs-up"></i>
-					</span>
-					<span>좋아요</span>
-				</a>
-			</c:if>
-			<c:if test="${article.extra.actorCanCancelLike}">
-				<a
-					href="../like/doCancelLike?relTypeCode=article&relId=${article.id}&redirectUrl=${encodedCurrentUrl}"
-					onclick="if (!confirm('`좋아요` 취소처리 하시겠습니까?')) return false">
-					<span>
-						<i class="fas fa-slash"></i>
-					</span>
-					<span>좋아요 취소</span>
-				</a>
-			</c:if>
-			<c:if test="${article.extra.actorCanDislike}">
-				<a
-					href="../like/doDislike?relTypeCode=article&relId=${article.id}&redirectUrl=${encodedCurrentUrl}"
-					onclick="if (!confirm('`싫어요` 처리 하시겠습니까?')) return false">
-					<span>
-						<i class="fas fa-thumbs-down"></i>
-					</span>
-					<span>싫어요</span>
-				</a>
-			</c:if>
-			<c:if test="${article.extra.actorCanCancelDislike}">
-				<a
-					href="../like/doCancelDislike?relTypeCode=article&relId=${article.id}&redirectUrl=${encodedCurrentUrl}"
-					onclick="if (!confirm('`싫어요` 취소처리 하시겠습니까?')) return false">
-					<span>
-						<i class="fas fa-slash"></i>
-					</span>
-					<span>싫어요 취소</span>
-				</a>
-			</c:if>
+			<a onclick="doLike('article', '${article.id}');">
+				<span><i id="like" class="far fa-thumbs-up"></i></span>
+				<span>좋아요</span>
+				<span class="likeOnlyPoint">${article.extra__likeOnlyPoint}</span>
+			</a>
+			<a onclick="doDislike('article', '${article.id}');">
+				<span><i id="disLike" class="far fa-thumbs-down"></i></span>
+				<span>싫어요</span>
+				<span class="dislikeOnlyPoint">${article.extra__dislikeOnlyPoint}</span>
+			</a>	
 			<c:if test="${sessionScope.loginedMemberId eq article.memberId}">
 				<a href="modify?id=${article.id}">수정</a>
 				<a onclick="if (confirm('정말 삭제 하시겠습니까?') == false){ return false;}"

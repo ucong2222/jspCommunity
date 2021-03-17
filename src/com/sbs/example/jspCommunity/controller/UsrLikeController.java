@@ -4,94 +4,98 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.sbs.example.jspCommunity.container.Container;
+import com.sbs.example.jspCommunity.dto.Article;
+import com.sbs.example.jspCommunity.dto.ResultData;
+import com.sbs.example.jspCommunity.service.ArticleService;
 import com.sbs.example.jspCommunity.service.LikeService;
 import com.sbs.example.util.Util;
 
 public class UsrLikeController extends Controller {
 	private LikeService likeService;
+	private ArticleService articleService;
 
 	public UsrLikeController() {
 		likeService = Container.likeService;
+		articleService = Container.articleService;
+	}
+	
+	public String doLikeAjax(HttpServletRequest req,  HttpServletResponse resp) {
+
+		String relTypeCode = req.getParameter("relTypeCode");
+		
+		int relId = Util.getAsInt(req.getParameter("relId"), 0);
+		
+		int actorId = (int) req.getAttribute("loginedMemberId");
+		
+		String resultCode = null;
+		String msg = null;
+		
+		Boolean aleadyDoDislike = likeService.aleadyDoDislike(relTypeCode, relId, actorId, -1);
+		
+		if (aleadyDoDislike == true) {
+			resultCode ="F-1";
+			msg = "이미 투표하셨습니다.";
+		} else {
+			
+			Boolean aleadyDoLike = likeService.aleadyDoLike(relTypeCode, relId, actorId, 1);
+			
+			if (aleadyDoLike == false){
+				resultCode = "S-1";
+				msg= "좋아요 처리";
+				likeService.setLikePoint(relTypeCode, relId, actorId, 1, 1);
+			} else{
+				resultCode = "S-2";
+				msg= "좋아요 취소";
+				likeService.setLikePoint(relTypeCode, relId, actorId, 1, 0);
+			} 
+		}
+		
+		
+		
+		Article article = articleService.getForPrintArticleById(relId);
+		
+		int likeOnlyPoint = article.getExtra__likeOnlyPoint();
+		
+		return json(req, new ResultData(resultCode, msg, "likeOnlyPoint",likeOnlyPoint));
 	}
 
-	public String doLike(HttpServletRequest req, HttpServletResponse resp) {
+	public String doDislikeAjax(HttpServletRequest req,  HttpServletResponse resp) {
+
 		String relTypeCode = req.getParameter("relTypeCode");
-
-		if (relTypeCode == null) {
-			return msgAndBack(req, "관련데이터코드를 입력해주세요.");
-		}
-
+		
 		int relId = Util.getAsInt(req.getParameter("relId"), 0);
-
-		if (relId == 0) {
-			return msgAndBack(req, "관련데이터번호를 입력해주세요.");
-		}
-
+		
 		int actorId = (int) req.getAttribute("loginedMemberId");
-
-		likeService.setLikePoint(relTypeCode, relId, actorId, 1);
-
-		return msgAndReplace(req, "`좋아요` 처리되었습니다.", req.getParameter("redirectUrl"));
-	}
-
-	public String doCancelLike(HttpServletRequest req, HttpServletResponse resp) {
-		String relTypeCode = req.getParameter("relTypeCode");
-
-		if (relTypeCode == null) {
-			return msgAndBack(req, "관련데이터코드를 입력해주세요.");
+		
+		String resultCode = null;
+		String msg = null;
+		
+		Boolean aleadyDoLike = likeService.aleadyDoLike(relTypeCode, relId, actorId, 1);
+		
+		if ( aleadyDoLike == true) {
+			resultCode = "F-1";
+			msg="이미 투표하셨습니다.";
+		} else {			
+			Boolean aleadyDoDislike = likeService.aleadyDoDislike(relTypeCode, relId, actorId, -1);
+			
+			if ( aleadyDoDislike == false ) {
+				resultCode = "S-1";
+				msg= "싫어요 처리";
+				likeService.setLikePoint(relTypeCode, relId, actorId, -1, 1);
+			} else {
+				resultCode = "S-2";
+				msg= "싫어요 취소";
+				likeService.setLikePoint(relTypeCode, relId, actorId, -1 ,0);
+			}
 		}
-
-		int relId = Util.getAsInt(req.getParameter("relId"), 0);
-
-		if (relId == 0) {
-			return msgAndBack(req, "관련데이터번호를 입력해주세요.");
-		}
-
-		int actorId = (int) req.getAttribute("loginedMemberId");
-
-		likeService.setLikePoint(relTypeCode, relId, actorId, 0);
-
-		return msgAndReplace(req, "`좋아요`가 취소 처리되었습니다.", req.getParameter("redirectUrl"));
-	}
-
-	public String doDislike(HttpServletRequest req, HttpServletResponse resp) {
-		String relTypeCode = req.getParameter("relTypeCode");
-
-		if (relTypeCode == null) {
-			return msgAndBack(req, "관련데이터코드를 입력해주세요.");
-		}
-
-		int relId = Util.getAsInt(req.getParameter("relId"), 0);
-
-		if (relId == 0) {
-			return msgAndBack(req, "관련데이터번호를 입력해주세요.");
-		}
-
-		int actorId = (int) req.getAttribute("loginedMemberId");
-
-		likeService.setLikePoint(relTypeCode, relId, actorId, -1);
-
-		return msgAndReplace(req, "`싫어요` 처리되었습니다.", req.getParameter("redirectUrl"));
-	}
-
-	public String doCancelDislike(HttpServletRequest req, HttpServletResponse resp) {
-		String relTypeCode = req.getParameter("relTypeCode");
-
-		if (relTypeCode == null) {
-			return msgAndBack(req, "관련데이터코드를 입력해주세요.");
-		}
-
-		int relId = Util.getAsInt(req.getParameter("relId"), 0);
-
-		if (relId == 0) {
-			return msgAndBack(req, "관련데이터번호를 입력해주세요.");
-		}
-
-		int actorId = (int) req.getAttribute("loginedMemberId");
-
-		likeService.setLikePoint(relTypeCode, relId, actorId, 0);
-
-		return msgAndReplace(req, "`싫어요`가 취소 처리되었습니다.", req.getParameter("redirectUrl"));
+		
+		
+		
+		Article article = articleService.getForPrintArticleById(relId);
+		
+		int dislikeOnlyPoint = article.getExtra__dislikeOnlyPoint();
+		
+		return json(req, new ResultData(resultCode, msg, "dislikeOnlyPoint",dislikeOnlyPoint));
 	}
 
 }
