@@ -188,17 +188,14 @@
 			return;
 		}
 			
-		const editor = $(form).find('.toast-ui-editor').data('data-toast-editor');
-		const body = editor.getMarkdown().trim();
+		form.body.value = form.body.value.trim()
 		
-		if ( body.length == 0 ) {
+		if ( form.body.value.length == 0 ) {
 			alert('내용을 입력해주세요.');
-			editor.focus();
+			form.body.focus();
 			
 			return;
 		}
-		
-		form.body.value = body;
 		
 		form.submit();
 		Reply__DoWriteForm__submited = true;
@@ -210,19 +207,11 @@
 			<input type="hidden" name="redirectUrl" value="${Util.getNewUrl(currentUrl, 'focusReplyId','[NEW_REPLY_ID]')}" />
 			<input type="hidden" name="relTypeCode" value="article" />
 			<input type="hidden" name="relId" value="${article.id}" />
-			<input type="hidden" name="body" />
 			
-          <div class="article-reply-write-box__body">
-            <div>내용</div>
-            <script type="text/x-template"></script>
-            <div class="toast-ui-editor" data-height="200"></div>
-          </div>
-          <div>
-            <div class="article-reply-write-box__bottom flex flex-jc-e">
-              <input type="submit" value="작성" />
-              <button type="button" onclick="history.back()">취소</button>
-            </div>
-          </div>
+          <div class="article-reply-write-box__body flex">
+		    <textarea name="body"></textarea>
+		    <input type="submit" onclick="if ( confirm('작성하시겠습니까?') == false ) { return false; }" value="작성" />
+		  </div>
         </form>
       </div>
 	</div>

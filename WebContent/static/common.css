@@ -796,12 +796,26 @@ a {
 /* 글작성 끝 */
 
 /* 댓글작성 시작 */
-.article-reply-write-box__body>*{
-  margin-bottom:10px;
+.article-reply-write-box__body{
+  height: 80px;
+  display:flex;
 }
 
-.article-reply-write-box__bottom>*{
-  margin-right:10px;
+.article-reply-write-box__body > textarea{
+  flex-grow:1;
+  height: 100%;
+  box-sizing:border-box;
+}
+.article-reply-write-box__body > input{
+  margin-left:15px;
+  width:100px;
+  height:100%;
+  vertical-align : top;
+  background-color: rgba(126, 101, 96);
+  color: white;
+  font-weight:bold;
+  font-size:1.2rem;
+  border-radius:5px;
 }
 /* 댓글작성 끝 */
 
