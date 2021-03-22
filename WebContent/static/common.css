@@ -169,7 +169,7 @@ a {
 }
 
 .con-min-width {
-  min-width: 360px;
+
 }
 
 .con {
@@ -818,6 +818,49 @@ a {
   border-radius:5px;
 }
 /* 댓글작성 끝 */
+
+/* 댓글리스트 시작 */
+.reply-like{
+  margin-right:10px;
+}
+
+@media(max-width:600px){
+  .reply-list-box{
+    font-size:0.9rem;
+  }
+}
+
+.reply-box:first-child{
+	margin-top:10px;
+}
+
+.reply-box{
+	border-top:solid #afafaf 1px;
+}
+
+.reply-box>div{
+	padding-top:5px;
+	padding-bottom:5px;
+}
+
+.reply-box>div:first-child{
+	padding-top:20px;
+}
+
+.reply-box>div:last-child{
+	padding-bottom:20px;
+}
+
+
+.reply-reg-date, .reply-box-bottom{
+	color:gray;
+}
+
+.reply-list-box .reply-box.focus {
+  background-color:#dfdfdf;
+  transition: background-color 0s;
+}
+/* 댓글리스트 끝 */
 
 
 

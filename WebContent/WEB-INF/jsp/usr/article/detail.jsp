@@ -9,7 +9,7 @@
 <script>
 	$(function(){
 		if ( param.focusReplyId ) {
-			const $target = $('.reply-list-box tr[data-id="' + param.focusReplyId + '"]');
+			const $target = $('.reply-list-box .reply-box[data-id="' + param.focusReplyId + '"]');
 			$target.addClass('focus');
 		
 			setTimeout(function() {
@@ -240,108 +240,42 @@
 	</div>
 </div>
 
-<div class="reply-list-box response-list-box con-min-width">
-	<div class="con">
-		<table>
-			<colgroup>
-				<col width="50">
-				<col width="150">
-				<col width="100">
-				<col width="100">
-				<col width="200">
-			</colgroup>
-			<thead>
-				<tr>
-					<th>번호</th>
-					<th>날짜</th>
-					<th>작성자</th>
-					<th>좋아요</th>
-					<th>비고</th>
-					<th>내용</th>
-				</tr>
-			</thead>
-			<tbody>
-				<c:forEach items="${replies}" var="reply">
-					<tr data-id="${reply.id}">
-						<td>
-							<span class="response-list-box__id">${reply.id}</span>
-						</td>
-						<td>
-							<span class="response-list-box__reg-date">${reply.regDate}</span>
-						</td>
-						<td>
-							<span class="response-list-box__writer">${reply.extra__writer}</span>
-						</td>
-						<td>
-							<span class="response-list-box__likeOnlyPoint">
-								<span>
-									<i class="far fa-thumbs-up"></i>
-								</span>
-								<span> ${reply.extra__likeOnlyPoint} </span>
-							</span>
-							<span class="response-list-box__dislikeOnlyPoint">
-								<span>
-									<i class="far fa-thumbs-down"></i>
-								</span>
-								<span> ${reply.extra__dislikeOnlyPoint} </span>
-							</span>
-						</td>
-						<td>
-							<div class="btn-wrap">
-								<a class="btn btn-info" href="../reply/modify?id=${reply.id}&redirectUrl=${encodedCurrentUrl}">수정</a>
-								<a class="btn btn-danger"
-									onclick="if ( confirm('정말 삭제하시겠습니까?') == false ) { return false; }"
-									href="../reply/doDelete?id=${reply.id}&redirectUrl=${encodedCurrentUrl}">삭제</a>
-							</div>
-						</td>
-						<td>
-							<script type="text/x-template">${reply.body}</script>
-							<div class="toast-ui-viewer"></div>
-						</td>
-						<td class="visible-md-down">
-							<div class="flex">
-								<span class="response-list-box__id response-list-box__id--mobile">${reply.id}</span>
-							</div>
-
-							<div class="flex">
-								<span class="response-list-box__likeOnlyPoint">
-									<span>
-										<i class="far fa-thumbs-up"></i>
-									</span>
-									<span> ${reply.extra__likeOnlyPoint} </span>
-								</span>
-								<span class="response-list-box__dislikeOnlyPoint">
-									<span>
-										<i class="far fa-thumbs-down"></i>
-									</span>
-									<span> ${reply.extra__dislikeOnlyPoint} </span>
-								</span>
-							</div>
-
-							<div class="flex">
-								<span
-									class="response-list-box__writer response-list-box__writer--mobile">${reply.extra__writer}</span>
-								<span>&nbsp;|&nbsp;</span>
-								<span
-									class="response-list-box__reg-date response-list-box__reg-date--mobile">${reply.regDate}</span>
-							</div>
-
-							<div>
-								<script type="text/x-template">${reply.body}</script>
-								<div class="toast-ui-viewer"></div>
-							</div>
-							<div class="btn-wrap">
-								<a class="btn btn-info" href="../reply/modify?id=${reply.id}&redirectUrl=${encodedCurrentUrl}">수정</a>
-								<a class="btn btn-danger"
-									onclick="if ( confirm('정말 삭제하시겠습니까?') == false ) { return false; }"
-									href="../reply/doDelete?id=${reply.id}&redirectUrl=${encodedCurrentUrl}">삭제</a>
-							</div>
-						</td>
-					</tr>
-				</c:forEach>
-			</tbody>
-		</table>
-	</div>
+<div class="reply-list-box con-min-width">
+  <div class="con">
+ 	 <c:forEach items="${replies}" var="reply">
+	    <div class="reply-box" data-id="${reply.id}">
+	    	<div class="reply-box-top flex">
+		      <div class="reply-name" style="font-weight:bold; margin-right:5px;">${reply.extra__writer}</div>
+		      <div class="reply-reg-date">${reply.regDate}</div>
+		      <div class="flex-grow-1"></div>
+		      <div class="reply-like-box flex">
+		        <div class="reply-like">
+		          <span><i id="like" class="far fa-thumbs-up"></i></span>
+		          <span>${reply.extra__likeOnlyPoint}</span>
+		        </div>
+		        <div class="reply-dislike">
+		          <span><i id="dislike" class="far fa-thumbs-down"></i></span>
+		          <span>${reply.extra__dislikeOnlyPoint}</span>
+		        </div>
+		      </div>
+		    </div>
+		    
+		    <div class="reply-box-body"">
+		    ${reply.body}
+		    </div>
+		    
+		    <div class="reply-box-bottom flex"">
+		        <a href="#">댓글달기</a>
+		        <div class="flex-grow-1"></div>
+		        <c:if test="${isLogined}">
+		        <a href="../reply/modify?id=${reply.id}&redirectUrl=${encodedCurrentUrl}" style="margin-right:5px;">수정</a>
+			    <a onclick="if (confirm('정말 삭제 하시겠습니까?') == false){ return false;}"
+							href="../reply/doDelete?id=${reply.id}&redirectUrl=${encodedCurrentUrl}">삭제</a>
+			    </c:if>
+		    </div>
+	    </div>
+    </c:forEach>
+  </div>
 </div>
 
 
