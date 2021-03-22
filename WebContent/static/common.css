@@ -820,7 +820,7 @@ a {
 /* 댓글작성 끝 */
 
 /* 댓글리스트 시작 */
-.reply-like{
+.reply-like-box > a:first-child{
   margin-right:10px;
 }
 

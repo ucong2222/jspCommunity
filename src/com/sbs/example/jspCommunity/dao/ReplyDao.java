@@ -36,7 +36,7 @@ public class ReplyDao {
 		sql.append("INNER JOIN `member` AS M");
 		sql.append("ON R.memberId = M.id");
 		sql.append("LEFT JOIN `like` AS L");
-		sql.append("ON L.relTypeCode = 'article'");
+		sql.append("ON L.relTypeCode = 'reply'");
 		sql.append("AND R.id = L.relId");
 		sql.append("WHERE 1");
 		sql.append("AND R.relTypeCode = ?", relTypeCode);
@@ -76,6 +76,31 @@ public class ReplyDao {
 		sql.append("AND id = ?", id);
 
 		return MysqlUtil.delete(sql);
+	}
+
+	public Reply getForPrintReplyById(int relId) {
+		SecSql sql = new SecSql();
+		sql.append("SELECT R.*");
+		sql.append(", M.name AS extra__writer");
+		sql.append(", IFNULL(SUM(L.point), 0) AS extra__likePoint");
+		sql.append(", IFNULL(SUM(IF(L.point > 0, L.point, 0)), 0) AS extra__likeOnlyPoint");
+		sql.append(", IFNULL(SUM(IF(L.point < 0, L.point * -1, 0)), 0) extra__dislikeOnlyPoint");
+		sql.append("FROM reply AS R");
+		sql.append("INNER JOIN `member` AS M");
+		sql.append("ON R.memberId = M.id");
+		sql.append("LEFT JOIN `like` AS L");
+		sql.append("ON L.relTypeCode = 'reply'");
+		sql.append("AND R.id = L.relId");
+		sql.append("WHERE 1");
+		sql.append("AND R.id = ?", relId);
+
+		Map<String, Object> replyMap = MysqlUtil.selectRow(sql);
+
+		if (replyMap.isEmpty()) {
+			return null;
+		}
+
+		return new Reply(replyMap);
 	}
 
 }

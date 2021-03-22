@@ -82,13 +82,13 @@ public class UsrReplyController extends Controller {
 		if (reply == null) {
 			return msgAndBack(req, id + "번 댓글은 존재하지 않습니다.");
 		}
-		
+
 		if (replyService.actorCanDelete(reply, loginedMemberId) == false) {
 			return msgAndBack(req, "삭제권한이 없습니다.");
 		}
 
 		replyService.delete(id);
-		
+
 		return msgAndReplace(req, id + "번 댓글이 삭제되었습니다.", redirectUrl);
 	}
 

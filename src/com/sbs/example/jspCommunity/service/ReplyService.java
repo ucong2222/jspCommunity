@@ -41,4 +41,8 @@ public class ReplyService {
 		return replyDao.delete(id);
 	}
 
+	public Reply getForPrintReplyById(int relId) {
+		return replyDao.getForPrintReplyById(relId);
+	}
+
 }

@@ -40,8 +40,10 @@
 			function(data){
 				if (data.resultCode == 'F-1'){
 					alert(data.msg);
-				} else{
+				}else if (data.body.relTypeCode == 'article'){
 				$('.likeOnlyPoint').text(data.body.likeOnlyPoint);
+				}else if (data.body.relTypeCode == 'reply'){
+					$('.reply-likeOnlyPoint-' + data.body.relId ).text(data.body.likeOnlyPoint);
 				}
 			},
 			'json',
@@ -62,8 +64,10 @@
 			function(data){
 				if (data.resultCode == 'F-1'){
 					alert(data.msg);
-				} else{
+				} else if (data.body.relTypeCode == 'article'){
 				$('.dislikeOnlyPoint').text(data.body.dislikeOnlyPoint);
+				} else if (data.body.relTypeCode == 'reply'){
+					$('.reply-dislikeOnlyPoint-' + data.body.relId ).text(data.body.dislikeOnlyPoint);
 				}
 			},
 			'json',
@@ -138,12 +142,12 @@
 		<div class="article-detail-box__bottom flex flex-jc-e">
 			<a onclick="doLike('article', '${article.id}');">
 				<span><i id="like" class="far fa-thumbs-up"></i></span>
-				<span>좋아요</span>
+				<span style="cursor:pointer;">좋아요</span>
 				<span class="likeOnlyPoint">${article.extra__likeOnlyPoint}</span>
 			</a>
 			<a onclick="doDislike('article', '${article.id}');">
 				<span><i id="disLike" class="far fa-thumbs-down"></i></span>
-				<span>싫어요</span>
+				<span style="cursor:pointer;">싫어요</span>
 				<span class="dislikeOnlyPoint">${article.extra__dislikeOnlyPoint}</span>
 			</a>	
 			<c:if test="${sessionScope.loginedMemberId eq article.memberId}">
@@ -249,14 +253,14 @@
 		      <div class="reply-reg-date">${reply.regDate}</div>
 		      <div class="flex-grow-1"></div>
 		      <div class="reply-like-box flex">
-		        <div class="reply-like">
-		          <span><i id="like" class="far fa-thumbs-up"></i></span>
-		          <span>${reply.extra__likeOnlyPoint}</span>
-		        </div>
-		        <div class="reply-dislike">
-		          <span><i id="dislike" class="far fa-thumbs-down"></i></span>
-		          <span>${reply.extra__dislikeOnlyPoint}</span>
-		        </div>
+		        <a onclick="doLike('reply', '${reply.id}');">
+		          <span style="cursor:pointer;"><i id="like" class="far fa-thumbs-up"></i></span>
+		          <span class="reply-likeOnlyPoint-${reply.id}">${reply.extra__likeOnlyPoint}</span>
+		        </a>
+		        <a onclick="doDislike('reply', '${reply.id}');">
+		          <span style="cursor:pointer;"><i id="dislike" class="far fa-thumbs-down"></i></span>
+		          <span class="reply-dislikeOnlyPoint-${reply.id}">${reply.extra__dislikeOnlyPoint}</span>
+		        </a>
 		      </div>
 		    </div>
 		    
