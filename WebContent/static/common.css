@@ -830,33 +830,33 @@ a {
   }
 }
 
-.reply-box:first-child{
+.reply-list:first-child{
 	margin-top:10px;
 }
 
-.reply-box{
+.reply-list{
 	border-top:solid #afafaf 1px;
 }
 
-.reply-box>div{
+.reply-list>div{
 	padding-top:5px;
 	padding-bottom:5px;
 }
 
-.reply-box>div:first-child{
+.reply-list>div:first-child{
 	padding-top:20px;
 }
 
-.reply-box>div:last-child{
+.reply-list>div:last-child{
 	padding-bottom:20px;
 }
 
 
-.reply-reg-date, .reply-box-bottom{
+.reply-reg-date, .reply-list-bottom{
 	color:gray;
 }
 
-.reply-list-box .reply-box.focus {
+.reply-list-box .reply-list.focus {
   background-color:#dfdfdf;
   transition: background-color 0s;
 }

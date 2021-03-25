@@ -165,5 +165,39 @@ public class UsrReplyController extends Controller {
 
 		return json(req, new ResultData(resultCode, msg, "articleReplies", articleReplies, "articleReplyCnt", articleRepliesAll.size()));
 	}
+	
+	public String doDeleteReplyAjax(HttpServletRequest req, HttpServletResponse resp) {
+
+		String resultCode = null;
+		String msg = null;
+
+		int loginedMemberId = (int) req.getAttribute("loginedMemberId");
+
+		int id = Util.getAsInt(req.getParameter("id"), 0);
+
+		if (id == 0) {
+			resultCode = "F-1";
+			msg = "번호를 입력해주세요.";
+		}
+
+		Reply reply = replyService.getReplyById(id);
+
+		if (reply == null) {
+			resultCode = "F-2";
+			msg = id + "번 댓글은 존재하지 않습니다.";
+		}
+
+		if (replyService.actorCanDelete(reply, loginedMemberId) == false) {
+			resultCode = "F-3";
+			msg = "삭제권한이 없습니다.";
+		}
+
+		replyService.delete(id);
+		
+		resultCode = "S-1";
+		msg = "삭제 성공";
+
+		return json(req, new ResultData(resultCode, msg));
+	}
 
 }

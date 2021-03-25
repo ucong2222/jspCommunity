@@ -6,10 +6,29 @@
 <c:set var="pageTitle" value="${board.name} 게시물 상세 페이지" />
 <%@ include file="../../part/head.jspf"%>
 
+<style>
+.reply-list-box .loading-inline {
+	display:none;
+	font-weit:bold;
+	color:red;
+}
+.reply-list-box .reply-list[data-loading="Y"] .loading-none {
+	display:none;
+}
+.reply-list-box .reply-list[data-loading="Y"] .loading-inline {
+	display:inline;
+}
+</style>
+
 <script>
+
+var ArticleReply__loadListDelay = 1000;
+// 임시
+ArticleReply__loadListDelay = 5000;
+
 $(function(){
 	if ( param.focusReplyId ) {
-		const $target = $('.reply-list-box .reply-box[data-article-reply-id="' + param.focusReplyId + '"]');
+		const $target = $('.reply-list-box .reply-list[data-article-reply-id="' + param.focusReplyId + '"]');
 		$target.addClass('focus');
 	
 		setTimeout(function() {
@@ -118,7 +137,7 @@ function ArticleReply__loadList() {
 			ArticleReply__lastLoadedArticleReplyId = articleReply.id;
 		}
 		
-		setTimeout(ArticleReply__loadList, 1000);
+		setTimeout(ArticleReply__loadList, ArticleReply__loadListDelay);
 		
 	},
 	'json'
@@ -145,8 +164,24 @@ $(function() {
 	ArticleReply__loadList();
 });
 
+
+// 댓글삭제 ajax
 function ArticleReply__delete(obj) {
-	alert(obj);
+	var $clickedBtn = $(obj);
+	var $list = $clickedBtn.closest('.reply-list');
+	var replyId = parseInt($list.attr('data-article-reply-id'));
+	$list.attr('data-loading', 'Y');
+	$.post(
+		'../reply/doDeleteReplyAjax',
+		{
+			id: replyId
+		},
+		function(data) {
+			$list.remove();
+			$list.attr('data-loading', 'N');
+		},
+		'json'
+	);
 }
 		
 </script>
@@ -264,8 +299,8 @@ function ArticleReply__delete(obj) {
 <!-- 게시물 댓글 끝-->
 
 <div class="template-box template-box-1">
-	<div class="reply-box" data-id="{$번호}">
-		<div class="reply-box-top flex">
+	<div class="reply-list" data-article-reply-id="{$번호}">
+		<div class="reply-list-top flex">
 			<div class="reply-name" style="font-weight: bold; margin-right: 5px;">{$작성자}</div>
 			<div class="reply-reg-date">{$날짜}</div>
 			<div class="flex-grow-1"></div>
@@ -281,14 +316,15 @@ function ArticleReply__delete(obj) {
 			</div>
 		</div>
 
-		<div class="reply-box-body"">{$내용}</div>
+		<div class="reply-list-body"">{$내용}</div>
 
-		<div class="reply-box-bottom flex">
+		<div class="reply-list-bottom flex">
 			<a href="#">댓글달기</a>
 			<div class="flex-grow-1"></div>
 			<c:if test="${isLogined}">
-				<a href="#" onclick="return false;" style="margin-right: 5px;">수정</a>
-				<a onclick="if ( confirm('정말 삭제하시겠습니까?') ) { ArticleReply__delete(this); } return false;" href="#">삭제</a>
+				<a class="loading-none" href="#" onclick="return false;" style="margin-right: 5px;">수정</a>
+				<span class="loading-inline">삭제중입니다...</span>
+				<a class="loading-none" onclick="if ( confirm('정말 삭제하시겠습니까?') ) { ArticleReply__delete(this); } return false;" href="#">삭제</a>
 			</c:if>
 		</div>
 	</div>
