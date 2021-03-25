@@ -117,6 +117,9 @@ function ArticleReply__loadList() {
 			
 			ArticleReply__lastLoadedArticleReplyId = articleReply.id;
 		}
+		
+		setTimeout(ArticleReply__loadList, 1000);
+		
 	},
 	'json'
 	);
@@ -124,43 +127,27 @@ function ArticleReply__loadList() {
 	
 var ArticleReply__$list;
 function ArticleReply__drawReply(articleReply) {
-	html = '';
-	html = '<div  class="reply-box" data-article-reply-id="' + articleReply.id + '">';
-	html += '<div class="reply-box-top flex">';
-	html += '<div class="reply-name" style="font-weight: bold; margin-right: 5px;">' + articleReply.extra__writer + '</div>';
-	html += '<div class="reply-reg-date">' + articleReply.regDate + '</div>';
-	html += '<div class="flex-grow-1"></div>';
-	html += '<div class="reply-like-box flex">';
-	html +=	'<a onclick="doLike("reply", "'+ articleReply.id+'");">';
-	html += '<span style="cursor: pointer;"><i id="like" class="far fa-thumbs-up"></i></span>';
-	html += '<span class="reply-likeOnlyPoint-' + articleReply.id+ '">'+ articleReply.extra__likeOnlyPoint+ '</span>';
-	html +=	'</a>';
-	html += '<a onclick="doDislike("reply", "' + articleReply.id + '");">';
-	html += '<span style="cursor: pointer;"><i id="dislike" class="far fa-thumbs-down"></i></span>';
-	html += '<span class="reply-dislikeOnlyPoint-' + articleReply.id + '">' + articleReply.extra__dislikeOnlyPoint + '</span>';
-	html +=	'</a>';
-	html += '</div>';
-    html += '</div>';
-
-	html += '<div class="reply-box-body"">' + articleReply.body+ '</div>';
-
-	html += '<div class="reply-box-bottom flex">';
-	html += '<a href="#">댓글달기</a>';
-	html += '<div class="flex-grow-1"></div>';
-	html += '<c:if test="${isLogined}">';
-	html += '<a href="#" style="margin-right: 5px;">수정</a>';
-	html += '<a onclick="#">삭제</a>';
-	html += '</c:if>';
-	html += '</div>';
-    html += '</div>';
+	var html = $('.template-box-1').html();
+	
+	html = replaceAll(html, "{$번호}", articleReply.id);
+	html = replaceAll(html, "{$날짜}", articleReply.regDate);
+	html = replaceAll(html, "{$작성자}", articleReply.extra__writer);
+	html = replaceAll(html, "{$내용}", articleReply.body);
+	html = replaceAll(html, "{$좋아요}", articleReply.extra__likeOnlyPoint);
+	html = replaceAll(html, "{$싫어요}", articleReply.extra__dislikeOnlyPoint);
+	
 	ArticleReply__$list.prepend(html);
 }
 
 $(function() {
 	ArticleReply__$list = $('.reply-list-box > div');
 	
-	setInterval(ArticleReply__loadList, 1000);
+	ArticleReply__loadList();
 });
+
+function ArticleReply__delete(obj) {
+	alert(obj);
+}
 		
 </script>
 
@@ -275,6 +262,38 @@ $(function() {
 	</div>
 </c:if>
 <!-- 게시물 댓글 끝-->
+
+<div class="template-box template-box-1">
+	<div class="reply-box" data-id="{$번호}">
+		<div class="reply-box-top flex">
+			<div class="reply-name" style="font-weight: bold; margin-right: 5px;">{$작성자}</div>
+			<div class="reply-reg-date">{$날짜}</div>
+			<div class="flex-grow-1"></div>
+			<div class="reply-like-box flex">
+				<a onclick="doLike('reply', '{$번호}');">
+					<span style="cursor: pointer;"><i id="like" class="far fa-thumbs-up"></i></span>
+					<span class="reply-likeOnlyPoint-{$번호}">{$좋아요}</span>
+				</a>
+				<a onclick="doDislike('reply', '{$번호}');">
+					<span style="cursor: pointer;"><i id="dislike" class="far fa-thumbs-down"></i></span>
+					<span class="reply-dislikeOnlyPoint-{$번호}">{$싫어요}</span>
+				</a>
+			</div>
+		</div>
+
+		<div class="reply-box-body"">{$내용}</div>
+
+		<div class="reply-box-bottom flex">
+			<a href="#">댓글달기</a>
+			<div class="flex-grow-1"></div>
+			<c:if test="${isLogined}">
+				<a href="#" onclick="return false;" style="margin-right: 5px;">수정</a>
+				<a onclick="if ( confirm('정말 삭제하시겠습니까?') ) { ArticleReply__delete(this); } return false;" href="#">삭제</a>
+			</c:if>
+		</div>
+	</div>
+</div>
+
 
 <!-- 게시물 댓글리스트 시작-->
 <div class="title-bar con-min-width">

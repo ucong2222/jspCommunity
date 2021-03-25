@@ -105,5 +105,9 @@ function EditorViewer__init() {
   });
 }
 
+function replaceAll(str, searchStr, replaceStr) {
+    return str.split(searchStr).join(replaceStr);
+} 
+
 EditorViewer__init();
 Editor__init(); 

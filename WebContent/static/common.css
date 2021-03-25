@@ -168,14 +168,14 @@ a {
   }
 }
 
-.con-min-width {
-
-}
-
 .con {
   max-width: var(--site-width);
   padding: 0 10px;
 }
+
+.template-box {
+	display:none;
+} 
 
 /* 토스트UI에디터 시작 */
 .tui-editor-contents {
