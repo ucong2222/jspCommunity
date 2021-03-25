@@ -7,111 +7,107 @@
 <%@ include file="../../part/head.jspf"%>
 
 <script>
-	$(function(){
-		if ( param.focusReplyId ) {
-			const $target = $('.reply-list-box .reply-box[data-id="' + param.focusReplyId + '"]');
-			$target.addClass('focus');
-		
+$(function(){
+	if ( param.focusReplyId ) {
+		const $target = $('.reply-list-box .reply-box[data-id="' + param.focusReplyId + '"]');
+		$target.addClass('focus');
+	
+		setTimeout(function() {
+			const targetOffset = $target.offset();
+			
+			$(window).scrollTop(targetOffset.top - 100);
+			
 			setTimeout(function() {
-				const targetOffset = $target.offset();
-				
-				$(window).scrollTop(targetOffset.top - 100);
-				
-				setTimeout(function() {
-					$target.removeClass('focus');
-				}, 1000);
+				$target.removeClass('focus');
 			}, 1000);
-		}
-	});
-	
-	// 좋아요, 싫어요 ajax 구현
-	
-	function doLike(relTypeCode, id){
-		if ( ${loginedMemberId} == 0 ){
-			alert('로그인 후 이용해주세요.');
-			return;
-		}
-		
-		$.get('../like/doLikeAjax',
-				{
-				relTypeCode : relTypeCode,
-				relId : id
-			},
-			function(data){
-				if (data.resultCode == 'F-1'){
-					alert(data.msg);
-				}else if (data.body.relTypeCode == 'article'){
-				$('.likeOnlyPoint').text(data.body.likeOnlyPoint);
-				}else if (data.body.relTypeCode == 'reply'){
-					$('.reply-likeOnlyPoint-' + data.body.relId ).text(data.body.likeOnlyPoint);
-				}
-			},
-			'json',
-		);
+		}, 1000);
+	}
+});
+
+// 좋아요, 싫어요 ajax 구현
+
+function doLike(relTypeCode, id){
+	if ( ${loginedMemberId} == 0 ){
+		alert('로그인 후 이용해주세요.');
+		return;
 	}
 	
-	function doDislike(relTypeCode, id){
-		if ( ${loginedMemberId} == 0 ){
-			alert('로그인 후 이용해주세요.');
-			return;
-		}
-		
-		$.get('../like/doDislikeAjax',
-				{
-				relTypeCode : relTypeCode,
-				relId : id
-			},
-			function(data){
-				if (data.resultCode == 'F-1'){
-					alert(data.msg);
-				} else if (data.body.relTypeCode == 'article'){
-				$('.dislikeOnlyPoint').text(data.body.dislikeOnlyPoint);
-				} else if (data.body.relTypeCode == 'reply'){
-					$('.reply-dislikeOnlyPoint-' + data.body.relId ).text(data.body.dislikeOnlyPoint);
-				}
-			},
-			'json',
-		);
-	}
-	
-	// 댓글 작성 ajax
-	function WriteReply__submitForm(form) {
-			form.body.value = form.body.value.trim();
-			
-			
-			if (form.body.value.length == 0) {
-				alert('댓글을 입력해주세요.');
-				form.body.focus();
-				return;
+	$.get('../like/doLikeAjax',
+			{
+			relTypeCode : relTypeCode,
+			relId : id
+		},
+		function(data){
+			if (data.resultCode == 'F-1'){
+				alert(data.msg);
+			}else if (data.body.relTypeCode == 'article'){
+			$('.likeOnlyPoint').text(data.body.likeOnlyPoint);
+			}else if (data.body.relTypeCode == 'reply'){
+				$('.reply-likeOnlyPoint-' + data.body.relId ).text(data.body.likeOnlyPoint);
 			}
-			$.post('../reply/doWriteReplyAjax', {
-				relTypeCode : form.relTypeCode.value,
-				relId : form.relId.value,
-				body : form.body.value
-			}, function(data) {
-				if (data.resultCode.substr(0,2) == 'F-') {
-					alert(data.msg);
-				}
-				else if ( data.resultCode.substr(0, 2) == 'S-' ) {
-					location.reload(); // 임시
-				}
-			},
-			'json',
-		);
-		form.body.value = '';
+		},
+		'json',
+	);
+}
+
+function doDislike(relTypeCode, id){
+	if ( ${loginedMemberId} == 0 ){
+		alert('로그인 후 이용해주세요.');
+		return;
 	}
 	
-	
-	
+	$.get('../like/doDislikeAjax',
+			{
+			relTypeCode : relTypeCode,
+			relId : id
+		},
+		function(data){
+			if (data.resultCode == 'F-1'){
+				alert(data.msg);
+			} else if (data.body.relTypeCode == 'article'){
+			$('.dislikeOnlyPoint').text(data.body.dislikeOnlyPoint);
+			} else if (data.body.relTypeCode == 'reply'){
+				$('.reply-dislikeOnlyPoint-' + data.body.relId ).text(data.body.dislikeOnlyPoint);
+			}
+		},
+		'json',
+	);
+}
+
+// 댓글 작성 ajax
+function ArticleReply__submitWriteForm(form) {
+		form.body.value = form.body.value.trim();
+		
+		
+		if (form.body.value.length == 0) {
+			alert('댓글을 입력해주세요.');
+			form.body.focus();
+			return;
+		}
+		$.post('../reply/doWriteReplyAjax', {
+			relTypeCode : form.relTypeCode.value,
+			relId : form.relId.value,
+			body : form.body.value
+		}, function(data) {
+			if (data.resultCode.substr(0,2) == 'F-') {
+				alert(data.msg);
+			}
+			else if ( data.resultCode.substr(0, 2) == 'S-' ) {
+				location.reload(); // 임시
+			}
+		},
+		'json',
+	);
+	form.body.value = '';
+}
+		
 </script>
 
 <!-- 게시물 상세 시작-->
 <div class="title-bar con-min-width">
 	<h1 class="con">
-		<span>
-			<i class="far fa-list-alt"></i>
-		</span>
-		<span>공지사항 게시물 상세 페이지</span>
+		<span> <i class="far fa-list-alt"></i>
+		</span> <span>공지사항 게시물 상세 페이지</span>
 	</h1>
 </div>
 
@@ -126,16 +122,13 @@
 			</div>
 			<div class="flex">
 				<div class="article-detail-box__likeCount">
-					<span>조회</span>
-					<span>${article.hit}</span>
+					<span>조회</span> <span>${article.hit}</span>
 				</div>
 				<div class="article-detail-box__recommand">
-					<span>좋아요수</span>
-					<span class="likeOnlyPoint">${article.extra__likeOnlyPoint}</span>
+					<span>좋아요수</span> <span class="likeOnlyPoint">${article.extra__likeOnlyPoint}</span>
 				</div>
 				<div class="article-detail-box__recommand">
-					<span>싫어요수</span>
-					<span class="dislikeOnlyPoint">${article.extra__dislikeOnlyPoint}</span>
+					<span>싫어요수</span> <span class="dislikeOnlyPoint">${article.extra__dislikeOnlyPoint}</span>
 				</div>
 			</div>
 		</div>
@@ -148,16 +141,13 @@
 			</div>
 			<div class="flex">
 				<div class="article-detail-box__likeCount">
-					<span>조회</span>
-					<span>${article.hit}</span>
+					<span>조회</span> <span>${article.hit}</span>
 				</div>
 				<div class="article-detail-box__recommand">
-					<span>좋아요수</span>
-					<span class="likeOnlyPoint">${article.extra__likeOnlyPoint}</span>
+					<span>좋아요수</span> <span class="likeOnlyPoint">${article.extra__likeOnlyPoint}</span>
 				</div>
 				<div class="article-detail-box__recommand">
-					<span>싫어요수</span>
-					<span class="dislikeOnlyPoint">${article.extra__dislikeOnlyPoint}</span>
+					<span>싫어요수</span> <span class="dislikeOnlyPoint">${article.extra__dislikeOnlyPoint}</span>
 				</div>
 			</div>
 		</div>
@@ -167,16 +157,13 @@
 			<div class="toast-ui-viewer"></div>
 		</div>
 		<div class="article-detail-box__bottom flex flex-jc-e">
-			<a onclick="doLike('article', '${article.id}');">
-				<span><i id="like" class="far fa-thumbs-up"></i></span>
-				<span style="cursor:pointer;">좋아요</span>
-				<span class="likeOnlyPoint">${article.extra__likeOnlyPoint}</span>
+			<a onclick="doLike('article', '${article.id}');"> <span><i
+					id="like" class="far fa-thumbs-up"></i></span> <span
+				style="cursor: pointer;">좋아요</span> <span class="likeOnlyPoint">${article.extra__likeOnlyPoint}</span>
+			</a> <a onclick="doDislike('article', '${article.id}');"> <span><i
+					id="disLike" class="far fa-thumbs-down"></i></span> <span
+				style="cursor: pointer;">싫어요</span> <span class="dislikeOnlyPoint">${article.extra__dislikeOnlyPoint}</span>
 			</a>
-			<a onclick="doDislike('article', '${article.id}');">
-				<span><i id="disLike" class="far fa-thumbs-down"></i></span>
-				<span style="cursor:pointer;">싫어요</span>
-				<span class="dislikeOnlyPoint">${article.extra__dislikeOnlyPoint}</span>
-			</a>	
 			<c:if test="${sessionScope.loginedMemberId eq article.memberId}">
 				<a href="modify?id=${article.id}">수정</a>
 				<a onclick="if (confirm('정말 삭제 하시겠습니까?') == false){ return false;}"
@@ -191,17 +178,16 @@
 <!-- 게시물 댓글 시작-->
 <div class="title-bar con-min-width">
 	<h1 class="con">
-		<span>
-			<i class="fas fa-newspaper"></i>
-		</span>
-		<span>댓글작성</span>
+		<span> <i class="fas fa-newspaper"></i>
+		</span> <span>댓글작성</span>
 	</h1>
 </div>
 <c:if test="${isLogined == false}">
-	<div
-		class="article-reply-write-form-box form-box con-min-width">
+	<div class="article-reply-write-form-box form-box con-min-width">
 		<div class="con">
-			<a class="udl hover-link" href="../member/login?afterLoginUrl=${encodedCurrentUrl}">로그인</a> 후 이용해주세요.
+			<a class="udl hover-link"
+				href="../member/login?afterLoginUrl=${encodedCurrentUrl}">로그인</a> 후
+			이용해주세요.
 		</div>
 	</div>
 </c:if>
@@ -210,17 +196,21 @@
 	<div class="article-reply-write-form-box form-box con-min-width">
 
 		<div class="con form-box">
-		<form action="" onsubmit="WriteReply__submitForm(this); return false;">
-			<input type="hidden" name="redirectUrl" value="${Util.getNewUrl(currentUrl, 'focusReplyId','[NEW_REPLY_ID]')}" />
-			<input type="hidden" name="relTypeCode" value="article" />
-			<input type="hidden" name="relId" value="${article.id}" />
-			
-          <div class="article-reply-write-box__body flex">
-		    <textarea name="body"></textarea>
-		    <input type="submit" onclick="if ( confirm('작성하시겠습니까?') == false ) { return false; }" value="작성" />
-		  </div>
-        </form>
-      </div>
+			<form action=""
+				onsubmit="ArticleReply__submitWriteForm(this); return false;">
+				<input type="hidden" name="redirectUrl"
+					value="${Util.getNewUrl(currentUrl, 'focusReplyId','[NEW_REPLY_ID]')}" />
+				<input type="hidden" name="relTypeCode" value="article" /> <input
+					type="hidden" name="relId" value="${article.id}" />
+
+				<div class="article-reply-write-box__body flex">
+					<textarea name="body"></textarea>
+					<input type="submit"
+						onclick="if ( confirm('작성하시겠습니까?') == false ) { return false; }"
+						value="작성" />
+				</div>
+			</form>
+		</div>
 	</div>
 </c:if>
 <!-- 게시물 댓글 끝-->
@@ -228,61 +218,60 @@
 <!-- 게시물 댓글리스트 시작-->
 <div class="title-bar con-min-width">
 	<h1 class="con">
-		<span>
-			<i class="fas fa-list"></i>
-		</span>
-		<span>댓글 리스트</span>
+		<span> <i class="fas fa-list"></i>
+		</span> <span>댓글 리스트</span>
 	</h1>
 </div>
 
 <div class="reply-list-total-count-box con-min-width">
 	<div class="con">
 		<div>
-			<span>
-				<i class="fas fa-clipboard-list"></i>
-			</span>
-			<span>총 게시물 수 : </span>
-			<span class="color-red"> ${replies.size()} </span>
+			<span> <i class="fas fa-clipboard-list"></i>
+			</span> <span>총 게시물 수 : </span> <span class="color-red">
+				${replies.size()} </span>
 		</div>
 	</div>
 </div>
 
 <div class="reply-list-box con-min-width">
-  <div class="con">
- 	 <c:forEach items="${replies}" var="reply">
-	    <div class="reply-box" data-id="${reply.id}">
-	    	<div class="reply-box-top flex">
-		      <div class="reply-name" style="font-weight:bold; margin-right:5px;">${reply.extra__writer}</div>
-		      <div class="reply-reg-date">${reply.regDate}</div>
-		      <div class="flex-grow-1"></div>
-		      <div class="reply-like-box flex">
-		        <a onclick="doLike('reply', '${reply.id}');">
-		          <span style="cursor:pointer;"><i id="like" class="far fa-thumbs-up"></i></span>
-		          <span class="reply-likeOnlyPoint-${reply.id}">${reply.extra__likeOnlyPoint}</span>
-		        </a>
-		        <a onclick="doDislike('reply', '${reply.id}');">
-		          <span style="cursor:pointer;"><i id="dislike" class="far fa-thumbs-down"></i></span>
-		          <span class="reply-dislikeOnlyPoint-${reply.id}">${reply.extra__dislikeOnlyPoint}</span>
-		        </a>
-		      </div>
-		    </div>
-		    
-		    <div class="reply-box-body"">
-		    ${reply.body}
-		    </div>
-		    
-		    <div class="reply-box-bottom flex"">
-		        <a href="#">댓글달기</a>
-		        <div class="flex-grow-1"></div>
-		        <c:if test="${isLogined}">
-		        <a href="../reply/modify?id=${reply.id}&redirectUrl=${encodedCurrentUrl}" style="margin-right:5px;">수정</a>
-			    <a onclick="if (confirm('정말 삭제 하시겠습니까?') == false){ return false;}"
+	<div class="con">
+		<c:forEach items="${replies}" var="reply">
+			<div class="reply-box" data-id="${reply.id}">
+				<div class="reply-box-top flex">
+					<div class="reply-name"
+						style="font-weight: bold; margin-right: 5px;">${reply.extra__writer}</div>
+					<div class="reply-reg-date">${reply.regDate}</div>
+					<div class="flex-grow-1"></div>
+					<div class="reply-like-box flex">
+						<a onclick="doLike('reply', '${reply.id}');"> <span
+							style="cursor: pointer;"><i id="like"
+								class="far fa-thumbs-up"></i></span> <span
+							class="reply-likeOnlyPoint-${reply.id}">${reply.extra__likeOnlyPoint}</span>
+						</a> <a onclick="doDislike('reply', '${reply.id}');"> <span
+							style="cursor: pointer;"><i id="dislike"
+								class="far fa-thumbs-down"></i></span> <span
+							class="reply-dislikeOnlyPoint-${reply.id}">${reply.extra__dislikeOnlyPoint}</span>
+						</a>
+					</div>
+				</div>
+
+				<div class="reply-box-body"">${reply.body}</div>
+
+				<div class="reply-box-bottom flex"">
+					<a href="#">댓글달기</a>
+					<div class="flex-grow-1"></div>
+					<c:if test="${isLogined}">
+						<a
+							href="../reply/modify?id=${reply.id}&redirectUrl=${encodedCurrentUrl}"
+							style="margin-right: 5px;">수정</a>
+						<a
+							onclick="if (confirm('정말 삭제 하시겠습니까?') == false){ return false;}"
 							href="../reply/doDelete?id=${reply.id}&redirectUrl=${encodedCurrentUrl}">삭제</a>
-			    </c:if>
-		    </div>
-	    </div>
-    </c:forEach>
-  </div>
+					</c:if>
+				</div>
+			</div>
+		</c:forEach>
+	</div>
 </div>
 
 
