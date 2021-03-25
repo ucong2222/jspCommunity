@@ -45,4 +45,8 @@ public class ReplyService {
 		return replyDao.getForPrintReplyById(relId);
 	}
 
+	public List<Reply> getForPrintArticleRepliesFrom(int id, int from) {
+		return replyDao.getForPrintArticleRepliesFrom(id, from);
+	}
+
 }

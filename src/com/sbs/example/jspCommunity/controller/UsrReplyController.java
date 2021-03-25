@@ -1,6 +1,7 @@
 package com.sbs.example.jspCommunity.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -146,6 +147,23 @@ public class UsrReplyController extends Controller {
 		msg = "성공";
 
 		return json(req, new ResultData(resultCode, msg, "articleId", newArticleId));
+	}
+
+	public String getForPrintArticleRepliesRs(HttpServletRequest req, HttpServletResponse resp) {
+		String resultCode = null;
+		String msg = null;
+
+		int id = Util.getAsInt(req.getParameter("id"), 0);
+		int from = Util.getAsInt(req.getParameter("from"), 0);
+
+		List<Reply> articleRepliesAll = replyService.getForPrintReplies("article", id);
+
+		List<Reply> articleReplies = replyService.getForPrintArticleRepliesFrom(id, from);
+
+		resultCode = "S-1";
+		msg = "성공";
+
+		return json(req, new ResultData(resultCode, msg, "articleReplies", articleReplies, "articleReplyCnt", articleRepliesAll.size()));
 	}
 
 }

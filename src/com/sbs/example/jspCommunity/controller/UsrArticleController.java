@@ -38,7 +38,8 @@ public class UsrArticleController extends Controller {
 		req.setAttribute("board", board);
 
 		int totalCount = articleService.getArticlesCountByBoardId(boardId, searchKeyword, searchKeywordType);
-		List<Article> articles = articleService.getForPrintArticlesByBoardId(boardId, limitStart, itemsInAPage, searchKeyword, searchKeywordType);
+		List<Article> articles = articleService.getForPrintArticlesByBoardId(boardId, limitStart, itemsInAPage,
+				searchKeyword, searchKeywordType);
 
 		int totalPage = (int) Math.ceil(totalCount / (double) itemsInAPage);
 
@@ -90,7 +91,6 @@ public class UsrArticleController extends Controller {
 	public String showDetail(HttpServletRequest req, HttpServletResponse resp) {
 		int id = Util.getAsInt(req.getParameter("id"), 0);
 
-
 		if (id == 0) {
 			return msgAndBack(req, "게시물 번호를 입력해주세요.");
 		}
@@ -102,15 +102,14 @@ public class UsrArticleController extends Controller {
 		if (article == null) {
 			return msgAndBack(req, id + "번 게시물은 존재하지 않습니다.");
 		}
-		
-		
+
 		Board board = articleService.getBoardById(article.getBoardId());
 
 		req.setAttribute("article", article);
-		
+
 		List<Reply> replies = replyService.getForPrintReplies("article", article.getId());
-		req.setAttribute("replies",replies);
-		
+		req.setAttribute("replies", replies);
+
 		req.setAttribute("board", board);
 
 		return "usr/article/detail";
@@ -266,5 +265,5 @@ public class UsrArticleController extends Controller {
 
 		return msgAndReplace(req, id + "번 게시물이 삭제되었습니다.", String.format("list?boardId=%d", boardId));
 	}
-	
+
 }

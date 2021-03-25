@@ -103,4 +103,34 @@ public class ReplyDao {
 		return new Reply(replyMap);
 	}
 
+	public List<Reply> getForPrintArticleRepliesFrom(int id, int from) {
+		List<Reply> replies = new ArrayList<>();
+
+		SecSql sql = new SecSql();
+		sql.append("SELECT R.*");
+		sql.append(", M.name AS extra__writer");
+		sql.append(", IFNULL(SUM(L.point), 0) AS extra__likePoint");
+		sql.append(", IFNULL(SUM(IF(L.point > 0, L.point, 0)), 0) AS extra__likeOnlyPoint");
+		sql.append(", IFNULL(SUM(IF(L.point < 0, L.point * -1, 0)), 0) extra__dislikeOnlyPoint");
+		sql.append("FROM reply AS R");
+		sql.append("INNER JOIN `member` AS M");
+		sql.append("ON R.memberId = M.id");
+		sql.append("LEFT JOIN `like` AS L");
+		sql.append("ON L.relTypeCode = 'reply'");
+		sql.append("AND R.id = L.relId");
+		sql.append("WHERE 1");
+		sql.append("AND R.relId = ?", id);
+		sql.append("AND R.id >= ?", from);
+		sql.append("GROUP BY R.id");
+		sql.append("ORDER BY R.id DESC");
+
+		List<Map<String, Object>> mapList = MysqlUtil.selectRows(sql);
+
+		for (Map<String, Object> map : mapList) {
+			replies.add(new Reply(map));
+		}
+
+		return replies;
+	}
+
 }

@@ -9,7 +9,7 @@
 <script>
 $(function(){
 	if ( param.focusReplyId ) {
-		const $target = $('.reply-list-box .reply-box[data-id="' + param.focusReplyId + '"]');
+		const $target = $('.reply-list-box .reply-box[data-article-reply-id="' + param.focusReplyId + '"]');
 		$target.addClass('focus');
 	
 		setTimeout(function() {
@@ -89,17 +89,78 @@ function ArticleReply__submitWriteForm(form) {
 			relId : form.relId.value,
 			body : form.body.value
 		}, function(data) {
-			if (data.resultCode.substr(0,2) == 'F-') {
-				alert(data.msg);
-			}
-			else if ( data.resultCode.substr(0, 2) == 'S-' ) {
-				location.reload(); // 임시
-			}
+			
 		},
 		'json',
 	);
 	form.body.value = '';
 }
+
+// 댓글리스트 ajax
+var ArticleReply__lastLoadedArticleReplyId = 0;
+
+function ArticleReply__loadList() {
+	$.get('../reply/getForPrintArticleRepliesRs', {
+		id : param.id,
+		from : ArticleReply__lastLoadedArticleReplyId + 1
+	}, function(data) {
+		
+		data.body.articleReplies = data.body.articleReplies.reverse();
+		
+		var articleReplies = data.body.articleReplies;
+		
+		$('.reply-total-cnt').text(data.body.articleReplyCnt);
+		
+		for (var i = 0; i < articleReplies.length; i++) {
+			var articleReply = articleReplies[i];
+			ArticleReply__drawReply(articleReply);
+			
+			ArticleReply__lastLoadedArticleReplyId = articleReply.id;
+		}
+	},
+	'json'
+	);
+}
+	
+var ArticleReply__$list;
+function ArticleReply__drawReply(articleReply) {
+	html = '';
+	html = '<div  class="reply-box" data-article-reply-id="' + articleReply.id + '">';
+	html += '<div class="reply-box-top flex">';
+	html += '<div class="reply-name" style="font-weight: bold; margin-right: 5px;">' + articleReply.extra__writer + '</div>';
+	html += '<div class="reply-reg-date">' + articleReply.regDate + '</div>';
+	html += '<div class="flex-grow-1"></div>';
+	html += '<div class="reply-like-box flex">';
+	html +=	'<a onclick="doLike("reply", "'+ articleReply.id+'");">';
+	html += '<span style="cursor: pointer;"><i id="like" class="far fa-thumbs-up"></i></span>';
+	html += '<span class="reply-likeOnlyPoint-' + articleReply.id+ '">'+ articleReply.extra__likeOnlyPoint+ '</span>';
+	html +=	'</a>';
+	html += '<a onclick="doDislike("reply", "' + articleReply.id + '");">';
+	html += '<span style="cursor: pointer;"><i id="dislike" class="far fa-thumbs-down"></i></span>';
+	html += '<span class="reply-dislikeOnlyPoint-' + articleReply.id + '">' + articleReply.extra__dislikeOnlyPoint + '</span>';
+	html +=	'</a>';
+	html += '</div>';
+    html += '</div>';
+
+	html += '<div class="reply-box-body"">' + articleReply.body+ '</div>';
+
+	html += '<div class="reply-box-bottom flex">';
+	html += '<a href="#">댓글달기</a>';
+	html += '<div class="flex-grow-1"></div>';
+	html += '<c:if test="${isLogined}">';
+	html += '<a href="#" style="margin-right: 5px;">수정</a>';
+	html += '<a onclick="#">삭제</a>';
+	html += '</c:if>';
+	html += '</div>';
+    html += '</div>';
+	ArticleReply__$list.prepend(html);
+}
+
+$(function() {
+	ArticleReply__$list = $('.reply-list-box > div');
+	
+	setInterval(ArticleReply__loadList, 1000);
+});
 		
 </script>
 
@@ -226,38 +287,38 @@ function ArticleReply__submitWriteForm(form) {
 <div class="reply-list-total-count-box con-min-width">
 	<div class="con">
 		<div>
-			<span> <i class="fas fa-clipboard-list"></i>
-			</span> <span>총 게시물 수 : </span> <span class="color-red">
-				${replies.size()} </span>
+			<span> <i class="fas fa-clipboard-list"></i></span>
+			<span>총 게시물 수 : </span>
+			<span></span>
+			<span class="reply-total-cnt">${replies.size()} </span>
 		</div>
 	</div>
 </div>
 
 <div class="reply-list-box con-min-width">
 	<div class="con">
+	<%--
 		<c:forEach items="${replies}" var="reply">
 			<div class="reply-box" data-id="${reply.id}">
 				<div class="reply-box-top flex">
-					<div class="reply-name"
-						style="font-weight: bold; margin-right: 5px;">${reply.extra__writer}</div>
+					<div class="reply-name" style="font-weight: bold; margin-right: 5px;">${reply.extra__writer}</div>
 					<div class="reply-reg-date">${reply.regDate}</div>
 					<div class="flex-grow-1"></div>
 					<div class="reply-like-box flex">
-						<a onclick="doLike('reply', '${reply.id}');"> <span
-							style="cursor: pointer;"><i id="like"
-								class="far fa-thumbs-up"></i></span> <span
-							class="reply-likeOnlyPoint-${reply.id}">${reply.extra__likeOnlyPoint}</span>
-						</a> <a onclick="doDislike('reply', '${reply.id}');"> <span
-							style="cursor: pointer;"><i id="dislike"
-								class="far fa-thumbs-down"></i></span> <span
-							class="reply-dislikeOnlyPoint-${reply.id}">${reply.extra__dislikeOnlyPoint}</span>
+						<a onclick="doLike('reply', '${reply.id}');">
+							<span style="cursor: pointer;"><i id="like" class="far fa-thumbs-up"></i></span>
+							<span class="reply-likeOnlyPoint-${reply.id}">${reply.extra__likeOnlyPoint}</span>
+						</a>
+						<a onclick="doDislike('reply', '${reply.id}');">
+							<span style="cursor: pointer;"><i id="dislike" class="far fa-thumbs-down"></i></span>
+							<span class="reply-dislikeOnlyPoint-${reply.id}">${reply.extra__dislikeOnlyPoint}</span>
 						</a>
 					</div>
 				</div>
 
 				<div class="reply-box-body"">${reply.body}</div>
 
-				<div class="reply-box-bottom flex"">
+				<div class="reply-box-bottom flex">
 					<a href="#">댓글달기</a>
 					<div class="flex-grow-1"></div>
 					<c:if test="${isLogined}">
@@ -271,6 +332,7 @@ function ArticleReply__submitWriteForm(form) {
 				</div>
 			</div>
 		</c:forEach>
+	--%>	
 	</div>
 </div>
 
