@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.sbs.example.jspCommunity.container.Container;
 import com.sbs.example.jspCommunity.dto.Article;
 import com.sbs.example.jspCommunity.dto.Reply;
+import com.sbs.example.jspCommunity.dto.ResultData;
 import com.sbs.example.jspCommunity.service.ArticleService;
 import com.sbs.example.jspCommunity.service.ReplyService;
 import com.sbs.example.util.Util;
@@ -96,4 +97,55 @@ public class UsrReplyController extends Controller {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	public String doWriteReplyAjax(HttpServletRequest req, HttpServletResponse resp) {
+
+		String resultCode = null;
+		String msg = null;
+
+		int loginedMemberId = (int) req.getAttribute("loginedMemberId");
+
+		String relTypeCode = req.getParameter("relTypeCode");
+
+		if (relTypeCode == null) {
+			return msgAndBack(req, "관련데이터타입코드를 입력해주세요.");
+		}
+
+		int relId = Util.getAsInt(req.getParameter("relId"), 0);
+
+		if (relId == 0) {
+			resultCode = "F-1";
+			msg = "관련데이터번호를 입력해주세요.";
+		}
+
+		if (relTypeCode.equals("article")) {
+			Article article = articleService.getArticleById(relId);
+
+			if (article == null) {
+				resultCode = "F-2";
+				msg = "게시물이 존재하지 않습니다.";
+			}
+		}
+
+		String body = req.getParameter("body");
+
+		if (Util.isEmpty(body)) {
+			resultCode = "F-2";
+			msg = "내용을 입력해주세요.";
+		}
+
+		Map<String, Object> writeArgs = new HashMap<>();
+		writeArgs.put("memberId", loginedMemberId);
+		writeArgs.put("relId", relId);
+		writeArgs.put("relTypeCode", relTypeCode);
+		writeArgs.put("body", body);
+
+		int newArticleId = replyService.write(writeArgs);
+
+		resultCode = "S-1";
+		msg = "성공";
+
+		return json(req, new ResultData(resultCode, msg, "articleId", newArticleId));
+	}
+
 }

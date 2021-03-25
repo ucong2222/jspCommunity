@@ -74,6 +74,33 @@
 		);
 	}
 	
+	// 댓글 작성 ajax
+	function WriteReply__submitForm(form) {
+			form.body.value = form.body.value.trim();
+			
+			
+			if (form.body.value.length == 0) {
+				alert('댓글을 입력해주세요.');
+				form.body.focus();
+				return;
+			}
+			$.post('../reply/doWriteReplyAjax', {
+				relTypeCode : form.relTypeCode.value,
+				relId : form.relId.value,
+				body : form.body.value
+			}, function(data) {
+				if (data.resultCode.substr(0,2) == 'F-') {
+					alert(data.msg);
+				}
+				else if ( data.resultCode.substr(0, 2) == 'S-' ) {
+					location.reload(); // 임시
+				}
+			},
+			'json',
+		);
+		form.body.value = '';
+	}
+	
 	
 	
 </script>
@@ -181,33 +208,9 @@
 
 <c:if test="${isLogined}">
 	<div class="article-reply-write-form-box form-box con-min-width">
-		<script>
-	let Reply__DoWriteForm__submited = false;
-	let Reply__DoWriteForm__checkedLoginId = "";
-	
-	// 폼 발송전 체크
-	function Reply__DoWriteForm__submit(form) {
-		if ( Reply__DoWriteForm__submited ) {
-			alert('처리중입니다.');
-			return;
-		}
-			
-		form.body.value = form.body.value.trim()
-		
-		if ( form.body.value.length == 0 ) {
-			alert('내용을 입력해주세요.');
-			form.body.focus();
-			
-			return;
-		}
-		
-		form.submit();
-		Reply__DoWriteForm__submited = true;
-	}
-	</script>
 
 		<div class="con form-box">
-		<form action="../reply/doWrite" method="POST" onsubmit="Reply__DoWriteForm__submit(this); return false;">
+		<form action="" onsubmit="WriteReply__submitForm(this); return false;">
 			<input type="hidden" name="redirectUrl" value="${Util.getNewUrl(currentUrl, 'focusReplyId','[NEW_REPLY_ID]')}" />
 			<input type="hidden" name="relTypeCode" value="article" />
 			<input type="hidden" name="relId" value="${article.id}" />

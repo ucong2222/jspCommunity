@@ -266,5 +266,5 @@ public class UsrArticleController extends Controller {
 
 		return msgAndReplace(req, id + "번 게시물이 삭제되었습니다.", String.format("list?boardId=%d", boardId));
 	}
-
+	
 }
