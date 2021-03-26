@@ -94,11 +94,6 @@ public class UsrReplyController extends Controller {
 		return msgAndReplace(req, id + "번 댓글이 삭제되었습니다.", redirectUrl);
 	}
 
-	public String doModify(HttpServletRequest req, HttpServletResponse resp) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	public String doWriteReplyAjax(HttpServletRequest req, HttpServletResponse resp) {
 
 		String resultCode = null;
@@ -109,30 +104,35 @@ public class UsrReplyController extends Controller {
 		String relTypeCode = req.getParameter("relTypeCode");
 
 		if (relTypeCode == null) {
-			return msgAndBack(req, "관련데이터타입코드를 입력해주세요.");
+			resultCode = "F-1";
+			msg = "관련된 타입코드를 입력해주세요.";
+			return json(req, new ResultData(resultCode, msg));
 		}
 
 		int relId = Util.getAsInt(req.getParameter("relId"), 0);
 
 		if (relId == 0) {
-			resultCode = "F-1";
+			resultCode = "F-2";
 			msg = "관련데이터번호를 입력해주세요.";
+			return json(req, new ResultData(resultCode, msg));
 		}
 
 		if (relTypeCode.equals("article")) {
 			Article article = articleService.getArticleById(relId);
 
 			if (article == null) {
-				resultCode = "F-2";
+				resultCode = "F-3";
 				msg = "게시물이 존재하지 않습니다.";
+				return json(req, new ResultData(resultCode, msg));
 			}
 		}
 
 		String body = req.getParameter("body");
 
 		if (Util.isEmpty(body)) {
-			resultCode = "F-2";
+			resultCode = "F-4";
 			msg = "내용을 입력해주세요.";
+			return json(req, new ResultData(resultCode, msg));
 		}
 
 		Map<String, Object> writeArgs = new HashMap<>();
@@ -154,7 +154,20 @@ public class UsrReplyController extends Controller {
 		String msg = null;
 
 		int id = Util.getAsInt(req.getParameter("id"), 0);
+		
+		if (id == 0) {
+			resultCode = "F-1";
+			msg = "번호를 입력해주세요.";
+			return json(req, new ResultData(resultCode, msg));
+		}
+		
 		int from = Util.getAsInt(req.getParameter("from"), 0);
+		
+		if (from == 0) {
+			resultCode = "F-2";
+			msg = "from 번호가 없습니다.";
+			return json(req, new ResultData(resultCode, msg));
+		}
 
 		List<Reply> articleRepliesAll = replyService.getForPrintReplies("article", id);
 
@@ -178,6 +191,7 @@ public class UsrReplyController extends Controller {
 		if (id == 0) {
 			resultCode = "F-1";
 			msg = "번호를 입력해주세요.";
+			return json(req, new ResultData(resultCode, msg));
 		}
 
 		Reply reply = replyService.getReplyById(id);
@@ -185,11 +199,13 @@ public class UsrReplyController extends Controller {
 		if (reply == null) {
 			resultCode = "F-2";
 			msg = id + "번 댓글은 존재하지 않습니다.";
+			return json(req, new ResultData(resultCode, msg));
 		}
 
 		if (replyService.actorCanDelete(reply, loginedMemberId) == false) {
 			resultCode = "F-3";
 			msg = "삭제권한이 없습니다.";
+			return json(req, new ResultData(resultCode, msg));
 		}
 
 		replyService.delete(id);

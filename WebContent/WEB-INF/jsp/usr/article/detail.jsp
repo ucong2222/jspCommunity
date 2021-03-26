@@ -108,7 +108,9 @@ function ArticleReply__submitWriteForm(form) {
 			relId : form.relId.value,
 			body : form.body.value
 		}, function(data) {
-			
+			if (data.resultCode.substr(0,2) == 'F-') {
+				alert(data.msg);
+			}
 		},
 		'json',
 	);
@@ -123,6 +125,10 @@ function ArticleReply__loadList() {
 		id : param.id,
 		from : ArticleReply__lastLoadedArticleReplyId + 1
 	}, function(data) {
+		
+		if (data.resultCode.substr(0,2) == 'F-') {
+			alert(data.msg);
+		}
 		
 		data.body.articleReplies = data.body.articleReplies.reverse();
 		
@@ -177,6 +183,11 @@ function ArticleReply__delete(obj) {
 			id: replyId
 		},
 		function(data) {
+			
+			if (data.resultCode.substr(0,2) == 'F-') {
+				alert(data.msg);
+			}
+			
 			$list.remove();
 			$list.attr('data-loading', 'N');
 		},
