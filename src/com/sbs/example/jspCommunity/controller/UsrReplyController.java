@@ -216,4 +216,53 @@ public class UsrReplyController extends Controller {
 		return json(req, new ResultData(resultCode, msg));
 	}
 
+	public String doModifyReplyAjax(HttpServletRequest req, HttpServletResponse resp) {
+		
+		String resultCode = null;
+		String msg = null;
+		
+		int loginedMemberId = (int) req.getAttribute("loginedMemberId");
+		
+		int id = Util.getAsInt(req.getParameter("id"), 0);
+		
+		if (id == 0) {
+			resultCode = "F-1";
+			msg = "번호를 입력해주세요.";
+			return json(req, new ResultData(resultCode, msg));
+		}
+		
+		Reply reply = replyService.getReplyById(id);
+
+		if (reply == null) {
+			resultCode = "F-2";
+			msg = id + "번 댓글은 존재하지 않습니다.";
+			return json(req, new ResultData(resultCode, msg));
+		}
+		
+		if (replyService.actorCanModify(reply, loginedMemberId) == false) {
+			resultCode = "F-3";
+			msg = "수정권한이 없습니다.";
+			return json(req, new ResultData(resultCode, msg));
+		}
+		
+		String body = req.getParameter("body");
+
+		if (Util.isEmpty(body)) {
+			resultCode = "F-4";
+			msg = "내용을 입력해주세요.";
+			return json(req, new ResultData(resultCode, msg));
+		}
+
+		Map<String, Object> modifyArgs = new HashMap<>();
+		modifyArgs.put("id", id);
+		modifyArgs.put("body", body);
+
+		replyService.modify(modifyArgs);
+
+		resultCode = "S-1";
+		msg = "수정 성공";
+		
+		return json(req, new ResultData(resultCode, msg));
+	}
+
 }

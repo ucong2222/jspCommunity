@@ -49,4 +49,14 @@ public class ReplyService {
 		return replyDao.getForPrintArticleRepliesFrom(id, from);
 	}
 
+	public boolean actorCanModify(Reply reply, int actorId) {
+		boolean actorCanModify = actorCanDelete(reply, actorId);
+
+		return actorCanModify;
+	}
+
+	public int modify(Map<String, Object> args) {
+		return replyDao.modify(args);
+	}
+
 }

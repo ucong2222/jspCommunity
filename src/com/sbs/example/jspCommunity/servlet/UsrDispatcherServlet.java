@@ -93,6 +93,8 @@ public class UsrDispatcherServlet extends DispatcherServlet {
 				jspPath = replyController.getForPrintArticleRepliesRs(req, resp);
 			} else if (actionMethodName.equals("doDeleteReplyAjax")) {
 				jspPath = replyController.doDeleteReplyAjax(req, resp);
+			} else if (actionMethodName.equals("doModifyReplyAjax")) {
+				jspPath = replyController.doModifyReplyAjax(req, resp);
 			}
 		}
 		return jspPath;

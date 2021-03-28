@@ -133,4 +133,16 @@ public class ReplyDao {
 		return replies;
 	}
 
+	public int modify(Map<String, Object> args) {
+		SecSql sql = new SecSql();
+		sql.append("UPDATE reply");
+		sql.append("SET updateDate = NOW()");
+
+			sql.append(",body = ?", args.get("body"));
+
+		sql.append("WHERE id = ?", args.get("id"));
+
+		return MysqlUtil.update(sql);
+	}
+
 }

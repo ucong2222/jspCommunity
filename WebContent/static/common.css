@@ -33,7 +33,7 @@
 }
 
 html {
-	font-family: 'LotteMartDream', sans-serif;
+	font-family: 'LotteMartDream', sans-serif !important;
 }
 /* 폰트적용 끝 */
 
@@ -861,6 +861,33 @@ a {
   transition: background-color 0s;
 }
 /* 댓글리스트 끝 */
+
+/* 댓글수정 시작*/
+.reply-modify .reply-body {
+  height: 80px;
+}
+
+.reply-modify textarea{
+  height:100%;
+  width:100%;
+}
+
+.reply-modify input {
+	border:none;
+	padding:0;
+	color:#808080;
+	-webkit-appearance: none;
+	-moz-appearance:none;
+	-webkit-appearance: none;
+	font-family: 'LotteMartDream', sans-serif !important;
+	font-size:16px;
+	cursor:pointer;
+	
+}
+
+.reply-modify .reply-list-bottom {
+	margin-top:10px;
+}
 
 
 

@@ -7,7 +7,7 @@
 <%@ include file="../../part/head.jspf"%>
 
 <style>
-.reply-list-box .loading-inline {
+.reply-list-box .loading-delete-inline {
 	display:none;
 	font-weit:bold;
 	color:red;
@@ -15,8 +15,24 @@
 .reply-list-box .reply-list[data-loading="Y"] .loading-none {
 	display:none;
 }
-.reply-list-box .reply-list[data-loading="Y"] .loading-inline {
+.reply-list-box .reply-list[data-loading="Y"][data-loading-delete="Y"] .loading-delete-inline {
 	display:inline;
+}
+.reply-list-box .reply-list[data-modify-mode="Y"] .modify-mode-none {
+	display: none;
+}
+
+.reply-list-box .reply-list .modify-mode-inline {
+	display: none;
+}
+.reply-list-box .reply-list .modify-mode-block {
+	display: none;
+}
+.reply-list-box .reply-list[data-modify-mode="Y"] .modify-mode-block {
+	display: block;
+}
+.reply-list-box .reply-list[data-modify-mode="Y"] .modify-mode-inline {
+	display: inline;
 }
 </style>
 
@@ -103,6 +119,7 @@ function ArticleReply__submitWriteForm(form) {
 			form.body.focus();
 			return;
 		}
+		
 		$.post('../reply/doWriteReplyAjax', {
 			relTypeCode : form.relTypeCode.value,
 			relId : form.relId.value,
@@ -177,24 +194,83 @@ function ArticleReply__delete(obj) {
 	var $list = $clickedBtn.closest('.reply-list');
 	var replyId = parseInt($list.attr('data-article-reply-id'));
 	$list.attr('data-loading', 'Y');
+	$list.attr('data-loading-delete', 'Y');
 	$.post(
 		'../reply/doDeleteReplyAjax',
 		{
 			id: replyId
 		},
 		function(data) {
+			$list.attr('data-loading', 'N');
+			$list.attr('data-loading-delete', 'N');
 			
 			if (data.resultCode.substr(0,2) == 'F-') {
 				alert(data.msg);
 			}
 			
 			$list.remove();
-			$list.attr('data-loading', 'N');
 		},
 		'json'
 	);
 }
 		
+
+// 댓글 수정
+function ArticleReply__enableModifyMode(obj) {
+	var $clickedBtn = $(obj);
+	var $list = $clickedBtn.closest('.reply-list');
+	var replyId = parseInt($list.attr('data-article-reply-id'));
+	
+	var $replyBodyText = $list.find('.reply-list-body');
+	var $textarea = $list.find('form textarea');
+	
+	$textarea.val($replyBodyText.text().trim());
+	$list.attr('data-modify-mode', 'Y');
+}
+
+function ArticleReply__disableModifyMode(obj) {
+	var $clickedBtn = $(obj);
+	var $list = $clickedBtn.closest('.reply-list');
+	$list.attr('data-modify-mode', 'N');
+}
+
+function ArticleReply__submitModifyReplyForm(form) {
+	var $list = $(form).closest('.reply-list');
+	form.body.value = form.body.value.trim();
+	
+	if (form.body.value.length == 0) {
+		alert('댓글내용을 입력 해주세요.');
+		form.body.focus();
+		return false;
+	}
+	
+	var replyId = parseInt($list.attr('data-article-reply-id'));
+	var body = form.body.value;
+	
+	$list.attr('data-loading', 'Y');
+	$list.attr('data-loading-modify', 'Y');
+	
+	$.post('../reply/doModifyReplyAjax', {
+		id : replyId,
+		body : body
+	}, function(data) {
+		$list.attr('data-loading', 'N');
+		$list.attr('data-loading-modify', 'N');
+		ArticleReply__disableModifyMode(form);
+		if (data.resultCode.substr(0, 2) == 'S-') {
+			var $replyBodyText = $list.find('.reply-list-body');
+			var $textarea = $list.find('form textarea');
+			$replyBodyText.text($textarea.val());
+		} else {
+			if (data.msg) {
+				alert(data.msg)
+			}
+		}
+	},
+	'json'
+	);
+
+}
 </script>
 
 <!-- 게시물 상세 시작-->
@@ -309,6 +385,8 @@ function ArticleReply__delete(obj) {
 </c:if>
 <!-- 게시물 댓글 끝-->
 
+<!-- 게시물 댓글리스트 시작-->
+
 <div class="template-box template-box-1">
 	<div class="reply-list" data-article-reply-id="{$번호}">
 		<div class="reply-list-top flex">
@@ -327,22 +405,35 @@ function ArticleReply__delete(obj) {
 			</div>
 		</div>
 
-		<div class="reply-list-body"">{$내용}</div>
+		<div class="reply-list-body modify-mode-none">{$내용}</div>
+		
+		<div class="reply-modify modify-mode-block">
+			<form onsubmit="ArticleReply__submitModifyReplyForm(this); return false;">
+				<div class="reply-body">
+					<textarea name="body">{$내용}</textarea>
+				</div>
+				<div class="reply-list-bottom flex">
+					<div class="flex-grow-1"></div>
+					<input class="loading-none" type="submit" value="수정" />
+					<a class="loading-none" href="#" onclick="ArticleReply__disableModifyMode(this); return false;" style="margin-left: 5px;">취소</a>
+				</div>
+			</form>
+		</div>
 
-		<div class="reply-list-bottom flex">
+		<div class="reply-list-bottom modify-mode-none flex">
 			<a href="#">댓글달기</a>
 			<div class="flex-grow-1"></div>
 			<c:if test="${isLogined}">
-				<a class="loading-none" href="#" onclick="return false;" style="margin-right: 5px;">수정</a>
-				<span class="loading-inline">삭제중입니다...</span>
+				<a class="loading-none modify-mode-none" href="#" onclick="ArticleReply__enableModifyMode(this); return false;" style="margin-right: 5px;">수정</a>
+				
+				<span class="loading-delete-inline">삭제중입니다...</span>
 				<a class="loading-none" onclick="if ( confirm('정말 삭제하시겠습니까?') ) { ArticleReply__delete(this); } return false;" href="#">삭제</a>
 			</c:if>
 		</div>
+		
 	</div>
 </div>
 
-
-<!-- 게시물 댓글리스트 시작-->
 <div class="title-bar con-min-width">
 	<h1 class="con">
 		<span> <i class="fas fa-list"></i>
