@@ -61,7 +61,7 @@ var param = ${paramJson};
 				<div>
 					<a href="../home/main">홈</a>
 					<c:if test="${isLogined}">
-						<a href="../member/modify">${loginedMember.nickname} 님</a>
+						<a href="../member/modify">마이페이지</a>
 					</c:if>
 					<c:if test="${isLogined}">
 						<a href="../member/doLogout">로그아웃</a>
@@ -70,7 +70,6 @@ var param = ${paramJson};
 						<a href="../member/login">로그인</a>
 						<a href="../member/join">회원가입</a>
 					</c:if>
-					<a href="#">문의하기</a>
 				</div>
 			</div>
 		</div>
@@ -97,7 +96,7 @@ var param = ${paramJson};
 <aside class="mobile-side-bar visible-md-down">
   <nav class="mobile-side-bar__menu-box-1">
     <ul>
-      <li><a href="../home/main" class="block">HOME</a></li>
+      <li><a href="../home/main" class="block">홈</a></li>
       <c:if test="${isLogined}">
       <li><a href="../member/modify" class="block">회원정보수정</a></li>
       <li><a href="../member/doLogout" class="block">로그아웃</a></li>
@@ -108,9 +107,9 @@ var param = ${paramJson};
       <li><a href="../member/findLoginPw" class="block">비밀번호찾기</a></li>
       <li><a href="../member/join" class="block">회원가입</a></li>
       </c:if>
-      <li><a href="../article/list?boardId=1" class="block">NOTICE</a></li>
-      <li><a href="../article/list?boardId=3" class="block">FREE</a></li>
-      <li><a href="../article/list?boardId=2" class="block">GUESTBOOK</a></li>
+      <li><a href="../article/list?boardId=1" class="block">자유토크</a></li>
+      <li><a href="../article/list?boardId=2" class="block">갤러리</a></li>
+      <li><a href="../article/list?boardId=3" class="block">정보공유</a></li>
     </ul>
   </nav>
 </aside>
@@ -134,10 +133,10 @@ var param = ${paramJson};
 	  <div class="con height-100p">
 	    <nav class="menu-bar__menu-box-1 height-100p">
 	      <ul class="flex height-100p">
-	        <li><a href="../home/main" class="flex flex-jc-c flex-ai-c height-100p">HOME</a></li>
-	        <li><a href="../article/list?boardId=1" class="flex flex-jc-c flex-ai-c height-100p">NOTICE</a></li>
-	        <li><a href="../article/list?boardId=3" class="flex flex-jc-c flex-ai-c height-100p">FREE</a></li>
-	        <li><a href="../article/list?boardId=2" class="flex flex-jc-c flex-ai-c height-100p">GUESTBOOK</a></li>
+	        <li><a href="../home/main" class="flex flex-jc-c flex-ai-c height-100p">홈</a></li>
+	        <li><a href="../article/list?boardId=1" class="flex flex-jc-c flex-ai-c height-100p">자유토크</a></li>
+	        <li><a href="../article/list?boardId=2" class="flex flex-jc-c flex-ai-c height-100p">갤러리</a></li>
+	        <li><a href="../article/list?boardId=3" class="flex flex-jc-c flex-ai-c height-100p">정보공유</a></li>
 	      </ul>
 	    </nav>
 	  </div>

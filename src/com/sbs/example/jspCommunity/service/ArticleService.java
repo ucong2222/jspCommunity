@@ -51,4 +51,10 @@ public class ArticleService {
 		articleDao.increaseHit(id);
 	}
 
+	public List<Article> getArticlesTitleByBoardId(int boardId) {
+		List<Article> articles= articleDao.getArticlesTitleByBoardId(boardId);
+		
+		return articles;
+	}
+
 }

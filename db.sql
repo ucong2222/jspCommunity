@@ -47,26 +47,26 @@ CREATE TABLE board(
     `name` CHAR(10) NOT NULL UNIQUE
 );
 
-# 공지사항 생성
+# 자유토크 생성
 INSERT INTO board
 SET regDate = NOW(),
     updateDate = NOW(),
-    `code` = "notice",
-    `name` = "공지사항";
+    `code` = "freeTalk",
+    `name` = "자유토크";
     
-# 방명록게시판  생성
+# 갤러리게시판  생성
 INSERT INTO board
 SET regDate = NOW(),
     updateDate = NOW(),
-    `code` = "guestBook",
-    `name` = "방명록";
+    `code` = "gallery",
+    `name` = "갤러리";
     
-# 자유게시판  생성
+# 정보공유게시판  생성
 INSERT INTO board
 SET regDate = NOW(),
     updateDate = NOW(),
-    `code` = "free",
-    `name` = "자유";
+    `code` = "info",
+    `name` = "정보공유";
 
 # 게시물 테이블 생성  
 CREATE TABLE article(
@@ -119,6 +119,87 @@ SET regDate = NOW(),
 updateDate = NOW(),
 memberId = 2,
 boardId = 1,
+title = '제목5',
+`body` = '내용5'; 
+
+
+INSERT INTO article
+SET regDate = NOW(),
+updateDate = NOW(),
+memberId = 1,
+boardId = 2,
+title = '제목1',
+`body` = '내용1';
+
+INSERT INTO article
+SET regDate = NOW(),
+updateDate = NOW(),
+memberId = 1,
+boardId = 2,
+title = '제목2',
+`body` = '내용2';
+
+INSERT INTO article
+SET regDate = NOW(),
+updateDate = NOW(),
+memberId = 1,
+boardId = 2,
+title = '제목3',
+`body` = '내용3';
+
+INSERT INTO article
+SET regDate = NOW(),
+updateDate = NOW(),
+memberId = 2,
+boardId = 2,
+title = '제목4',
+`body` = '내용4';
+
+INSERT INTO article
+SET regDate = NOW(),
+updateDate = NOW(),
+memberId = 2,
+boardId = 2,
+title = '제목5',
+`body` = '내용5'; 
+
+INSERT INTO article
+SET regDate = NOW(),
+updateDate = NOW(),
+memberId = 1,
+boardId = 3,
+title = '제목1',
+`body` = '내용1';
+
+INSERT INTO article
+SET regDate = NOW(),
+updateDate = NOW(),
+memberId = 1,
+boardId = 3,
+title = '제목2',
+`body` = '내용2';
+
+INSERT INTO article
+SET regDate = NOW(),
+updateDate = NOW(),
+memberId = 1,
+boardId = 3,
+title = '제목3',
+`body` = '내용3';
+
+INSERT INTO article
+SET regDate = NOW(),
+updateDate = NOW(),
+memberId = 2,
+boardId = 3,
+title = '제목4',
+`body` = '내용4';
+
+INSERT INTO article
+SET regDate = NOW(),
+updateDate = NOW(),
+memberId = 2,
+boardId = 3,
 title = '제목5',
 `body` = '내용5'; 
 
@@ -207,3 +288,4 @@ memberId = 2,
 relTypeCode = 'article',
 relId = 1,
 `body` = '댓글3';
+

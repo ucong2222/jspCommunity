@@ -12,8 +12,44 @@
 	<!--content 시작 -->
 	<main class="con-min-width visible-md-up">
 	  <div class="con main-content flex flex-jc-sb">
-	    <div class="left-content"></div>
-	    <div class="right-content">
+	    <div class="left-content">
+	        <div class="flex flex-wrap">
+	          <div class="freetalk-box">
+	            <div class="flex flex-jc-sb title-box">
+	              <div class="title">자유토크</div>
+	              <a href="../article/list?boardId=1" class="flex-as-c">더보기+</a>
+	            </div>
+	            <div class="freetalk-title">
+	              <c:forEach var="freeTalkArticle" items="${freeTalkArticles}">
+	              	<a href="../article/detail?id=${freeTalkArticle.id}">${freeTalkArticle.title}</a>
+	              </c:forEach>
+	            </div>
+	          </div>
+	          <div class="infoshare-box">
+	            <div class="flex flex-jc-sb title-box">
+	              <div class="title">정보공유</div>
+	              <a href="../article/list?boardId=3" class="flex-as-c">더보기+</a>
+	            </div>
+	            <div class="infoshare-title">
+	              <c:forEach var="infoShareArticle" items="${infoShareArticles}">
+	              	<a href="../article/detail?id=${infoShareArticle.id}">${infoShareArticle.title}</a>
+	              </c:forEach>
+	            </div>
+	          </div>
+	          <div class="gallery-box">
+	            <div class="flex flex-jc-sb title-box">
+	              <div class="title">갤러리</div>
+	              <a href="../article/list?boardId=2" class="flex-as-c">더보기+</a>
+	            </div>
+	            <div class="gallery-title">
+	              <c:forEach var="galleryArticle" items="${galleryArticles}">
+	              	<a href="../article/detail?id=${galleryArticle.id}">${galleryArticle.title}</a>
+	              </c:forEach>
+	            </div>
+	          </div>
+	        </div>
+	    </div>
+	    <div class="right-content flex flex-jc-c">
 	      <div class="login-box">
 	        <c:if test="${isLogined == false}">
 		        <div class="login-box__login flex flex-ai-c  flex-jc-c">
@@ -53,6 +89,7 @@
 	  </div>
 	</main>
 	<!--content 끝 -->
+	
 
 
 <%@ include file="../../part/foot.jspf"%>

@@ -76,6 +76,9 @@ a {
   justify-content: space-between;
 }
 
+.flex-wrap{
+	flex-wrap:wrap;
+}
 /* 성장성 부여 */
 .flex-grow-1 {
   flex-grow: 1;
@@ -283,18 +286,61 @@ a {
 }
 /* 메뉴바 끝*/
 
-/* 홈-로그아웃시 시작*/
+/* 홈 시작 */
 .main-content{
   padding:20px 0;
 }
 .left-content {
-  width:825px;
+  width:calc((100% / 3)*2);
 }
 .right-content {
-  width:325px;
+  width:calc(100% / 3);
 }
+
+.freetalk-box,.infoshare-box{
+  width: calc(100% / 2.15);
+  margin:5px 10px;
+}
+.gallery-box{
+  width:calc(100% / 1.05);
+  margin:5px 10px;
+}
+
+.left-content .title-box{
+  padding:5px 0 10px 0;
+  border-bottom:solid rgba(126,101,96) 2px; 
+}
+
+.left-content .title{
+    font-size:1.3rem;
+  font-weight:bold;
+}
+
+.left-content .title-box>a{
+  color:gray;
+  align-items:center;
+}
+
+
+.freetalk-title>a,.infoshare-title>a, .gallery-title>a{
+  display:block;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  margin:10px 0;
+  font-size:1.1rem;
+  
+}
+
+.freetalk-title>a:hover,.infoshare-title>a:hover,.gallery-title>a:hover{
+  text-decoration:underline;
+}
+
+/* 홈 끝*/
+
+/* 홈-로그아웃시 시작*/
 .login-box{
-  background-color:rgba(243,231,224,0.8);
+  background-color:rgba(224,224,224);
   width:325px;
   height:150px;
   color:white;

@@ -277,7 +277,7 @@ function ArticleReply__submitModifyReplyForm(form) {
 <div class="title-bar con-min-width">
 	<h1 class="con">
 		<span> <i class="far fa-list-alt"></i>
-		</span> <span>공지사항 게시물 상세 페이지</span>
+		</span> <span>${board.name} 게시물 상세 페이지</span>
 	</h1>
 </div>
 

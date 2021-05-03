@@ -201,4 +201,24 @@ public class ArticleDao {
 
 		return MysqlUtil.update(sql);
 	}
+
+	public List<Article> getArticlesTitleByBoardId(int boardId) {
+		List<Article> articles = new ArrayList<>();
+		
+		SecSql sql = new SecSql();
+		sql.append("SELECT *");
+		sql.append("FROM article");
+		sql.append("WHERE boardId= ?", boardId);
+		sql.append("ORDER BY regDate DESC");
+		sql.append("LIMIT 5");
+		
+		List<Map<String, Object>> articleMapList = MysqlUtil.selectRows(sql);
+
+		for (Map<String, Object> articleMap : articleMapList) {
+			articles.add(new Article(articleMap));
+		}
+		
+		return articles;
+	}
+
 }
