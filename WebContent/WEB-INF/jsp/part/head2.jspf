@@ -49,11 +49,9 @@ var param = ${paramJson};
 
 <div class="body">
 	<c:if test="${needToChangePw}">
-	  <div class="pw-warning con-min-width">
-	    <div class="con flex flex-jc-c flex-ai-c height-100p">
-	      <span>비밀번호를 변경해주세요.</span>
-	    </div>
-	  </div>
+	  <div class="pw-warning flex flex-jc-c flex-ai-c">
+		<div class="blinking"><i class="fas fa-exclamation-triangle"></i> 임시 비밀번호를 사용중입니다. 비밀번호를 변경해주세요 <i class="fas fa-exclamation-triangle"></i></div>
+      </div>
 	</c:if>
 	<header class="top-bar visible-md-up">
 		<div class="con-min-width height-100p">

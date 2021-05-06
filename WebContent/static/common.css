@@ -150,6 +150,37 @@ a {
 .red {
 		color:red;
 }
+
+/* 텍스트 깜빡임 */
+.blinking {
+  -webkit-animation: blink 1s ease-in-out infinite alternate;
+  -moz-animation: blink 1s ease-in-out infinite alternate;
+  animation: blink 1s ease-in-out infinite alternate;
+}
+@-webkit-keyframes blink {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@-moz-keyframes blink {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes blink {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
 /* 라이브러리-디거그 끝 */
 
 
@@ -188,11 +219,9 @@ a {
 
 /* 비밀번호 경고창 시작*/
 .pw-warning {
-  background-color:red;
-  height:50px;
-}
-.pw-warning span{
-  font-size:2rem;
+  height: 30px;
+  width: 100%;
+  background-color: orange;
 }
 /* 비밀번호 경고창 끝*/
 
@@ -342,7 +371,7 @@ a {
 .login-box{
   background-color:rgba(224,224,224);
   width:325px;
-  height:150px;
+  height:160px;
   color:white;
   flex-direction:column;
 }
