@@ -190,18 +190,6 @@ a {
   --mobile-top-bar__btn-toggle-side-bar__dur: 0.3s;
 }
 
-@media (max-width: 701px) {
-  .visible-md-up {
-    display: none !important;
-  }
-}
-
-@media (min-width: 701px) {
-  .visible-md-down {
-    display: none !important;
-  }
-}
-
 .con {
   max-width: var(--site-width);
   padding: 0 10px;
@@ -350,6 +338,14 @@ a {
   align-items:center;
 }
 
+@media (max-width: 1000px) {
+  .right-content{
+    display:none;
+  }
+  .left-content{
+    width:100%;
+  }
+}
 
 .freetalk-title>a,.infoshare-title>a, .gallery-title>a{
   display:block;
@@ -1019,5 +1015,24 @@ a {
   border-top:solid rgba(113, 76, 68);
 }
 /*하단바 끝*/
+
+@media (max-width: 700px) {
+  .visible-md-up {
+    display: none !important;
+  }
+  .freetalk-box,
+  .infoshare-box,
+  .gallery-box {
+    width: 100%;
+    margin: 0px;
+    padding:0 10px;
+  }
+}
+
+@media (min-width: 701px) {
+  .visible-md-down {
+    display: none !important;
+  }
+}
 
 /* 커스텀 끝*/

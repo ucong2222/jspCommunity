@@ -10,7 +10,7 @@
 <script src="${pageContext.request.contextPath}/static/UsrHomeMain.js" defer></script>
  -->
 	<!--content 시작 -->
-	<main class="con-min-width visible-md-up">
+	<main class="con-min-width">
 	  <div class="con main-content flex flex-jc-sb">
 	    <div class="left-content">
 	        <div class="flex flex-wrap">
