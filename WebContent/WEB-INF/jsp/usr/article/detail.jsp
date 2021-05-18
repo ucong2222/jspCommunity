@@ -206,6 +206,7 @@ function ArticleReply__delete(obj) {
 			
 			if (data.resultCode.substr(0,2) == 'F-') {
 				alert(data.msg);
+				return;
 			}
 			
 			$list.remove();

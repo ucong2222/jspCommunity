@@ -86,9 +86,9 @@ public class UsrMemberController extends Controller {
 		joinArgs.put("email", email);
 		joinArgs.put("cellphoneNo", cellphoneNo);
 
-		int newArticleId = memberService.join(joinArgs);
+		memberService.join(joinArgs);
 
-		return msgAndReplace(req, newArticleId + "번 회원이 생성되었습니다.", "../home/main");
+		return msgAndReplace(req, nickname + "님, 환영합니다!", "../home/main");
 	}
 
 	public String showLogin(HttpServletRequest req, HttpServletResponse resp) {
