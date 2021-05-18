@@ -6,11 +6,16 @@
 <c:set var="pageTitle" value="${board.name} 게시물 상세 페이지" />
 <%@ include file="../../part/head.jspf"%>
 
+<c:set var="loginedMemberId" value="${loginedMemberId}" />
+
 <style>
 .reply-list-box .loading-delete-inline {
 	display:none;
 	font-weit:bold;
 	color:red;
+}
+.reply-list-box .permission-mode-block{
+	display:none;
 }
 .reply-list-box .reply-list[data-loading="Y"] .loading-none {
 	display:none;
@@ -34,6 +39,11 @@
 .reply-list-box .reply-list[data-modify-mode="Y"] .modify-mode-inline {
 	display: inline;
 }
+
+.reply-list-box .reply-list[data-permission-mode="Y"] .permission-mode-block {
+	display: block;
+}
+
 </style>
 
 <script>
@@ -153,9 +163,18 @@ function ArticleReply__loadList() {
 		
 		$('.reply-total-cnt').text(data.body.articleReplyCnt);
 		
+		var loginedMemberId = ${loginedMemberId};
+		
 		for (var i = 0; i < articleReplies.length; i++) {
 			var articleReply = articleReplies[i];
+			
+			
 			ArticleReply__drawReply(articleReply);
+			
+			if (loginedMemberId == articleReply.memberId){
+			var $list = $('.reply-list[data-article-reply-id='+ articleReply.id + ']');
+				$list.attr('data-permission-mode', 'Y');
+			}
 			
 			ArticleReply__lastLoadedArticleReplyId = articleReply.id;
 		}
@@ -177,6 +196,7 @@ function ArticleReply__drawReply(articleReply) {
 	html = replaceAll(html, "{$내용}", articleReply.body);
 	html = replaceAll(html, "{$좋아요}", articleReply.extra__likeOnlyPoint);
 	html = replaceAll(html, "{$싫어요}", articleReply.extra__dislikeOnlyPoint);
+	
 	
 	ArticleReply__$list.prepend(html);
 }
@@ -425,10 +445,12 @@ function ArticleReply__submitModifyReplyForm(form) {
 			<a href="#">댓글달기</a>
 			<div class="flex-grow-1"></div>
 			<c:if test="${isLogined}">
+				<div class="permission-mode-block">
 				<a class="loading-none modify-mode-none" href="#" onclick="ArticleReply__enableModifyMode(this); return false;" style="margin-right: 5px;">수정</a>
 				
 				<span class="loading-delete-inline">삭제중입니다...</span>
 				<a class="loading-none" onclick="if ( confirm('정말 삭제하시겠습니까?') ) { ArticleReply__delete(this); } return false;" href="#">삭제</a>
+				</div>
 			</c:if>
 		</div>
 		
