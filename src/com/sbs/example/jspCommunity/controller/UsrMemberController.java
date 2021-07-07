@@ -284,11 +284,7 @@ public class UsrMemberController extends Controller {
 		memberService.modify(modifyParam);
 		String value = Container.attrService.getValue("member__" + loginedMemberId + "__extra__isUsingTempPassword");
 
-		if (loginPw != null) {
-			memberService.setIsUsingTempPassword(loginedMemberId, false);
-		}
-
-		if (loginPw != null || value.equals("1")) {
+		if (loginPw != null && value.equals("1")) {
 			Container.attrService.remove("member__" + loginedMemberId + "__extra__isUsingTempPassword");
 		}
 
