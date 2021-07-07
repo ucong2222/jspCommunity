@@ -360,7 +360,14 @@ function ArticleReply__submitModifyReplyForm(form) {
 				<a onclick="if (confirm('정말 삭제 하시겠습니까?') == false){ return false;}"
 					href="doDelete?id=${article.id}">삭제</a>
 			</c:if>
-			<a href="${param.listUrl}">목록</a>
+			<c:choose>
+			    <c:when test="${param.listUrl != null}">
+					<a href="${param.listUrl}">목록</a>
+				</c:when>
+			    <c:otherwise>
+			    	<a href="../article/list?boardId=${article.boardId}">목록</a>
+			    </c:otherwise>
+			</c:choose>
 		</div>
 	</div>
 </div>

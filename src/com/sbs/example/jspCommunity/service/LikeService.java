@@ -31,13 +31,7 @@ public class LikeService {
 	}
 
 	public Boolean aleadyDoDislike(String relTypeCode, int relId, int actorId, int i) {
-		Like like = likeDao.getLike(relTypeCode, relId, actorId, i);
-
-		if (like != null) {
-			return true;
-		} else {
-			return false;
-		}
+		return aleadyDoLike(relTypeCode, relId, actorId, i);
 	}
 
 }
