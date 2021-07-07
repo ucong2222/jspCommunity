@@ -1,7 +1,11 @@
 package com.sbs.example.jspCommunity;
 
 public class App {
+	
+	// 운영모드일때 컨텍스트 패스 제거
+	// 컨텍스트 패스 : WAS에서 웹어플리케이션을 구분하기 위한 path
 	public static boolean isProductMode() {
+		// 환경변수 spring.profiles.active의 값을 체크해서 운영모드인지 확인
 		String profilesActive = System.getProperty("spring.profiles.active");
 
 		if (profilesActive == null) {
@@ -15,6 +19,9 @@ public class App {
 		return true;
 	}
 
+	// 운영모드 : https://walwal.heycong.com/usr/home/main
+	// 개발모드 : http://localhost:8083/jspCommunity/usr/home/main
+	
 	public static String getSiteName() {
 		return "Walwal";
 	}

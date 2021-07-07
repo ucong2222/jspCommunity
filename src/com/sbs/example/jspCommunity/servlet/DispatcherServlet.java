@@ -19,12 +19,17 @@ import com.sbs.example.jspCommunity.dto.Member;
 import com.sbs.example.mysqlutil.MysqlUtil;
 import com.sbs.example.util.Util;
 
+// 각 서블릿에 중복되는 코드를 부모클래스인 DispatcherServlet에 몰아두기
+// 템플릿 메서드 패턴
 public abstract class DispatcherServlet extends HttpServlet {
+	
+	// html내 form 태그의 method 속성이 get일 경우 호출
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		run(req, resp);
 	}
 
+	// html내 form 태그의 method 속성이 post일 경우 호출
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		doGet(req, resp);
@@ -49,7 +54,10 @@ public abstract class DispatcherServlet extends HttpServlet {
 
 	private Map<String, Object> doBeforeAction(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
+		// post 방식으로 보내는 값이 '한글'일 경우 깨지지 않게 전달하기 위해 사용하는 것
+		// get 방식으로 보내진 한글은 톰캣이 기본적으로 UTF-8 문자코드가 적용이 되어 있어 자동으로 한글처리
 		req.setCharacterEncoding("UTF-8");
+		// 브라우저마다 기본적으로 문자코드를 해석하는 defaul가 다르기 때문에 브라우저에게 utf-8을 사용할 것이라는 메세지 전달
 		resp.setContentType("text/html; charset=UTF-8");
 
 		String requestUri = req.getRequestURI();
@@ -66,6 +74,7 @@ public abstract class DispatcherServlet extends HttpServlet {
 			return null;
 		}
 
+		// 운영모드라면 운영DB접속 정보 사용
 		if (App.isProductMode()) {
 			MysqlUtil.setDBInfo("127.0.0.1", "sbsstLocal", "sbs123414", "jspCommunityReal");
 		} else {
@@ -89,7 +98,7 @@ public abstract class DispatcherServlet extends HttpServlet {
 
 		String actionUrl = "/" + controllerTypeName + "/" + controllerName + "/" + actionMethodName;
 
-		// 데이터 추가 인터셉터 시작
+		// 인터셉터에서 로그인 관련 정보를 req에 넣기
 		boolean isLogined = false;
 		int loginedMemberId = 0;
 		Member loginedMember = null;
@@ -149,19 +158,24 @@ public abstract class DispatcherServlet extends HttpServlet {
 		needToLoginActionUrls.add("/usr/reply/modify");
 		needToLoginActionUrls.add("/usr/reply/doModify");
 		needToLoginActionUrls.add("/usr/reply/doDelete");
-
+		
+		
 		if (needToLoginActionUrls.contains(actionUrl)) {
 			if ((boolean) req.getAttribute("isLogined") == false) {
+				
 				req.setAttribute("alertMsg", "로그인 후 이용해주세요.");
 				req.setAttribute("replaceUrl", "../member/login?afterLoginUrl=" + encodedCurrentUrl);
-
+				
+				// rd라는 객체를 생성해서 forward할 페이지 요청 
 				RequestDispatcher rd = req.getRequestDispatcher(getJspDirPath() + "/common/redirect.jsp");
+				// 포워드 할 페이지를 부르는 일종의 공식같은 것
 				rd.forward(req, resp);
+				
 			}
 		}
-
 		// 로그인 필요 필터링 인터셉터 끝
-		// 로그인 불필요 필터링 인터셉터 시작\
+		
+		// 로그인 불필요 필터링 인터셉터 시작
 		List<String> needToLogoutActionUrls = new ArrayList<>();
 
 		needToLogoutActionUrls.add("/usr/member/login");
@@ -178,7 +192,9 @@ public abstract class DispatcherServlet extends HttpServlet {
 				req.setAttribute("alertMsg", "로그아웃 후 진행해주세요.");
 				req.setAttribute("historyBack", true);
 
+				// rd라는 객체를 생성해서 forward할 페이지 요청 
 				RequestDispatcher rd = req.getRequestDispatcher(getJspDirPath() + "/common/redirect.jsp");
+				// 포워드 할 페이지를 부르는 일종의 공식같은 것
 				rd.forward(req, resp);
 			}
 		}
@@ -203,6 +219,7 @@ public abstract class DispatcherServlet extends HttpServlet {
 	}
 
 	private String getJspDirPath() {
+		// WEB-INF파일을 사용해 web에서 바로 jsp 파일에 접근 못하도록 수정
 		return "/WEB-INF/jsp";
 	}
 }

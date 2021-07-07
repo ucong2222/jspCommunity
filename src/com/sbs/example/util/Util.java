@@ -50,37 +50,62 @@ public class Util {
 		return rs;
 	}
 
+	// Gmail SMTP를 이용한 메일 보내기
 	public static int send(String smtpServerId, String smtpServerPw, String from, String fromName, String to, String title, String body) {
+		
+		// Properties 클래스는 시스템의 속성을 객체로 생성하는 클래스
 		Properties prop = System.getProperties();
+		
+		// 로그인 시 TLS를 사용할 것인지 설정
 		prop.put("mail.smtp.starttls.enable", "true");
+		
+		// 이메일 발송을 처리해줄 SMTP 서버
 		prop.put("mail.smtp.host", "smtp.gmail.com");
+		
+		prop.put("mail.smtp.ssl.trust", "smtp.gmail.com");
+		
+		// SMTP 서버의 인증을 사용한다는 의미
 		prop.put("mail.smtp.auth", "true");
+		
+		// TLS의 포트번호는 587이며 SSL의 포트번호는 456
 		prop.put("mail.smtp.port", "587");
 
+		// MailAuth.java에서 Authenticator를 상속받아 MailAuth 클래스를 받아 세션 생성
 		Authenticator auth = new MailAuth(smtpServerId, smtpServerPw);
 
 		Session session = Session.getDefaultInstance(prop, auth);
 
+		// MimeMessage는 Message 클래스를 상속받은 인터넷 메일을 위한 클래스
+		// 위에서 생성한 세션을 담아 msg 객체를 생성
 		MimeMessage msg = new MimeMessage(session);
 
 		try {
+			// 보내는 날짜 지정
 			msg.setSentDate(new Date());
 
+			// 발송자를 지정, 발송자의 메일과 발송자명
 			msg.setFrom(new InternetAddress(from, fromName));
+			
+			// 수신자를 설정
 			msg.setRecipient(Message.RecipientType.TO, new InternetAddress(to));
+			
+			// 메일의 제목 지정
 			msg.setSubject(title, "UTF-8");
+			
+			// 메일의 내용
 			msg.setContent(body, "text/html; charset=UTF-8");
 
+			// 메일을 최종적으로 보내는 클래스로 메일을 보내는 부분
 			Transport.send(msg);
 
 		} catch (AddressException ae) {
-			System.out.println("AddressException : " + ae.getMessage());
+			System.out.println("AddressException : " + ae.getMessage()); // 문자열의 잘못된 주소
 			return -1;
 		} catch (MessagingException me) {
-			System.out.println("MessagingException : " + me.getMessage());
+			System.out.println("MessagingException : " + me.getMessage()); // 메일 계정인증 관련 예외처리
 			return -2;
 		} catch (UnsupportedEncodingException e) {
-			System.out.println("UnsupportedEncodingException : " + e.getMessage());
+			System.out.println("UnsupportedEncodingException : " + e.getMessage()); // 지원되지 않는 인코딩 사용할 경우 예외처리
 			return -3;
 		}
 

@@ -7,10 +7,13 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+// SQL 인젝션 방지
+// SQL 인젝션 : 악의적인 사용자가 보안상의 취약점을 이용하여, 임의의 SQL 문을 주입하고 실행되게 하여 데이터베이스가 비정상적으로 동작하도록 조작하는 행위
 public class SecSql {
 	private StringBuilder sqlBuilder;
 	private List<Object> datas;
 
+	// SQL 오류시 홤ㄴ에 출력되던 sql 원문이 안나오던 버그 수정
 	@Override
 	public String toString() {
 		return "rawSql=" + getRawSql() + ", data=" + datas;

@@ -76,13 +76,12 @@ function doLike(relTypeCode, id){
 		alert('로그인 후 이용해주세요.');
 		return;
 	}
-	
-	$.get('../like/doLikeAjax',
-			{
-			relTypeCode : relTypeCode,
-			relId : id
-		},
-		function(data){
+	$.ajax({
+		url : '../like/doLikeAjax', // 요청 url
+		type : 'GET', // 데이터 전송 방식
+		dataType : "json", // 서버에서 받아올 데이터를 어떤 형태로 해석할 것인가
+		data : {"relTypeCode" : relTypeCode, "relId" : id} , // 서버로 전송할 데이터
+		success : function(data) { // ajax 통신에 성공했을때 실행되는 이벤트
 			if (data.resultCode == 'F-1'){
 				alert(data.msg);
 			}else if (data.body.relTypeCode == 'article'){
@@ -91,8 +90,8 @@ function doLike(relTypeCode, id){
 				$('.reply-likeOnlyPoint-' + data.body.relId ).text(data.body.likeOnlyPoint);
 			}
 		},
-		'json',
-	);
+	});
+	
 }
 
 function doDislike(relTypeCode, id){
@@ -101,12 +100,12 @@ function doDislike(relTypeCode, id){
 		return;
 	}
 	
-	$.get('../like/doDislikeAjax',
-			{
-			relTypeCode : relTypeCode,
-			relId : id
-		},
-		function(data){
+	$.ajax({
+		url : '../like/doDislikeAjax', // 요청 url
+		type : 'GET', // 데이터 전송 방식
+		dataType : "json", // 서버에서 받아올 데이터를 어떤 형태로 해석할 것인가
+		data : {"relTypeCode" : relTypeCode, "relId" : id} , // 서버로 전송할 데이터
+		success : function(data) { // ajax 통신에 성공했을때 실행되는 이벤트
 			if (data.resultCode == 'F-1'){
 				alert(data.msg);
 			} else if (data.body.relTypeCode == 'article'){
@@ -115,8 +114,8 @@ function doDislike(relTypeCode, id){
 				$('.reply-dislikeOnlyPoint-' + data.body.relId ).text(data.body.dislikeOnlyPoint);
 			}
 		},
-		'json',
-	);
+	});
+	
 }
 
 // 댓글 작성 ajax
@@ -347,6 +346,7 @@ function ArticleReply__submitModifyReplyForm(form) {
 			<script type="text/x-template">${article.body}</script>
 			<div class="toast-ui-viewer"></div>
 		</div>
+		
 		<div class="article-detail-box__bottom flex flex-jc-e">
 			<a onclick="doLike('article', '${article.id}');"> <span><i
 					id="like" class="far fa-thumbs-up"></i></span> <span

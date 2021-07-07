@@ -14,6 +14,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+// MySQL 드라이버 로딩, JDBC Connection 객체 생성
+// Insert, update, delete 메서드 추가
 public class MysqlUtil {
 	private static String dbHost;
 	private static String dbLoginId;
@@ -42,6 +44,7 @@ public class MysqlUtil {
 		MysqlUtil.dbName = dbName;
 	}
 
+	// 연결 끊기
 	public static void closeConnection() {
 		long currentThreadId = Thread.currentThread().getId();
 
@@ -62,6 +65,7 @@ public class MysqlUtil {
 		connections.remove(currentThreadId);
 	}
 
+	// 연결 생성
 	private static Connection getConnection() {
 		long currentThreadId = Thread.currentThread().getId();
 
