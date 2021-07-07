@@ -10,6 +10,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Properties;
 
@@ -51,22 +52,23 @@ public class Util {
 	}
 
 	// Gmail SMTP를 이용한 메일 보내기
-	public static int send(String smtpServerId, String smtpServerPw, String from, String fromName, String to, String title, String body) {
-		
+	public static int send(String smtpServerId, String smtpServerPw, String from, String fromName, String to,
+			String title, String body) {
+
 		// Properties 클래스는 시스템의 속성을 객체로 생성하는 클래스
 		Properties prop = System.getProperties();
-		
+
 		// 로그인 시 TLS를 사용할 것인지 설정
 		prop.put("mail.smtp.starttls.enable", "true");
-		
+
 		// 이메일 발송을 처리해줄 SMTP 서버
 		prop.put("mail.smtp.host", "smtp.gmail.com");
-		
+
 		prop.put("mail.smtp.ssl.trust", "smtp.gmail.com");
-		
+
 		// SMTP 서버의 인증을 사용한다는 의미
 		prop.put("mail.smtp.auth", "true");
-		
+
 		// TLS의 포트번호는 587이며 SSL의 포트번호는 456
 		prop.put("mail.smtp.port", "587");
 
@@ -85,13 +87,13 @@ public class Util {
 
 			// 발송자를 지정, 발송자의 메일과 발송자명
 			msg.setFrom(new InternetAddress(from, fromName));
-			
+
 			// 수신자를 설정
 			msg.setRecipient(Message.RecipientType.TO, new InternetAddress(to));
-			
+
 			// 메일의 제목 지정
 			msg.setSubject(title, "UTF-8");
-			
+
 			// 메일의 내용
 			msg.setContent(body, "text/html; charset=UTF-8");
 
@@ -114,7 +116,8 @@ public class Util {
 
 	public static String getTempPassword(int length) {
 		int index = 0;
-		char[] charArr = new char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z' };
+		char[] charArr = new char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f',
+				'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z' };
 
 		StringBuffer sb = new StringBuffer();
 
@@ -205,7 +208,7 @@ public class Util {
 
 		return (int) ((new Date().getTime() - n.getTime()) / 1000);
 	}
-	
+
 	public static String getNewUriRemoved(String url, String paramName) {
 		String deleteStrStarts = paramName + "=";
 		int delStartPos = url.indexOf(deleteStrStarts);
@@ -263,6 +266,39 @@ public class Util {
 		}
 
 		return param;
+	}
+
+	public static Map<String, Object> mapOf(Object... args) {
+		if (args.length % 2 != 0) {
+			// IllegalArgumentException : 부적절한 인자를 받았을때 예외처리
+			throw new IllegalArgumentException("인자를 짝수개 입력해주세요.");
+		}
+
+		int size = args.length / 2;
+
+		Map<String, Object> map = new LinkedHashMap<>();
+
+		for (int i = 0; i < size; i++) {
+			int keyIndex = i * 2;
+			int valueIndex = keyIndex + 1;
+
+			String key;
+			Object value;
+
+			try {
+				key = (String) args[keyIndex];
+			}
+			// ClassCastException : 객체의 형을 반환할 때 객체 타입 변환이 적절하지 않을 때 예외처리
+			catch (ClassCastException e) {
+				throw new IllegalArgumentException("키는 String으로 입력해야 합니다. " + e.getMessage());
+			}
+
+			value = args[valueIndex];
+
+			map.put(key, value);
+		}
+
+		return map;
 	}
 
 }
