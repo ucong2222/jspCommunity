@@ -63,6 +63,8 @@ public abstract class DispatcherServlet extends HttpServlet {
 		String requestUri = req.getRequestURI();
 		String[] requestUriBits = requestUri.split("/");
 
+		System.out.println(requestUri);
+		
 		int minBitsCount = 5;
 
 		if (App.isProductMode()) {
@@ -98,7 +100,7 @@ public abstract class DispatcherServlet extends HttpServlet {
 
 		String actionUrl = "/" + controllerTypeName + "/" + controllerName + "/" + actionMethodName;
 
-		// 인터셉터에서 로그인 관련 정보를 req에 넣기
+		// 인터셉터위해 로그인 관련 정보를 req에 넣기
 		boolean isLogined = false;
 		int loginedMemberId = 0;
 		Member loginedMember = null;

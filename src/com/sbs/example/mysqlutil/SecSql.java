@@ -13,7 +13,7 @@ public class SecSql {
 	private StringBuilder sqlBuilder;
 	private List<Object> datas;
 
-	// SQL 오류시 홤ㄴ에 출력되던 sql 원문이 안나오던 버그 수정
+	// SQL 오류시 화면에 출력되던 sql 원문이 안나오던 버그 수정
 	@Override
 	public String toString() {
 		return "rawSql=" + getRawSql() + ", data=" + datas;

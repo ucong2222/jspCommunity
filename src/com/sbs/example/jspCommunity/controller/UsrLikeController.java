@@ -34,16 +34,17 @@ public class UsrLikeController extends Controller {
 		String resultCode = null;
 		String msg = null;
 
-		Boolean aleadyDoDislike = likeService.aleadyDoDislike(relTypeCode, relId, actorId, -1);
+		// 싫어요 처리 되어있는지 확인
+		Boolean alreadyDoDislike = likeService.alreadyDoDislike(relTypeCode, relId, actorId, -1);
 
-		if (aleadyDoDislike == true) {
+		if (alreadyDoDislike == true) {
 			resultCode = "F-1";
 			msg = "이미 투표하셨습니다.";
 		} else {
+			// 좋아요 처리 되어있는지 확인
+			Boolean alreadyDoLike = likeService.alreadyDoLike(relTypeCode, relId, actorId, 1);
 
-			Boolean aleadyDoLike = likeService.aleadyDoLike(relTypeCode, relId, actorId, 1);
-
-			if (aleadyDoLike == false) {
+			if (alreadyDoLike == false) {
 				resultCode = "S-1";
 				msg = "좋아요 처리";
 				likeService.setLikePoint(relTypeCode, relId, actorId, 1, 1);
@@ -79,15 +80,17 @@ public class UsrLikeController extends Controller {
 		String resultCode = null;
 		String msg = null;
 
-		Boolean aleadyDoLike = likeService.aleadyDoLike(relTypeCode, relId, actorId, 1);
+		// 좋아요 처리되어있는지 확인
+		Boolean alreadyDoLike = likeService.alreadyDoLike(relTypeCode, relId, actorId, 1);
 
-		if (aleadyDoLike == true) {
+		if (alreadyDoLike == true) {
 			resultCode = "F-1";
 			msg = "이미 투표하셨습니다.";
 		} else {
-			Boolean aleadyDoDislike = likeService.aleadyDoDislike(relTypeCode, relId, actorId, -1);
+			// 싫어요 처리되어있는지 확인
+			Boolean alreadyDoDislike = likeService.alreadyDoDislike(relTypeCode, relId, actorId, -1);
 
-			if (aleadyDoDislike == false) {
+			if (alreadyDoDislike == false) {
 				resultCode = "S-1";
 				msg = "싫어요 처리";
 				likeService.setLikePoint(relTypeCode, relId, actorId, -1, 1);

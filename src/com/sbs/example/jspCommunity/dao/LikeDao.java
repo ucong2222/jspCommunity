@@ -46,7 +46,7 @@ public class LikeDao {
 		return MysqlUtil.insert(sql);
 	}
 
-	public Like getLike(String relTypeCode, int relId, int actorId, int i) {
+	public Like getLike(String relTypeCode, int relId, int actorId, int point) {
 		SecSql sql = new SecSql();
 		sql.append("SELECT *");
 		sql.append("From `like` AS L");
@@ -54,7 +54,7 @@ public class LikeDao {
 		sql.append("AND L.relTypeCode = ?", relTypeCode);
 		sql.append("AND L.relId = ?", relId);
 		sql.append("AND L.memberId = ?", actorId);
-		sql.append("AND L.point = ?", i);
+		sql.append("AND L.point = ?", point);
 
 		Map<String, Object> map = MysqlUtil.selectRow(sql);
 

@@ -19,8 +19,8 @@ public class LikeService {
 		}
 	}
 
-	public Boolean aleadyDoLike(String relTypeCode, int relId, int actorId, int i) {
-		Like like = likeDao.getLike(relTypeCode, relId, actorId, i);
+	public Boolean alreadyDoLike(String relTypeCode, int relId, int actorId, int point) {
+		Like like = likeDao.getLike(relTypeCode, relId, actorId, point);
 
 		if (like != null) {
 			return true;
@@ -30,8 +30,8 @@ public class LikeService {
 
 	}
 
-	public Boolean aleadyDoDislike(String relTypeCode, int relId, int actorId, int i) {
-		return aleadyDoLike(relTypeCode, relId, actorId, i);
+	public Boolean alreadyDoDislike(String relTypeCode, int relId, int actorId, int point) {
+		return alreadyDoLike(relTypeCode, relId, actorId, point);
 	}
 
 }
